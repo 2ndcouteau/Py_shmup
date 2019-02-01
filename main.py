@@ -4,14 +4,13 @@
 import pygame
 from pygame.locals import *
 
+## CONSTANT
+window_x = 670
+window_y = 720
 
 def main():
 
 	pygame.init()
-
-	## CONSTANT
-	window_x = 1280
-	window_y = 720
 
 	# INIT window
 	window = pygame.display.set_mode((window_x, window_y), HWSURFACE | DOUBLEBUF | RESIZABLE) ## FULLSCREEN
@@ -21,7 +20,7 @@ def main():
 	# Display Background
 	background = pygame.image.load("media/desert.png").convert()
 	s_background = background.get_size()
-	scale_x = float(window_y) / s_background[0]
+	scale_x = float(window_x) / s_background[0]
 	scale_y = float(window_y) / s_background[1]
 	s_background = (s_background[0] * scale_x, s_background[1] * scale_x)
 	background = pygame.transform.scale(background, (int(s_background[0]), int(s_background[1])))
@@ -47,10 +46,11 @@ def main():
 
 	# Rafraîchissement de l'écran
 	pygame.display.flip()
-
-
+	# Set input frequency
 	pygame.key.set_repeat(1, 1)
 
+
+	# Game loop
 	while 42:
 		## BAD # for event in pygame.event.get():  # On parcours la liste de tous les événements reçus
 		pygame.event.pump() ## Good way to manage event
@@ -75,12 +75,15 @@ def main():
 
 		pygame.event.clear()
 
+
 		player_pos = player_pos.clamp(background.get_rect())
 		window.blit(background, (0,0))
 		window.blit(player, player_pos)
-		#Rafraichissement
-		pygame.display.flip()
 
+		pygame.display.update((player_pos, background.get_rect()))
+		# Refresh ALL the Display
+#		pygame.display.flip()
+		# Set frame frequency
 		pygame.time.Clock().tick(60)
 
 
