@@ -4,28 +4,63 @@
 import pygame
 from pygame.locals import *
 
-## CONSTANT
-window_x = 670
-window_y = 720
+class Target:
+	hp = 100
+	speed = 100
+
+class Player(Target):
+	name = "Player1"
+
+class Game:
+	# Constant
+	window = 0
+	window_x = 670
+	window_y = 720
+
+	backgrounds = []
+	y0 = 0
+	y1 = -window_y
+
+	player = Player
+	ennemies = ()
+	entities = ()
+
+def scroll_background(g):
+	g.y0 += 1
+	g.y1 += 1
+	g.window.blit(g.backgrounds[0], (0 ,g.y0))
+	g.window.blit(g.backgrounds[1], (0 ,g.y1))
+
+	if g.y0 > g.window_y:
+		g.y0 = -g.window_y
+	if g.y1 > g.window_y:
+		g.y1 = -g.window_y
+
+
 
 def main():
+
+	g = Game
 
 	pygame.init()
 
 	# INIT window
-	window = pygame.display.set_mode((window_x, window_y), HWSURFACE | DOUBLEBUF | RESIZABLE) ## FULLSCREEN
+	g.window = pygame.display.set_mode((g.window_x, g.window_y), HWSURFACE | DOUBLEBUF | RESIZABLE) ## FULLSCREEN
 	icone = pygame.image.load("media/SF06.png")
 	title = pygame.display.set_caption("BEST GAME EVER -- Py_SHMUP")
 
 	# Display Background
-	background = pygame.image.load("media/desert.png").convert()
-	s_background = background.get_size()
-	scale_x = float(window_x) / s_background[0]
-	scale_y = float(window_y) / s_background[1]
-	s_background = (s_background[0] * scale_x, s_background[1] * scale_x)
-	background = pygame.transform.scale(background, (int(s_background[0]), int(s_background[1])))
-	window.blit(background, (0 ,0))
+	g.backgrounds.append(pygame.image.load("media/desert.png").convert())
+	g.backgrounds.append(pygame.image.load("media/desert.png").convert())
 
+	s_background = g.backgrounds[0].get_size()
+	scale_x = float(g.window_x) / s_background[0]
+	scale_y = float(g.window_y) / s_background[1]
+	s_background = (s_background[0] * scale_x, s_background[1] * scale_x)
+	g.backgrounds[0] = pygame.transform.scale(g.backgrounds[0], (int(s_background[0]), int(s_background[1])))
+	g.backgrounds[1] = pygame.transform.scale(g.backgrounds[1], (int(s_background[0]), int(s_background[1])))
+	g.window.blit(g.backgrounds[0], (0 ,g.y0))
+	g.window.blit(g.backgrounds[1], (0 ,g.y1))
 
 	# Display Player
 	player = pygame.image.load("media/SF06.png").convert_alpha()
@@ -42,7 +77,7 @@ def main():
 
 
 	# print ("high == " + str(s_player[0]) + " Width == "  + str(s_player[1]))
-	window.blit(player, player_pos)
+	g.window.blit(player, player_pos)
 
 	# Rafraîchissement de l'écran
 	pygame.display.flip()
@@ -76,13 +111,16 @@ def main():
 		pygame.event.clear()
 
 
-		player_pos = player_pos.clamp(background.get_rect())
-		window.blit(background, (0,0))
-		window.blit(player, player_pos)
+		player_pos = player_pos.clamp(g.window.get_rect())
+		scroll_background(g)
 
-		pygame.display.update((player_pos, background.get_rect()))
+
+#		g.window.blit(background, (0,0))
+		g.window.blit(player, player_pos)
+
+	#	pygame.display.update((player_pos, g.backgrounds[0], g.backgrounds[1]))
 		# Refresh ALL the Display
-#		pygame.display.flip()
+		pygame.display.flip()
 		# Set frame frequency
 		pygame.time.Clock().tick(60)
 
