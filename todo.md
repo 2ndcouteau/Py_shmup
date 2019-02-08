@@ -5,6 +5,10 @@ Todo:
 			--> return (True or False)
 	[IN_PROGRESS] Create Classes
 
+	ENEMIES
+		Need to generate regulary
+			manage number
+			manage frequency
 
 DONE:
 	Display background
@@ -24,3 +28,9 @@ DONE:
 
 	Clean all the Code
 		Oject style organisation
+
+	Create class Enemy
+		Update()
+			move()
+			delete(), if go too out the window
+		Manage x position at the creation to stay in the window

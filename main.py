@@ -4,6 +4,8 @@
 import os
 import pygame
 from pygame.locals import *
+
+from random import randint
 # from pygame.sprite import Sprite
 
 
@@ -17,7 +19,7 @@ X_WINDOW = 670
 Y_WINDOW = 710
 
 ALLIES = 0
-ENNEMIES = 1
+ENEMIES = 1
 NEUTRAL = 2
 
 UP = (0, -1)
@@ -81,12 +83,46 @@ class Player(Entities):
 		self.rect = self.rect.move(direction[0] * self.speed, direction[1] * self.speed)
 
 class Enemy(Entities):
-	def __init__(self):
-		Entities.__init__(self, _hp = 1, _life = 0, _speed = 5)
+	def __init__(self, g):
+		Entities.__init__(self, _hp = 1, _life = 0, _speed = 5, _type = ENEMIES)
 		self.name = "Enemy"
-		self.image = 0
-		self.pos = 0
-		self.hit_box = 0
+
+		# Load image from media
+		self.image = IMG_PLAYER.convert_alpha()
+
+		# Scale player ship
+		self.size = self.image.get_size()	# Returns tupple
+		self.size = (self.size[0] / 4, self.size[1] / 4)
+		self.image = pygame.transform.scale(self.image, (int(self.size[0]), int(self.size[1])))
+		self.image = pygame.transform.rotate(self.image, 180);
+		self.hit_box_player = pygame.transform.scale(self.image, (int(self.size[0]) - 10, int(self.size[1]) - 10))
+
+		# Init player ship position
+		self.rect = self.image.get_rect()
+		self.rect = self.rect.move(randint(self.size[0], X_WINDOW) - self.size[0] , 0)
+
+		self.g = g
+		self.g.all_sprites_list.add(self)
+		self.g.sprites_enemies_list.add(self)
+
+	def delete(self):
+		self.g.all_sprites_list.remove(self)
+		self.g.sprites_enemies_list.remove(self)
+
+	def move(self, direction):
+		self.rect = self.rect.move(direction[0] * self.speed, direction[1] * self.speed)
+
+	def update(self):
+		self.move(DOWN)
+
+		# If the enemy go out the window, unreference it
+		if self.rect.y > Y_WINDOW:
+			self.delete()
+
+
+
+
+
 
 
 class Game():
@@ -101,7 +137,7 @@ class Game():
 		self.all_sprites_list = pygame.sprite.Group()
 		self.sprites_backgrounds_list = pygame.sprite.Group()
 		self.sprites_players_list = pygame.sprite.Group()
-#		self.sprites_enemies_list = pygame.sprite.Group()
+		self.sprites_enemies_list = pygame.sprite.Group()
 #		self.sprites_shoots_list = pygame.sprite.Group()
 #		self.sprites_neutrals_list = pygame.sprite.Group()
 
@@ -123,6 +159,15 @@ class Game():
 		# self.shoots = []
 		# self.neutrals = []
 
+	def collide_management(self):
+		# See if the enemies collide with player
+		collide_list = pygame.sprite.spritecollide(self.player, self.sprites_enemies_list, True)
+
+		# Check the list of collisions.
+		for x in collide_list:
+			print("Collide !")
+
+
 def scroll_background(g):
 	g.backgrounds[0].rect.y += 1
 	g.backgrounds[1].rect.y += 1
@@ -131,6 +176,7 @@ def scroll_background(g):
 		g.backgrounds[0].rect.y = -Y_WINDOW
 	if g.backgrounds[1].rect.y >= Y_WINDOW:
 		g.backgrounds[1].rect.y = -Y_WINDOW
+
 
 
 # def shoot(g):
@@ -162,6 +208,8 @@ def game_event(g, keys):
 		g.player.move(LEFT)
 	if keys[K_RIGHT] or keys[K_d]:
 		g.player.move(RIGHT)
+	if keys[K_e]:
+		Enemy(g)
 
 def global_envent(g, keys):
 	if keys[K_ESCAPE]:
@@ -196,13 +244,23 @@ def game_loop(g):
 
 		if (g.mode is GAME):
 			# g.window.fill((0,0,0))
-
 			event_manage(g)
 			scroll_background(g)
 
+			g.sprites_enemies_list.update()
+
+			g.collide_management()
+
+
+			# Draw All Spirte list
 			# g.all_sprites_list.draw(g.window)
 			g.sprites_backgrounds_list.draw(g.window)
 			g.sprites_players_list.draw(g.window)
+			g.sprites_enemies_list.draw(g.window)
+
+			# self.shoots = []
+			# self.neutrals = []
+
 
 			# Refresh ALL the Display
 				# update() is faster than flip()
@@ -216,7 +274,6 @@ def game_loop(g):
 def main():
 
 	g = Game()
-
 	game_loop(g)
 
 
