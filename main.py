@@ -30,6 +30,17 @@ LEFT = (-1, 0)
 GAME = 1 << 0
 MENU = 1 << 1
 
+# Colors
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+YELLOW = (255, 255, 0)
+
+PLAYER_SHOOT_FREQUENCY = 50
+ENEMIES_SHOOT_FREQUENCY = 500
+ENEMIES_SPAWN_FREQUENCY = 500
 
 class Entities(pygame.sprite.Sprite):
 	def __init__(self, _hp, _life, _speed, _type):
@@ -56,11 +67,56 @@ class Background(Entities):
 		g.sprites_backgrounds_list.add(self)
 
 
+class Shoot(Entities):
+	def __init__(self, g, type, speed, x, y):
+		Entities.__init__(self, _hp = 1, _life = 0, _speed = speed, _type = type)
+		self.name = "Shoot"
+
+		# Load image from media
+		# self.image = IMG_PLAYER.convert_alpha()
+		# g.Rect_entities.append(pygame.draw.circle(g.window, [120, 0, 255], (g.player.rect[0], g.player.rect[1] + 15), 5))
+		self.image = pygame.Surface((4, 15))
+
+		# Scale player ship
+		self.size = self.image.get_size()	# Returns tupple
+
+		# Init shoot ship position
+		self.rect = self.image.get_rect()
+		self.rect.bottom = y
+		self.rect.centerx = x
+
+		if self.type == ALLIES:
+			self.image.fill(BLUE)
+			self.direction = UP
+			g.sprites_allies_shoots_list.add(self)
+		else:
+			self.image.fill(RED)
+			self.direction = DOWN
+			g.sprites_enemies_shoots_list.add(self)
+
+		g.all_sprites_list.add(self)
+
+	def move(self):
+		self.rect = self.rect.move(self.direction[0] * self.speed, self.direction[1] * self.speed)
+
+	def update(self):
+		self.move()
+
+		# If the shoot go out the window, unreference it
+		if self.rect.top > Y_WINDOW and self.type == ENEMIES:
+			self.kill()
+		elif self.rect.bottom < 0 and self.type == ALLIES:
+			self.kill()
+
+
+
 class Player(Entities):
 
 	def __init__(self, g):
-		Entities.__init__(self, _hp = 2, _life = 3, _speed = 15, _type = ALLIES)
+		Entities.__init__(self, _hp = 3, _life = 3, _speed = 15, _type = ALLIES)
 		self.name = "Player"
+
+		self.timer = 0
 
 		# Load image from media
 		self.image = IMG_PLAYER.convert_alpha()
@@ -82,10 +138,30 @@ class Player(Entities):
 	def move(self, direction):
 		self.rect = self.rect.move(direction[0] * self.speed, direction[1] * self.speed)
 
+	def shoot(self, g):
+		self.timer -= g.dt
+		if self.timer <= 0:
+			Shoot(g, ALLIES, self.speed + 1, self.rect.centerx, self.rect.top)
+			# Reset the countdown timer to one second.
+			self.timer = PLAYER_SHOOT_FREQUENCY
+
+	def reinitialization(self, g):
+		# Init player position and spec
+		self.rect.x = (X_WINDOW / 2) - self.size[0] / 2
+		self.rect.y = Y_WINDOW - 150
+		self.hp = 3
+
+		g.sprites_players_list.add(self)
+		g.all_sprites_list.add(self)
+
+
+
 class Enemy(Entities):
 	def __init__(self, g):
 		Entities.__init__(self, _hp = 1, _life = 0, _speed = 5, _type = ENEMIES)
 		self.name = "Enemy"
+
+		self.timer = 0
 
 		# Load image from media
 		self.image = IMG_PLAYER.convert_alpha()
@@ -99,35 +175,36 @@ class Enemy(Entities):
 
 		# Init player ship position
 		self.rect = self.image.get_rect()
-		self.rect = self.rect.move(randint(self.size[0], X_WINDOW) - self.size[0] , 0)
+		self.rect = self.rect.move(randint(self.size[0], X_WINDOW) - self.size[0] , -self.size[1])
+
+		# self.g = g
+		g.all_sprites_list.add(self)
+		g.sprites_enemies_list.add(self)
 
 		self.g = g
-		self.g.all_sprites_list.add(self)
-		self.g.sprites_enemies_list.add(self)
 
-	def delete(self):
-		self.g.all_sprites_list.remove(self)
-		self.g.sprites_enemies_list.remove(self)
+	def shoot(self):
+		self.timer -= self.g.dt
+		if self.timer <= 0:
+			Shoot(self.g, ENEMIES, self.speed * 2, self.rect.centerx, self.rect.bottom)
+			# Reset the countdown shoot timer + salt time
+			self.timer = ENEMIES_SHOOT_FREQUENCY + randint(0, 1000)
 
 	def move(self, direction):
 		self.rect = self.rect.move(direction[0] * self.speed, direction[1] * self.speed)
 
 	def update(self):
 		self.move(DOWN)
+		self.shoot()
 
 		# If the enemy go out the window, unreference it
 		if self.rect.y > Y_WINDOW:
-			self.delete()
-
-
-
-
-
-
+			self.kill()
 
 class Game():
 	def __init__(self):
-		# Constant
+		self.timer = 0 # 1seconde
+		self.dt = 0
 
 		pygame.init()
 		# Set input frequency
@@ -138,6 +215,8 @@ class Game():
 		self.sprites_backgrounds_list = pygame.sprite.Group()
 		self.sprites_players_list = pygame.sprite.Group()
 		self.sprites_enemies_list = pygame.sprite.Group()
+		self.sprites_allies_shoots_list = pygame.sprite.Group()
+		self.sprites_enemies_shoots_list = pygame.sprite.Group()
 #		self.sprites_shoots_list = pygame.sprite.Group()
 #		self.sprites_neutrals_list = pygame.sprite.Group()
 
@@ -159,13 +238,46 @@ class Game():
 		# self.shoots = []
 		# self.neutrals = []
 
+	def generate_enemies(self):
+		if self.timer <= 0:
+			for i in range(1, 3):
+				Enemy(self)
+			# Reset the countdown timer to one second.
+			self.timer = ENEMIES_SPAWN_FREQUENCY + randint(0, 1000)
+
 	def collide_management(self):
 		# See if the enemies collide with player
 		collide_list = pygame.sprite.spritecollide(self.player, self.sprites_enemies_list, True)
-
 		# Check the list of collisions.
 		for x in collide_list:
-			print("Collide !")
+			self.player.hp -= 1
+			print("Collide Player with Enemies !")
+
+		collide_list = pygame.sprite.spritecollide(self.player, self.sprites_enemies_shoots_list, True)
+		for x in collide_list:
+			self.player.hp -= 1
+			print("Collide Enemies shoots with player !")
+
+		collide_list = pygame.sprite.groupcollide(self.sprites_allies_shoots_list, self.sprites_enemies_list, True, True)
+		# Check the list of collisions.
+		for x in collide_list:
+			print("Collide Player Shoots with Enemies !")
+
+	def backgrounds_reinitialization(self):
+		self.all_sprites_list.add(self.backgrounds[0])
+		self.all_sprites_list.add(self.backgrounds[1])
+		self.backgrounds[0].rect.y = 0
+		self.backgrounds[1].rect.y = -Y_WINDOW
+
+	def restart_game(self):
+		# Clear all Useless sprites lists
+		self.all_sprites_list.empty()
+		self.sprites_enemies_list.empty()
+		self.sprites_enemies_shoots_list.empty()
+		self.sprites_allies_shoots_list.empty()
+
+		self.player.reinitialization(self)
+		self.backgrounds_reinitialization()
 
 
 def scroll_background(g):
@@ -178,25 +290,17 @@ def scroll_background(g):
 		g.backgrounds[1].rect.y = -Y_WINDOW
 
 
-
-# def shoot(g):
-# 	# now = pygame.time.get_ticks()
-# 	# if now - self.last_shot > self.shoot_delay:
-# 	# self.last_shot = now
-# 	g.Rect_entities.append(pygame.draw.circle(g.window, [120, 0, 255], (g.player.rect[0], g.player.rect[1] + 15), 5))
-# 	# g.window.blit(g.shoots, g.player.rect)
-# 	# g.Rect_entities.append(g.shoots[-1].get_rect())
-# 	#pygame.draw.circle(screen, YELLOW, (24,24), 7)
-
-
 def game_event(g, keys):
 
+	if g.player.hp <= 0:
+		print("You Died")
+		g.mode = MENU	# change to load_menu()
 	if keys[K_BACKSPACE]:
 		g.mode = MENU	# change to load_menu()
 	if keys[K_RETURN]:
 		print("Entrée")
 	if keys[K_SPACE]:
-#		g.player.shoot(g)
+		g.player.shoot(g)
 		print("Espace")
 	if keys[K_b]:
 		print("Bomb")
@@ -209,7 +313,10 @@ def game_event(g, keys):
 	if keys[K_RIGHT] or keys[K_d]:
 		g.player.move(RIGHT)
 	if keys[K_e]:
-		Enemy(g)
+		if g.timer <= 0:
+			Enemy(g)
+			# Reset the countdown timer to one second.
+			g.timer = 1000
 
 def global_envent(g, keys):
 	if keys[K_ESCAPE]:
@@ -219,7 +326,11 @@ def global_envent(g, keys):
 
 
 def menu_envent(g, keys):
-	if keys[K_RETURN] or keys[K_SPACE]:
+	if (g.player.hp > 0):
+		if keys[K_RETURN] or keys[K_SPACE]:
+			g.mode = GAME
+	if keys[K_r]:
+		g.restart_game()
 		g.mode = GAME
 
 def event_manage(g):
@@ -238,16 +349,21 @@ def event_manage(g):
 
 
 def game_loop(g):
-	# Game loop
 	while 42:
-		pygame.time.Clock().tick(60)
+		# dt = time in milliseconds that passed since last tick.
+		g.dt = pygame.time.Clock().tick(60)
+		g.timer -= g.dt
 
 		if (g.mode is GAME):
 			# g.window.fill((0,0,0))
+			g.generate_enemies()
 			event_manage(g)
 			scroll_background(g)
 
 			g.sprites_enemies_list.update()
+			g.sprites_enemies_shoots_list.update()
+			g.sprites_allies_shoots_list.update()
+
 
 			g.collide_management()
 
@@ -257,6 +373,8 @@ def game_loop(g):
 			g.sprites_backgrounds_list.draw(g.window)
 			g.sprites_players_list.draw(g.window)
 			g.sprites_enemies_list.draw(g.window)
+			g.sprites_enemies_shoots_list.draw(g.window)
+			g.sprites_allies_shoots_list.draw(g.window)
 
 			# self.shoots = []
 			# self.neutrals = []
