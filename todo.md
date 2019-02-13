@@ -59,6 +59,7 @@ DONE:
 
 	Clean all the Code
 		Oject style organisation
+		Create multiple files structures
 
 	GAME
 		Display background
