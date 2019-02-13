@@ -1,21 +1,31 @@
 
 Todo:
+
+
+	Layout:
+	1) Update sprites with new media
+			shoots
+				player
+				enemies
+			enemies
+				color by type
+
+
 	Enemies:
-		Manage position to avoid collisions at creation
 		generate salve
-		shoot in player direction
-			diff enemy position and player position
+
 
 	Shoot class
 		generate salve
-		shoot in multiple direction
 
-	Print Informations
+
+	2) Print Informations
 		score
 		weapon
 		hp
 		lifes
 		time
+
 
 	Weapon
 		basic
@@ -24,11 +34,13 @@ Todo:
 		targeted
 		Bomb
 
+
 	Loot
 		weapon
 		life
 		hp+
 		speed boost
+
 
 	MENU
 		Manage event
@@ -37,10 +49,14 @@ Todo:
 			Options ?
 			Quit Game
 
+
 	LEVEL
 		Level script management
 
+
 DONE:
+
+
 	Clean all the Code
 		Oject style organisation
 
@@ -82,6 +98,8 @@ DONE:
 			manage frequency
 		Pseudo random spawn frequency
 		Pseudo random shoot frequency
+		Shoot in multiple direction
+		Manage position to avoid collisions at creation
 
 	SHOOT
 		generate shoot item
@@ -90,3 +108,6 @@ DONE:
 			Direction
 			Position from shooter
 		collide management (ALLIES and ENEMIES)
+
+		Shoot in player direction
+			Manage angle

@@ -2,6 +2,7 @@
 # _*_ coding: Utf-8 -*
 
 import os
+import math
 import pygame
 from pygame.locals import *
 
@@ -41,6 +42,8 @@ YELLOW = (255, 255, 0)
 PLAYER_SHOOT_FREQUENCY = 50
 ENEMIES_SHOOT_FREQUENCY = 500
 ENEMIES_SPAWN_FREQUENCY = 500
+
+PLAYER_HP = 30
 
 class Entities(pygame.sprite.Sprite):
 	def __init__(self, _hp, _life, _speed, _type):
@@ -91,10 +94,28 @@ class Shoot(Entities):
 			g.sprites_allies_shoots_list.add(self)
 		else:
 			self.image.fill(RED)
-			self.direction = DOWN
+			# self.direction = DOWN
+			self.target_player(g)
 			g.sprites_enemies_shoots_list.add(self)
 
 		g.all_sprites_list.add(self)
+
+	def target_player(self, g):
+		self.direction = g.player.rect.centerx - self.rect.centerx, g.player.rect.top - self.rect.centery
+
+		angle = math.degrees(math.atan(self.direction[0] / self.direction[1]))
+
+		print (self.direction)
+		if abs(self.direction[0]) > abs(self.direction[1]):
+			if self.direction[0] != 0:
+				self.direction = self.direction[0] / abs(self.direction[0]), self.direction[1] / abs(self.direction[0])
+		else :
+			if self.direction[1] != 0:
+				self.direction = self.direction[0] / abs(self.direction[1]), self.direction[1] / abs(self.direction[1])
+		print (self.direction)
+
+		self.image = pygame.transform.rotate(self.image, angle);
+
 
 	def move(self):
 		self.rect = self.rect.move(self.direction[0] * self.speed, self.direction[1] * self.speed)
@@ -113,7 +134,7 @@ class Shoot(Entities):
 class Player(Entities):
 
 	def __init__(self, g):
-		Entities.__init__(self, _hp = 3, _life = 3, _speed = 15, _type = ALLIES)
+		Entities.__init__(self, _hp = PLAYER_HP, _life = 3, _speed = 15, _type = ALLIES)
 		self.name = "Player"
 
 		self.timer = 0
@@ -149,7 +170,7 @@ class Player(Entities):
 		# Init player position and spec
 		self.rect.x = (X_WINDOW / 2) - self.size[0] / 2
 		self.rect.y = Y_WINDOW - 150
-		self.hp = 3
+		self.hp = PLAYER_HP
 
 		g.sprites_players_list.add(self)
 		g.all_sprites_list.add(self)
@@ -176,6 +197,8 @@ class Enemy(Entities):
 		# Init player ship position
 		self.rect = self.image.get_rect()
 		self.rect = self.rect.move(randint(self.size[0], X_WINDOW) - self.size[0] , -self.size[1])
+		while pygame.sprite.spritecollide(self, g.sprites_enemies_list, False):
+			self.rect.centery -= self.size[1] / 2
 
 		# self.g = g
 		g.all_sprites_list.add(self)
