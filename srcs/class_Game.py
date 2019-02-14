@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3.7
 # _*_ coding: Utf-8 -*
 
 import pygame
@@ -9,9 +9,12 @@ from random			import randint
 from class_Player		import Player
 from class_Enemy		import Enemy
 from class_Background	import Background
+from class_Text			import Text
+
 from constants			import (X_WINDOW,
 								Y_WINDOW,
 								ENEMIES_SPAWN_FREQUENCY,
+								NEUTRALS_SPAWN_FREQUENCY,
 								GAME,
 								IMG_PLAYER)
 
@@ -31,10 +34,10 @@ class Game():
 		self.sprites_enemies_list = pygame.sprite.Group()
 		self.sprites_allies_shoots_list = pygame.sprite.Group()
 		self.sprites_enemies_shoots_list = pygame.sprite.Group()
-#		self.sprites_shoots_list = pygame.sprite.Group()
 #		self.sprites_neutrals_list = pygame.sprite.Group()
+		self.sprites_text_list = pygame.sprite.Group()
 
-		self.window = pygame.display.set_mode((X_WINDOW, Y_WINDOW), HWSURFACE | DOUBLEBUF | RESIZABLE)
+		self.window = pygame.display.set_mode((X_WINDOW, Y_WINDOW), HWSURFACE | DOUBLEBUF) # | RESIZABLE)
 		self.window_rect = self.window.get_rect()
 		self.icone = IMG_PLAYER.convert_alpha()
 		self.title = pygame.display.set_caption("BEST GAME EVER -- Py_SHMUP")
@@ -48,9 +51,17 @@ class Game():
 
 		self.player = Player(self)
 
-		# self.ennemies = []
-		# self.shoots = []
+		Text(self, "Hello  Game  !!")
+
 		# self.neutrals = []
+
+	# def generate_neutrals(self):
+		# if self.timer <= 0:
+		# 	for i in range(1, 3):
+		# 		Neutrals(self)
+		# 	# Reset the countdown timer to one second.
+		# 	self.timer = NEUTRALS_SPAWN_FREQUENCY + randint(0, 1000)
+
 
 	def generate_enemies(self):
 		if self.timer <= 0:
