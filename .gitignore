@@ -11,6 +11,6 @@ ehthumbs.db
 Thumbs.db
 
 
-
+*.pyc
 media/archives/*
 srcs/__pycache__/
