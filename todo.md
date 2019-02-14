@@ -1,23 +1,10 @@
 
-Todo:
+TODO:
 
 
-	Layout:
-	1) Update sprites with new media
-			shoots
-				player
-				enemies
-			enemies
-				color by type
-
-
-	Enemies:
-		generate salve
-
-
-	Shoot class
-		generate salve
-
+	Layout
+		enemies
+			color by type
 
 	2) Print Informations
 		score
@@ -26,6 +13,16 @@ Todo:
 		lifes
 		time
 
+	Enemies
+		generate spwan salve formation
+			duo
+			triple
+			line
+			delta formation
+			etc...
+
+	Shoot class
+		generate salve
 
 	Weapon
 		basic
@@ -34,13 +31,11 @@ Todo:
 		targeted
 		Bomb
 
-
 	Loot
 		weapon
 		life
 		hp+
 		speed boost
-
 
 	MENU
 		Manage event
@@ -48,7 +43,6 @@ Todo:
 			Restart Game
 			Options ?
 			Quit Game
-
 
 	LEVEL
 		Level script management
@@ -60,6 +54,7 @@ DONE:
 	Clean all the Code
 		Oject style organisation
 		Create multiple files structures
+
 
 	GAME
 		Display background
@@ -80,6 +75,17 @@ DONE:
 			Die Management
 			Restart Game Management
 				reinitialization fct() for player, background
+
+
+	LAYOUT
+		Create Class
+		Create method draw_sprites
+		Create method scroll_background
+
+
+	TEXT
+		Create Class
+
 
 	PLAYER
 		Class PLAYER
@@ -102,6 +108,7 @@ DONE:
 		Shoot in multiple direction
 		Manage position to avoid collisions at creation
 
+
 	SHOOT
 		generate shoot item
 			type=ALLIES/ENNEMY
@@ -112,3 +119,5 @@ DONE:
 
 		Shoot in player direction
 			Manage angle
+
+		Update sprites with new media
