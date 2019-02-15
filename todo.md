@@ -1,6 +1,8 @@
 
 TODO:
 
+!!	Need to manage nicely all differents background and text reinitialization
+
 
 	Layout
 		enemies
@@ -76,6 +78,11 @@ DONE:
 			Restart Game Management
 				reinitialization fct() for player, background
 
+		Menu Management
+			Main Menu
+			Level Menu
+			Game
+			--> Can move from one to another
 
 	LAYOUT
 		Create Class
