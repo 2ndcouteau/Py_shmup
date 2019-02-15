@@ -34,8 +34,8 @@ class Player(Entities):
 		self.rect = self.image.get_rect()
 		self.rect = self.rect.move((X_WINDOW / 2) - self.size[0] / 2, Y_WINDOW - 150)
 
-		g.all_sprites_list.add(self)
-		g.sprites_players_list.add(self)
+		g.all_sprites.add(self)
+		g.sprites_players.add(self)
 
 	def move(self, direction):
 		self.rect = self.rect.move(direction[0] * self.speed, direction[1] * self.speed)
@@ -53,5 +53,5 @@ class Player(Entities):
 		self.rect.y = Y_WINDOW - 150
 		self.hp = PLAYER_HP
 
-		g.sprites_players_list.add(self)
-		g.all_sprites_list.add(self)
+		g.sprites_players.add(self)
+		g.all_sprites.add(self)

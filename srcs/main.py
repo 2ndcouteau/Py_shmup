@@ -10,9 +10,10 @@ from class_Game		import Game
 from class_Event	import Event
 from class_Layout	import Layout
 from constants		import (GAME,
-							MENU)
+							LEVEL_MENU,
+							MAIN_MENU)
 
-def game_loop(g):
+def main_loop(g):
 	while 42:
 		# dt = time in milliseconds that passed since last tick.
 		g.dt = pygame.time.Clock().tick(60)
@@ -22,23 +23,28 @@ def game_loop(g):
 			# g.window.fill((0,0,0))
 			g.generate_enemies()
 			Event.manage(Event, g)
-			Layout.scroll_background(g)
+			Layout.scroll_level_background(g)
 
-			g.sprites_enemies_list.update()
-			g.sprites_enemies_shoots_list.update()
-			g.sprites_allies_shoots_list.update()
+			g.sprites_enemies.update()
+			g.sprites_enemies_shoots.update()
+			g.sprites_allies_shoots.update()
 
 			g.collide_management()
+			Layout.draw_game_sprites(Layout, g)
 
-			Layout.draw_sprites(Layout, g)
+		elif (g.mode is LEVEL_MENU):
 
-		else:
+			Layout.draw_level_menu_sprites(Layout, g)
+			Event.manage(Event, g)
+
+		else :
+			Layout.draw_main_menu_sprites(Layout, g)
 			Event.manage(Event, g)
 
 def main():
 
 	g = Game()
-	game_loop(g)
+	main_loop(g)
 
 
 if __name__ == '__main__':

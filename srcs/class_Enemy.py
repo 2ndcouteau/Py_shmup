@@ -36,12 +36,12 @@ class Enemy(Entities):
 		# Init player ship position
 		self.rect = self.image.get_rect()
 		self.rect = self.rect.move(randint(self.size[0], X_WINDOW) - self.size[0] , -self.size[1])
-		while pygame.sprite.spritecollide(self, g.sprites_enemies_list, False):
+		while pygame.sprite.spritecollide(self, g.sprites_enemies, False):
 			self.rect.centery -= self.size[1] / 2
 
 		# self.g = g
-		g.all_sprites_list.add(self)
-		g.sprites_enemies_list.add(self)
+		g.all_sprites.add(self)
+		g.sprites_enemies.add(self)
 
 		self.g = g
 

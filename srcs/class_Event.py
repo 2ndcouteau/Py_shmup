@@ -8,9 +8,9 @@ from random			import randint
 
 from class_Player		import Player
 from class_Enemy		import Enemy
-from class_Background	import Background
 from constants			import (GAME,
-								MENU,
+								LEVEL_MENU,
+								MAIN_MENU,
 								UP,
 								DOWN,
 								RIGHT,
@@ -21,14 +21,13 @@ class Event():
 		self.timer = 0 # 1seconde
 		self.dt = 0
 
-
 	def game(g, keys):
 
 		if g.player.hp <= 0:
 			print("You Died")
-			g.mode = MENU	# change to load_menu()
+			g.mode = LEVEL_MENU	# change to load_menu()
 		if keys[K_BACKSPACE]:
-			g.mode = MENU	# change to load_menu()
+			g.mode = LEVEL_MENU	# change to load_menu()
 		if keys[K_RETURN]:
 			print("Entrée")
 		if keys[K_SPACE]:
@@ -56,14 +55,22 @@ class Event():
 		# if keys[K_S]:
 		# 	cut_the_sound
 
+	def main_menu(g, keys):
+		if keys[K_RETURN]:
+			g.restart_game() ## Init_game() with some differente base value
+			g.mode = GAME
+			print("Entrée")
 
-	def menu(g, keys):
+	def level_menu(g, keys):
 		if (g.player.hp > 0):
 			if keys[K_RETURN] or keys[K_SPACE]:
 				g.mode = GAME
 		if keys[K_r]:
 			g.restart_game()
 			g.mode = GAME
+		if keys[K_q]:
+			g.mode = MAIN_MENU
+
 
 	def manage(self, g):
 		pygame.event.pump() ## Good way to manage event
@@ -73,8 +80,10 @@ class Event():
 		self.general(g, keys)
 		if (g.mode is GAME):
 			self.game(g, keys)
+		elif (g.mode is LEVEL_MENU):
+			self.level_menu(g, keys)
 		else:
-			self.menu(g, keys)
+			self.main_menu(g, keys)
 
 		pygame.event.clear()
 		g.player.rect = g.player.rect.clamp(g.window_rect)

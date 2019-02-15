@@ -6,11 +6,20 @@ from pygame.locals	import *
 
 from constants			import (Y_WINDOW,
 								X_WINDOW,
-								FONT)
+								FONT,
+								GAME,
+								MAIN_MENU,
+								LEVEL_MENU,
+								WHITE,
+								BLACK,
+								RED,
+								GREEN,
+								BLUE,
+								YELLOW)
 
 
 class Text(pygame.sprite.Sprite):
-	def __init__(self, g, msg):
+	def __init__(self, g, msg, mode):
 		pygame.sprite.Sprite.__init__(self)
 
 		font = pygame.font.Font(FONT, 16)
@@ -20,4 +29,11 @@ class Text(pygame.sprite.Sprite):
 		self.rect = self.image.get_rect()
 		print(self.rect)
 
-		g.sprites_text_list.add(self)
+
+		g.all_sprites.add(self)
+		if mode is GAME :
+			g.sprites_level_text.add(self)
+		elif mode is MAIN_MENU :
+			g.sprites_main_menu_text.add(self)
+		else :
+			g.sprites_level_menu_text.add(self)

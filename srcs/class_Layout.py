@@ -13,25 +13,25 @@ class Layout():
 		self.timer = 0 # 1seconde
 		self.dt = 0
 
-	def scroll_background(g):
-		g.backgrounds[0].rect.y += 1
-		g.backgrounds[1].rect.y += 1
+	def scroll_level_background(g):
+		g.level_backgrounds[0].rect.y += 1
+		g.level_backgrounds[1].rect.y += 1
 
-		if g.backgrounds[0].rect.y >= Y_WINDOW:
-			g.backgrounds[0].rect.y = -Y_WINDOW
-		if g.backgrounds[1].rect.y >= Y_WINDOW:
-			g.backgrounds[1].rect.y = -Y_WINDOW
+		if g.level_backgrounds[0].rect.y >= Y_WINDOW:
+			g.level_backgrounds[0].rect.y = -Y_WINDOW
+		if g.level_backgrounds[1].rect.y >= Y_WINDOW:
+			g.level_backgrounds[1].rect.y = -Y_WINDOW
 
-	def draw_sprites(self, g):
+	def draw_game_sprites(self, g):
 		# Draw All Spirte list
-		# g.all_sprites_list.draw(g.window)
-		g.sprites_backgrounds_list.draw(g.window)
-		g.sprites_players_list.draw(g.window)
-		g.sprites_enemies_list.draw(g.window)
-		g.sprites_enemies_shoots_list.draw(g.window)
-		g.sprites_allies_shoots_list.draw(g.window)
+		# g.all_sprites.draw(g.window)
+		g.sprites_level_backgrounds.draw(g.window)
+		g.sprites_players.draw(g.window)
+		g.sprites_enemies.draw(g.window)
+		g.sprites_enemies_shoots.draw(g.window)
+		g.sprites_allies_shoots.draw(g.window)
 
-		g.sprites_text_list.draw(g.window)
+		g.sprites_level_text.draw(g.window)
 
 		# g.sprites_neutrals.draw(g.window)
 
@@ -41,6 +41,22 @@ class Layout():
 
 		pygame.display.flip()
 
-	# def message(g):
-	#
-	# 	Text(g, "Hello")
+	def draw_level_menu_sprites(self, g):
+
+		g.sprites_level_backgrounds.draw(g.window)
+		g.sprites_players.draw(g.window)
+		g.sprites_enemies.draw(g.window)
+
+		# g.sprites_level_text.draw(g.window)
+
+		g.sprites_level_menu_backgrounds.draw(g.window)
+		g.sprites_level_menu_text.draw(g.window)
+
+		pygame.display.flip()
+
+	def draw_main_menu_sprites(self, g):
+
+		g.sprites_main_menu_backgrounds.draw(g.window)
+		g.sprites_main_menu_text.draw(g.window)
+
+		pygame.display.flip()

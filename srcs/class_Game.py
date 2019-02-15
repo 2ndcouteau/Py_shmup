@@ -16,6 +16,12 @@ from constants			import (X_WINDOW,
 								ENEMIES_SPAWN_FREQUENCY,
 								NEUTRALS_SPAWN_FREQUENCY,
 								GAME,
+								MAIN_MENU,
+								LEVEL_MENU,
+								IMG_LEVEL1_BACKGROUND,
+								IMG_MAIN_MENU_BACKGROUND,
+								IMG_LEVEL_MENU_BACKGROUND_FULL,
+								IMG_LEVEL_MENU_BACKGROUND_TIER,
 								IMG_PLAYER)
 
 class Game():
@@ -28,30 +34,50 @@ class Game():
 		pygame.key.set_repeat(1, 1)
 
 		# This is a list of every sprite.
-		self.all_sprites_list = pygame.sprite.Group()
-		self.sprites_backgrounds_list = pygame.sprite.Group()
-		self.sprites_players_list = pygame.sprite.Group()
-		self.sprites_enemies_list = pygame.sprite.Group()
-		self.sprites_allies_shoots_list = pygame.sprite.Group()
-		self.sprites_enemies_shoots_list = pygame.sprite.Group()
+		self.all_sprites = pygame.sprite.Group()
+
+		self.sprites_level_backgrounds = pygame.sprite.Group()
+		self.sprites_level_menu_backgrounds = pygame.sprite.Group()
+		self.sprites_main_menu_backgrounds = pygame.sprite.Group()
+
+		self.sprites_level_text = pygame.sprite.Group()
+		self.sprites_level_menu_text = pygame.sprite.Group()
+		self.sprites_main_menu_text = pygame.sprite.Group()
+
+		self.sprites_players = pygame.sprite.Group()
+		self.sprites_enemies = pygame.sprite.Group()
+
+		self.sprites_allies_shoots = pygame.sprite.Group()
+		self.sprites_enemies_shoots = pygame.sprite.Group()
 #		self.sprites_neutrals_list = pygame.sprite.Group()
-		self.sprites_text_list = pygame.sprite.Group()
+
+
 
 		self.window = pygame.display.set_mode((X_WINDOW, Y_WINDOW), HWSURFACE | DOUBLEBUF) # | RESIZABLE)
 		self.window_rect = self.window.get_rect()
 		self.icone = IMG_PLAYER.convert_alpha()
 		self.title = pygame.display.set_caption("BEST GAME EVER -- Py_SHMUP")
 
-		self.mode = GAME
+		self.mode = MAIN_MENU
 
-		# Set 2 backgrounds for infinite loop display
-		self.backgrounds = []
-		self.backgrounds.append(Background(self, 0))
-		self.backgrounds.append(Background(self, -Y_WINDOW))
+		# Init all backgrounds:
+		self.level_backgrounds = []
+		self.level_backgrounds.append(Background(self, (0, 0), IMG_LEVEL1_BACKGROUND, GAME))
+		self.level_backgrounds.append(Background(self, (0, -Y_WINDOW), IMG_LEVEL1_BACKGROUND, GAME))
+
+		self.main_menu_backgrounds = []
+		self.main_menu_backgrounds.append(Background(self, (0, 0), IMG_MAIN_MENU_BACKGROUND, MAIN_MENU))
+
+		self.level_menu_backgrounds = []
+		self.level_menu_backgrounds.append(Background(self, (0, 0), IMG_LEVEL_MENU_BACKGROUND_FULL, LEVEL_MENU))
+		self.level_menu_backgrounds.append(Background(self, (X_WINDOW / 4, Y_WINDOW / 4), IMG_LEVEL_MENU_BACKGROUND_TIER, LEVEL_MENU))
+
 
 		self.player = Player(self)
 
-		Text(self, "Hello  Game  !!")
+		Text(self, "Hello  Game  !!", GAME)
+		Text(self, "** Main menu **", MAIN_MENU)
+		Text(self, "* Menu *", LEVEL_MENU)
 
 		# self.neutrals = []
 
@@ -72,34 +98,34 @@ class Game():
 
 	def collide_management(self):
 		# See if the enemies collide with player
-		collide_list = pygame.sprite.spritecollide(self.player, self.sprites_enemies_list, True)
+		collide_list = pygame.sprite.spritecollide(self.player, self.sprites_enemies, True)
 		# Check the list of collisions.
 		for x in collide_list:
 			self.player.hp -= 1
 			print("Collide Player with Enemies !")
 
-		collide_list = pygame.sprite.spritecollide(self.player, self.sprites_enemies_shoots_list, True)
+		collide_list = pygame.sprite.spritecollide(self.player, self.sprites_enemies_shoots, True)
 		for x in collide_list:
 			self.player.hp -= 1
 			print("Collide Enemies shoots with player !")
 
-		collide_list = pygame.sprite.groupcollide(self.sprites_allies_shoots_list, self.sprites_enemies_list, True, True)
+		collide_list = pygame.sprite.groupcollide(self.sprites_allies_shoots, self.sprites_enemies, True, True)
 		# Check the list of collisions.
 		for x in collide_list:
 			print("Collide Player Shoots with Enemies !")
 
-	def backgrounds_reinitialization(self):
-		self.all_sprites_list.add(self.backgrounds[0])
-		self.all_sprites_list.add(self.backgrounds[1])
-		self.backgrounds[0].rect.y = 0
-		self.backgrounds[1].rect.y = -Y_WINDOW
+	def level_backgrounds_reinitialization(self):
+		self.all_sprites.add(self.level_backgrounds[0])
+		self.all_sprites.add(self.level_backgrounds[1])
+		self.level_backgrounds[0].rect.y = 0
+		self.level_backgrounds[1].rect.y = -Y_WINDOW
 
 	def restart_game(self):
 		# Clear all Useless sprites lists
-		self.all_sprites_list.empty()
-		self.sprites_enemies_list.empty()
-		self.sprites_enemies_shoots_list.empty()
-		self.sprites_allies_shoots_list.empty()
+		self.all_sprites.empty()
+		self.sprites_enemies.empty()
+		self.sprites_enemies_shoots.empty()
+		self.sprites_allies_shoots.empty()
 
 		self.player.reinitialization(self)
-		self.backgrounds_reinitialization()
+		self.level_backgrounds_reinitialization()

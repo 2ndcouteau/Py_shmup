@@ -42,14 +42,14 @@ class Shoot(Entities):
 		if self.type == ALLIES:
 			# self.image.fill(BLUE)
 			self.direction = UP
-			g.sprites_allies_shoots_list.add(self)
+			g.sprites_allies_shoots.add(self)
 		else:
 			# self.image.fill(RED)
 			# self.direction = DOWN
 			self.target_player(g)
-			g.sprites_enemies_shoots_list.add(self)
+			g.sprites_enemies_shoots.add(self)
 
-		g.all_sprites_list.add(self)
+		g.all_sprites.add(self)
 
 	def target_player(self, g):
 		self.direction = g.player.rect.centerx - self.rect.centerx, g.player.rect.top - self.rect.centery
