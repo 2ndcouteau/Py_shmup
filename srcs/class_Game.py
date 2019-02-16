@@ -8,8 +8,8 @@ from random			import randint
 
 from class_Player		import Player
 from class_Enemy		import Enemy
-from class_Background	import Background
-from class_Text			import Text
+from class_Background	import Level_background, Level_menu_background, Main_menu_background
+from class_Text			import Level_text, Level_menu_text, Main_menu_text
 
 from constants			import (X_WINDOW,
 								Y_WINDOW,
@@ -62,22 +62,22 @@ class Game():
 
 		# Init all backgrounds:
 		self.level_backgrounds = []
-		self.level_backgrounds.append(Background(self, (0, 0), IMG_LEVEL1_BACKGROUND, GAME))
-		self.level_backgrounds.append(Background(self, (0, -Y_WINDOW), IMG_LEVEL1_BACKGROUND, GAME))
+		self.level_backgrounds.append(Level_background(self, (0, 0), IMG_LEVEL1_BACKGROUND, GAME))
+		self.level_backgrounds.append(Level_background(self, (0, -Y_WINDOW), IMG_LEVEL1_BACKGROUND, GAME))
 
 		self.main_menu_backgrounds = []
-		self.main_menu_backgrounds.append(Background(self, (0, 0), IMG_MAIN_MENU_BACKGROUND, MAIN_MENU))
+		self.main_menu_backgrounds.append(Main_menu_background(self, (0, 0), IMG_MAIN_MENU_BACKGROUND, MAIN_MENU))
 
 		self.level_menu_backgrounds = []
-		self.level_menu_backgrounds.append(Background(self, (0, 0), IMG_LEVEL_MENU_BACKGROUND_FULL, LEVEL_MENU))
-		self.level_menu_backgrounds.append(Background(self, (X_WINDOW / 4, Y_WINDOW / 4), IMG_LEVEL_MENU_BACKGROUND_TIER, LEVEL_MENU))
+		self.level_menu_backgrounds.append(Level_menu_background(self, (0, 0), IMG_LEVEL_MENU_BACKGROUND_FULL, LEVEL_MENU))
+		self.level_menu_backgrounds.append(Level_menu_background(self, (X_WINDOW / 4, Y_WINDOW / 4), IMG_LEVEL_MENU_BACKGROUND_TIER, LEVEL_MENU))
 
 
 		self.player = Player(self)
 
-		Text(self, "Hello  Game  !!", GAME)
-		Text(self, "** Main menu **", MAIN_MENU)
-		Text(self, "* Menu *", LEVEL_MENU)
+		Level_text(self, "Hello  Game  !!", (0, 0))
+		Level_menu_text(self, "** Main menu **", (self.level_menu_backgrounds[1].rect.x, 0), (True, True))
+		Main_menu_text(self, "* Menu *", (X_WINDOW / 2, Y_WINDOW /2), True)
 
 		# self.neutrals = []
 
