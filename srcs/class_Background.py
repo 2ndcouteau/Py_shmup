@@ -14,7 +14,7 @@ from constants		import (X_WINDOW,
 							MAIN_MENU,
 							LEVEL_MENU,
 							NEUTRAL,
-							BLUE)
+							BLACK)
 
 class Background(Entities):
 	def __init__(self):
@@ -47,25 +47,27 @@ class Main_menu_background(Background):
 		self.image = image_file.convert()
 
 		self.size = self.image.get_size()
+		scale_y = float(Y_WINDOW) / self.size[1]
+		self.size = (self.size[0] * scale_y, self.size[1] * scale_y)
+		self.image = pygame.transform.scale(self.image, (int(self.size[0]), int(self.size[1])))
 
 		self.rect = self.image.get_rect()
-
-		self.rect.x = pos[0]
+		self.rect.x = pos[0] - 80
 		self.rect.y = pos[1]
 
 		g.all_sprites.add(self)
 		g.sprites_main_menu_backgrounds.add(self)
 
 class Level_menu_background(Background):
-	def __init__(self, g, pos, image_file, mode):
+	def __init__(self, g, pos, image_file, mode, opacity=255):
 		Background.__init__(self)
 
 		self.image = image_file
 
 		self.size = self.image.get_size()
 
-		self.rect = self.image.fill(BLUE)
-		self.image.set_alpha(50)
+		self.rect = self.image.fill(BLACK)
+		self.image.set_alpha(opacity)
 
 		self.rect.x = pos[0]
 		self.rect.y = pos[1]

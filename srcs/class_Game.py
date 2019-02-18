@@ -69,15 +69,15 @@ class Game():
 		self.main_menu_backgrounds.append(Main_menu_background(self, (0, 0), IMG_MAIN_MENU_BACKGROUND, MAIN_MENU))
 
 		self.level_menu_backgrounds = []
-		self.level_menu_backgrounds.append(Level_menu_background(self, (0, 0), IMG_LEVEL_MENU_BACKGROUND_FULL, LEVEL_MENU))
-		self.level_menu_backgrounds.append(Level_menu_background(self, (X_WINDOW / 4, Y_WINDOW / 4), IMG_LEVEL_MENU_BACKGROUND_TIER, LEVEL_MENU))
+		self.level_menu_backgrounds.append(Level_menu_background(self, (0, 0), IMG_LEVEL_MENU_BACKGROUND_FULL, LEVEL_MENU, opacity=100))
+		self.level_menu_backgrounds.append(Level_menu_background(self, (X_WINDOW / 4, Y_WINDOW / 4), IMG_LEVEL_MENU_BACKGROUND_TIER, LEVEL_MENU, opacity=150))
 
 
 		self.player = Player(self)
 
 		Level_text(self, "Hello  Game  !!", (0, 0))
-		Level_menu_text(self, "** Main menu **", (self.level_menu_backgrounds[1].rect.x, 0), (True, True))
-		Main_menu_text(self, "* Menu *", (X_WINDOW / 2, Y_WINDOW /2), True)
+		Level_menu_text(self, "** Main menu **", (self.level_menu_backgrounds[1].rect.x, 0), cx=True)
+		Main_menu_text(self, "* Menu *", (X_WINDOW / 2, Y_WINDOW /2), cx=True)
 
 		# self.neutrals = []
 

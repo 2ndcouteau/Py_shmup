@@ -1,14 +1,42 @@
 
 TODO:
 
-!!	Need to manage nicely all differents background and text reinitialization
+	Format Render, Binary
+		Freeze Format distribution		
+		-- check pyinstaller (Osx/linux)
+		-- py2app(Osx)
+		-- bbfreeze (linux) -- Nop (Only python 2.X)
 
+	Sound
+		Add Music
+			In Menu
+			In Game
+		Add SFX
+			menu
+				move selection
+				selection validation
+				selection invalid
+			game
+				shoot player
+				shoot enemies
+				explosion enemies
+				loose game
+				(
+				win game (define some objectives before PLZ)
+				special dodge movement
+				)
+
+1)	Clean Event class
+		use dict/hash table function for manage input
 
 	Layout
 		enemies
 			color by type
 
-	2) Print Informations
+3)		Explosion
+			animation
+
+2)	Print Informations
 		score
 		weapon
 		hp
@@ -45,6 +73,12 @@ TODO:
 			Restart Game
 			Options ?
 			Quit Game
+		Event Animations
+			Zoom the current text position
+			Change text for selectable options
+				On / Off
+			Progression bar for level selection options
+				Music / Sfx
 
 	LEVEL
 		Level script management
@@ -83,6 +117,8 @@ DONE:
 			Level Menu
 			Game
 			--> Can move from one to another
+
+		Clean Background and Text Classes
 
 	LAYOUT
 		Create Class
