@@ -26,15 +26,13 @@ TODO:
 				special dodge movement
 				)
 
-1)	Clean Event class
+~~	Clean Event class
 		use dict/hash table function for manage input
 
 	Layout
 		enemies
 			color by type
 
-3)		Explosion
-			animation
 
 2)	Print Informations
 		score
@@ -51,6 +49,10 @@ TODO:
 			delta formation
 			etc...
 
+	Player
+		invulnerability for seconds after took a shoot
+
+
 	Shoot class
 		generate salve
 
@@ -66,6 +68,7 @@ TODO:
 		life
 		hp+
 		speed boost
+		slow motion time
 
 	MENU
 		Manage event
@@ -164,3 +167,7 @@ DONE:
 			Manage angle
 
 		Update sprites with new media
+
+
+	EXPLOSION
+		animation

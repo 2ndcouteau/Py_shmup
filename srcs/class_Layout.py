@@ -33,6 +33,9 @@ class Layout():
 
 		g.sprites_level_text.draw(g.window)
 
+		# print(g.sprites_explosions)
+		g.sprites_explosions.draw(g.window)
+
 		# g.sprites_neutrals.draw(g.window)
 
 			# Refresh ALL the Display

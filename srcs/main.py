@@ -14,9 +14,10 @@ from constants		import (GAME,
 							MAIN_MENU)
 
 def main_loop(g):
+	clock = pygame.time.Clock()
 	while 42:
 		# dt = time in milliseconds that passed since last tick.
-		g.dt = pygame.time.Clock().tick(60)
+		g.dt = clock.tick(60)
 		g.timer -= g.dt
 
 		if (g.mode is GAME):
@@ -25,11 +26,13 @@ def main_loop(g):
 			Event.manage(Event, g)
 			Layout.scroll_level_background(g)
 
-			g.sprites_enemies.update()
-			g.sprites_enemies_shoots.update()
 			g.sprites_allies_shoots.update()
+			g.sprites_enemies_shoots.update()
+			g.sprites_enemies.update()
 
 			g.collide_management()
+
+			g.sprites_explosions.update()
 			Layout.draw_game_sprites(Layout, g)
 
 		elif (g.mode is LEVEL_MENU):

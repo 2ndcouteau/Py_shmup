@@ -4,7 +4,6 @@
 import os
 import pygame
 
-
 # Colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -32,6 +31,12 @@ IMG_PLAYER = pygame.image.load(os.path.join(media_folder, "SF06.png"))
 IMG_LASER_PLAYER = pygame.image.load(os.path.join(media_folder, "laserBlue.png"))
 IMG_LASER_ENEMY = pygame.image.load(os.path.join(media_folder, "laserRed.png"))
 
+IMG_EXPLOSION1 = pygame.image.load(os.path.join(media_folder, "explosion01.png"))
+IMG_EXPLOSION2 = pygame.image.load(os.path.join(media_folder, "explosion02.png"))
+IMG_EXPLOSION3 = pygame.image.load(os.path.join(media_folder, "explosion03.png"))
+
+# EXPLOSIONS_LIST = {}
+
 ALLIES = 0
 ENEMIES = 1
 NEUTRAL = 2
@@ -45,11 +50,14 @@ GAME = 1 << 0
 MAIN_MENU = 1 << 1
 LEVEL_MENU = 1 << 2
 
-PLAYER_SHOOT_FREQUENCY = 50
-ENEMIES_SHOOT_FREQUENCY = 500
-ENEMIES_SPAWN_FREQUENCY = 500
+PLAYER_SHOOT_FREQUENCY = 1000 / 10
+ENEMIES_SHOOT_FREQUENCY = 1000 / 4
+ENEMIES_SPAWN_FREQUENCY = 1000 / 2
 
 NEUTRALS_SPAWN_FREQUENCY = 1000
+
+# EVENT_FREQUENCY = 1000 / 60
+EXPLOSION_FRAME_RATE = 1000 / 60
 
 
 PLAYER_HP = 30

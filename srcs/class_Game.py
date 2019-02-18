@@ -5,7 +5,7 @@ import pygame
 from pygame.locals	import *
 from random			import randint
 
-
+from class_Explosion	import Explosion
 from class_Player		import Player
 from class_Enemy		import Enemy
 from class_Background	import Level_background, Level_menu_background, Main_menu_background
@@ -22,12 +22,19 @@ from constants			import (X_WINDOW,
 								IMG_MAIN_MENU_BACKGROUND,
 								IMG_LEVEL_MENU_BACKGROUND_FULL,
 								IMG_LEVEL_MENU_BACKGROUND_TIER,
-								IMG_PLAYER)
+								IMG_PLAYER,
+								IMG_EXPLOSION1,
+								IMG_EXPLOSION2,
+								IMG_EXPLOSION3)
 
 class Game():
 	def __init__(self):
-		self.timer = 0 # 1seconde
 		self.dt = 0
+		self.timer = 0 # 1seconde
+		self.timer_gen_e = 0
+		self.timer_event = 0 # 1seconde
+
+		self.last_update = 0
 
 		pygame.init()
 		# Set input frequency
@@ -51,6 +58,8 @@ class Game():
 		self.sprites_enemies_shoots = pygame.sprite.Group()
 #		self.sprites_neutrals_list = pygame.sprite.Group()
 
+		self.sprites_explosions = pygame.sprite.Group()
+
 
 
 		self.window = pygame.display.set_mode((X_WINDOW, Y_WINDOW), HWSURFACE | DOUBLEBUF) # | RESIZABLE)
@@ -72,6 +81,12 @@ class Game():
 		self.level_menu_backgrounds.append(Level_menu_background(self, (0, 0), IMG_LEVEL_MENU_BACKGROUND_FULL, LEVEL_MENU, opacity=100))
 		self.level_menu_backgrounds.append(Level_menu_background(self, (X_WINDOW / 4, Y_WINDOW / 4), IMG_LEVEL_MENU_BACKGROUND_TIER, LEVEL_MENU, opacity=150))
 
+		self.explosion_imgs = []
+		self.explosion_imgs.append(self.load_sprites(IMG_EXPLOSION1, width=256, height=256, ratio=1/3))
+		self.explosion_imgs.append(self.load_sprites(IMG_EXPLOSION2, width=256, height=256, ratio=1/2))
+		self.explosion_imgs.append(self.load_sprites(IMG_EXPLOSION3, width=256, height=256, ratio=1/2))
+
+
 
 		self.player = Player(self)
 
@@ -88,13 +103,25 @@ class Game():
 		# 	# Reset the countdown timer to one second.
 		# 	self.timer = NEUTRALS_SPAWN_FREQUENCY + randint(0, 1000)
 
+	def load_sprites(self, img, posx=0, posy=0, width=10, height=10, ratio=(1/2)):
+		sprite_frames = []
+		for line in range(8):
+			for column in range(8):
+				print(line, column)
+				sub_img = img.subsurface(pygame.Rect((posx +(column * width)),  (posy + (line * height)), width, height)).convert_alpha()
+				sub_img = pygame.transform.scale(sub_img, (int(width * ratio), int(height * ratio)))
+				sprite_frames.append(sub_img)
+
+		return sprite_frames
+
 
 	def generate_enemies(self):
-		if self.timer <= 0:
+		self.timer_gen_e -= self.dt
+		if self.timer_gen_e <= 0:
 			for i in range(1, 3):
 				Enemy(self)
 			# Reset the countdown timer to one second.
-			self.timer = ENEMIES_SPAWN_FREQUENCY + randint(0, 1000)
+			self.timer_gen_e = ENEMIES_SPAWN_FREQUENCY + randint(0, 1000)
 
 	def collide_management(self):
 		# See if the enemies collide with player
@@ -105,14 +132,17 @@ class Game():
 			print("Collide Player with Enemies !")
 
 		collide_list = pygame.sprite.spritecollide(self.player, self.sprites_enemies_shoots, True)
-		for x in collide_list:
+		for hit in collide_list:
 			self.player.hp -= 1
 			print("Collide Enemies shoots with player !")
+			Explosion(self, hit.rect.center, 0)
 
 		collide_list = pygame.sprite.groupcollide(self.sprites_allies_shoots, self.sprites_enemies, True, True)
 		# Check the list of collisions.
-		for x in collide_list:
+		for hit in collide_list:
 			print("Collide Player Shoots with Enemies !")
+			Explosion(self, hit.rect.center, randint(1, 2))
+
 
 	def level_backgrounds_reinitialization(self):
 		self.all_sprites.add(self.level_backgrounds[0])

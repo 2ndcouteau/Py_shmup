@@ -45,7 +45,9 @@ class Player(Entities):
 		if self.timer <= 0:
 			Shoot(g, ALLIES, self.speed + 1, self.rect.centerx, self.rect.top)
 			# Reset the countdown timer to one second.
+			print (self.timer)
 			self.timer = PLAYER_SHOOT_FREQUENCY
+			print (self.timer)
 
 	def reinitialization(self, g):
 		# Init player position and spec
