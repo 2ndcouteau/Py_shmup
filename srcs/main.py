@@ -26,6 +26,7 @@ def main_loop(g):
 			Event.manage(Event, g)
 			Layout.scroll_level_background(g)
 
+			print("nb_shoot == " + str(len(g.sprites_allies_shoots)))
 			g.sprites_allies_shoots.update()
 			g.sprites_enemies_shoots.update()
 			g.sprites_enemies.update()

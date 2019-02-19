@@ -7,7 +7,7 @@ TODO:
 		-- py2app(Osx)
 		-- bbfreeze (linux) -- Nop (Only python 2.X)
 
-	Sound
+2)	Sound
 		Add Music
 			In Menu
 			In Game
@@ -17,9 +17,9 @@ TODO:
 				selection validation
 				selection invalid
 			game
-				shoot player
-				shoot enemies
-				explosion enemies
+			OK)	shoot player
+			nop)shoot enemies
+			OK)	explosion enemies
 				loose game
 				(
 				win game (define some objectives before PLZ)
@@ -34,7 +34,7 @@ TODO:
 			color by type
 
 
-2)	Print Informations
+1)	Print Informations
 		score
 		weapon
 		hp

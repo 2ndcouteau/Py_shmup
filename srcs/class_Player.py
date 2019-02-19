@@ -3,6 +3,7 @@
 
 import pygame
 
+from random			import randint
 from class_Entities	import Entities
 from class_Shoot	import Shoot
 from constants		import (X_WINDOW,
@@ -19,6 +20,9 @@ class Player(Entities):
 		self.name = "Player"
 
 		self.timer = 0
+		self.sound_shoot = g.sound_shoot
+		self.sound_shoot.set_volume(0.5)
+
 
 		# Load image from media
 		self.image = IMG_PLAYER.convert_alpha()
@@ -44,10 +48,15 @@ class Player(Entities):
 		self.timer -= g.dt
 		if self.timer <= 0:
 			Shoot(g, ALLIES, self.speed + 1, self.rect.centerx, self.rect.top)
+
+			self.sound_shoot.play()
+			# self.sound_shoot[randint(0, 5)].play()
+			# print("nb_sound == " + str(self.sound_shoot.get_num_channels()))
+			print()
 			# Reset the countdown timer to one second.
-			print (self.timer)
+			# print (self.timer)
 			self.timer = PLAYER_SHOOT_FREQUENCY
-			print (self.timer)
+			# print (self.timer)
 
 	def reinitialization(self, g):
 		# Init player position and spec

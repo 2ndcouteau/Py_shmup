@@ -18,6 +18,10 @@ class Explosion(pygame.sprite.Sprite):
 
 		self.explosion_style = explosion_style
 		self.image = g.explosion_imgs[self.explosion_style][0]
+		self.sound = g.sound_explosion
+		self.sound.set_volume(0.5)
+		self.sound.play()
+
 		# print(self.image)
 
 		self.rect = self.image.get_rect()

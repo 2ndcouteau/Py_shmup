@@ -12,6 +12,8 @@ from constants		import (X_WINDOW,
 							ENEMIES,
 							IMG_LASER_PLAYER,
 							IMG_LASER_ENEMY)
+							# SOUND_SHOOT_PLAYER,
+							# SOUND_SHOOT_ENNEMIES)
 
 class Shoot(Entities):
 	def __init__(self, g, type, speed, x, y):
@@ -25,7 +27,7 @@ class Shoot(Entities):
 			self.image = IMG_LASER_PLAYER.convert_alpha()
 		else :
 			self.image = IMG_LASER_ENEMY.convert_alpha()
-			# self.image = pygame.Surface((4, 15))
+			self.sound = None
 
 
 		# Scale player ship
@@ -49,6 +51,8 @@ class Shoot(Entities):
 			self.target_player(g)
 			g.sprites_enemies_shoots.add(self)
 
+		# if self.sound:
+		# 	self.sound.play()
 		g.all_sprites.add(self)
 
 	def target_player(self, g):
@@ -56,14 +60,12 @@ class Shoot(Entities):
 
 		angle = degrees(atan(self.direction[0] / self.direction[1]))
 
-		print (self.direction)
 		if abs(self.direction[0]) > abs(self.direction[1]):
 			if self.direction[0] != 0:
 				self.direction = self.direction[0] / abs(self.direction[0]), self.direction[1] / abs(self.direction[0])
 		else :
 			if self.direction[1] != 0:
 				self.direction = self.direction[0] / abs(self.direction[1]), self.direction[1] / abs(self.direction[1])
-		print (self.direction)
 
 		self.image = pygame.transform.rotate(self.image, angle);
 

@@ -1,8 +1,10 @@
 #!/usr/bin/env python3.7
 # _*_ coding: Utf-8 -*
 
+import os
 import pygame
 from pygame.locals	import *
+from pygame.mixer	import music
 from random			import randint
 
 from class_Player		import Player
@@ -13,7 +15,8 @@ from constants			import (GAME,
 								UP,
 								DOWN,
 								RIGHT,
-								LEFT)
+								LEFT,
+								media_folder)
 
 # func_table = {
 # 		1: (truc, (1, 2, 3)),
@@ -66,6 +69,7 @@ class Event():
 
 	def k_backspace(g):
 		g.mode = LEVEL_MENU	# change to load_menu()
+		music.pause()
 	def k_e(g):
 		if self.timer <= 0:
 			Enemy(g)
@@ -131,18 +135,26 @@ class Event():
 		if keys[K_RETURN]:
 			g.restart_game() ## Init_game() with some differente base value
 			g.mode = GAME
+			# g.main_menu_music.pause()
+			music.load(os.path.join(media_folder, 'game_music.wav'))
+			music.play(-1)
+			# g.music_level.play(-1)
 			print("Entrée")
 
 	def level_menu(g, keys):
 		if (g.player.hp > 0):
 			if keys[K_RETURN] or keys[K_SPACE]:
 				g.mode = GAME
+				music.unpause()
 		if keys[K_r]:
 			g.restart_game()
 			g.mode = GAME
+			music.rewind()
+			music.play(-1)
 		if keys[K_q]:
 			g.mode = MAIN_MENU
-
+			music.load(os.path.join(media_folder, 'main_menu_music.wav'))
+			music.play(-1)
 
 	def manage(self, g):
 		# g.timer_event -= g.dt

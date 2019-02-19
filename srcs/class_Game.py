@@ -2,8 +2,11 @@
 # _*_ coding: Utf-8 -*
 
 import pygame
+import os
 from pygame.locals	import *
+from pygame.mixer	import music
 from random			import randint
+
 
 from class_Explosion	import Explosion
 from class_Player		import Player
@@ -25,7 +28,8 @@ from constants			import (X_WINDOW,
 								IMG_PLAYER,
 								IMG_EXPLOSION1,
 								IMG_EXPLOSION2,
-								IMG_EXPLOSION3)
+								IMG_EXPLOSION3,
+								media_folder)
 
 class Game():
 	def __init__(self):
@@ -37,6 +41,9 @@ class Game():
 		self.last_update = 0
 
 		pygame.init()
+		pygame.mixer.set_num_channels(64)
+		pygame.mixer.init()
+
 		# Set input frequency
 		pygame.key.set_repeat(1, 1)
 
@@ -59,6 +66,31 @@ class Game():
 #		self.sprites_neutrals_list = pygame.sprite.Group()
 
 		self.sprites_explosions = pygame.sprite.Group()
+
+
+		self.sound_explosion = pygame.mixer.Sound(os.path.join(media_folder, 'explosion42.wav'))
+
+		self.sound_shoot = pygame.mixer.Sound(os.path.join(media_folder, 'laser51.wav'))
+
+		# self.music_channel_level = pygame.mixer.Channel(0)
+		# self.music_channel_main_menu = pygame.mixer.Channel()
+
+		music.load(os.path.join(media_folder, 'main_menu_music.wav'))
+		music.play(-1)
+
+		# self.music_level = pygame.mixer.Sound(os.path.join(media_folder, 'game_music.wav'))
+		# self.music_main_menu = pygame.mixer.music.load(os.path.join(media_folder, 'main_menu_music.wav'))
+
+		# self.music_channel_level.load(self.music_level)
+		# self.music_main_menu.play(-1)
+
+		# self.sound_shoot = []
+		# self.sound_shoot.append(pygame.mixer.Sound(os.path.join(media_folder, 'laser42.wav')))
+		# self.sound_shoot.append(pygame.mixer.Sound(os.path.join(media_folder, 'laser43.wav')))
+		# self.sound_shoot.append(pygame.mixer.Sound(os.path.join(media_folder, 'laser44.wav')))
+		# self.sound_shoot.append(pygame.mixer.Sound(os.path.join(media_folder, 'laser45.wav')))
+		# self.sound_shoot.append(pygame.mixer.Sound(os.path.join(media_folder, 'laser46.wav')))
+		# self.sound_shoot.append(pygame.mixer.Sound(os.path.join(media_folder, 'laser47.wav')))
 
 
 
