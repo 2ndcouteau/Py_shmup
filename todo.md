@@ -9,17 +9,17 @@ TODO:
 
 2)	Sound
 		Add Music
-			In Menu
-			In Game
+OK			In Menu
+OK			In Game
 		Add SFX
 			menu
 				move selection
 				selection validation
 				selection invalid
 			game
-			OK)	shoot player
-			nop)shoot enemies
-			OK)	explosion enemies
+OK				shoot player
+OK				shoot enemies
+OK				explosion enemies
 				loose game
 				(
 				win game (define some objectives before PLZ)
@@ -32,6 +32,14 @@ TODO:
 	Layout
 		enemies
 			color by type
+
+	Collide
+		Manage hitbox
+
+3)	Explosion
+		Player
+			no explosion animation but visual bell
+			special sound
 
 
 1)	Print Informations
@@ -50,7 +58,7 @@ TODO:
 			etc...
 
 	Player
-		invulnerability for seconds after took a shoot
+2)		invulnerability for seconds after took a shoot
 
 
 	Shoot class

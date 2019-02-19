@@ -153,7 +153,7 @@ class Game():
 			for i in range(1, 3):
 				Enemy(self)
 			# Reset the countdown timer to one second.
-			self.timer_gen_e = ENEMIES_SPAWN_FREQUENCY + randint(0, 1000)
+			self.timer_gen_e = ENEMIES_SPAWN_FREQUENCY + randint(0, 3000)
 
 	def collide_management(self):
 		# See if the enemies collide with player
