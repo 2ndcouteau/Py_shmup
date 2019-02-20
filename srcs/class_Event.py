@@ -16,6 +16,7 @@ from constants			import (GAME,
 								DOWN,
 								RIGHT,
 								LEFT,
+								MENU_INPUT_DELAY,
 								media_folder)
 
 # func_table = {
@@ -71,10 +72,10 @@ class Event():
 		g.mode = LEVEL_MENU	# change to load_menu()
 		music.pause()
 	def k_e(g):
-		if self.timer <= 0:
+		if g.timer <= 0:
 			Enemy(g)
 			# Reset the countdown timer to one second.
-			self.timer = 1000
+			g.timer = 50
 
 		#
 		# if keys[K_BACKSPACE]:
@@ -140,6 +141,17 @@ class Event():
 			music.play(-1)
 			# g.music_level.play(-1)
 			print("Entrée")
+
+		g.menu_timer -= g.dt
+		if g.menu_timer <= 0:
+			# print ("Move OK")
+			if keys[K_UP]:
+				g.text_main_menu.move_up()
+				g.menu_timer = MENU_INPUT_DELAY
+			if keys[K_DOWN]:
+				g.text_main_menu.move_down()
+				g.menu_timer = MENU_INPUT_DELAY
+
 
 	def level_menu(g, keys):
 		if (g.player.hp > 0):

@@ -35,8 +35,8 @@ class Player(Entities):
 		self.hit_box_player = pygame.transform.scale(self.image, (int(self.size[0]) - 10, int(self.size[1]) - 10))
 
 		# Init player ship position
-		self.rect = self.image.get_rect()
-		self.rect = self.rect.move((X_WINDOW / 2) - self.size[0] / 2, Y_WINDOW - 150)
+		self.rect = self.image.get_rect(center=[(X_WINDOW / 2) - self.size[0] / 2, Y_WINDOW - 150])
+		# self.rect = self.rect.move((X_WINDOW / 2) - self.size[0] / 2, Y_WINDOW - 150)
 
 		g.all_sprites.add(self)
 		g.sprites_players.add(self)

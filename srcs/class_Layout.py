@@ -6,7 +6,8 @@ from pygame.locals	import *
 
 from class_Background	import Background
 from constants			import (Y_WINDOW,
-								X_WINDOW)
+								X_WINDOW,
+								FONT)
 
 class Layout():
 	def __init__(self):
@@ -31,7 +32,7 @@ class Layout():
 		g.sprites_enemies_shoots.draw(g.window)
 		g.sprites_allies_shoots.draw(g.window)
 
-		g.sprites_level_text.draw(g.window)
+		# g.sprites_level_text.draw(g.window)
 
 		# print(g.sprites_explosions)
 		g.sprites_explosions.draw(g.window)
@@ -53,13 +54,16 @@ class Layout():
 		# g.sprites_level_text.draw(g.window)
 
 		g.sprites_level_menu_backgrounds.draw(g.window)
-		g.sprites_level_menu_text.draw(g.window)
+		# g.sprites_level_menu_text.draw(g.window)
 
 		pygame.display.flip()
 
 	def draw_main_menu_sprites(self, g):
 
+
 		g.sprites_main_menu_backgrounds.draw(g.window)
-		g.sprites_main_menu_text.draw(g.window)
+		# g.sprites_main_menu_text.draw(g.window)
+
+		g.text_main_menu.draw_text(g.window)
 
 		pygame.display.flip()

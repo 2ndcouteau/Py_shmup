@@ -18,45 +18,152 @@ from constants			import (Y_WINDOW,
 								YELLOW)
 
 
-class Text(pygame.sprite.Sprite):
-	def __init__(self, g, msg, pos, cx, cy):
+class Text_line(pygame.sprite.Sprite):
+	def __init__(self, font_size, text, pos, cx=False, cy=False, selected=False):
 		pygame.sprite.Sprite.__init__(self)
 
-		font = pygame.font.Font(FONT, 16)
-		self.image = font.render(msg, True, (255, 255, 255))
+
+		self.font_size = font_size
+		self.text = text
+		self.cx = cx
+		self.cy = cy
+		self.pos = list(pos)
+		self.selected = selected
+
+		self.font_low = pygame.font.Font(FONT, font_size)
+		self.font_big = pygame.font.Font(FONT, font_size * 2)
+		if selected :
+			self.image = self.font_big.render(self.text, True, WHITE)
+		else:
+			self.image = self.font_low.render(self.text, True, WHITE)
 		self.rect = self.image.get_rect()
-		position_text(self, list(pos), cx, cy)
+		self.size = self.image.get_size()
+		# self.old_size = self.new_size * 2
+		self.position_text(self)
 
-		g.all_sprites.add(self)
+	def position_text(self, text):
+		#cx= center_x, cy= center_y
+		text.size = text.image.get_size()
+		if text.cx :
+			text.pos[0] -= text.size[0] / 2
+		if text.cy :
+			text.pos[1] -= text.size[1] / 2
 
-def position_text(self, pos, cx, cy):
-	#cx= center_x, cy= center_y
-	self.size = self.image.get_size()
-	if cx :
-		pos[0] -= self.size[0] / 2
-	if cy :
-		pos[1] -= self.size[1] / 2
+		text.rect.x += text.pos[0]
+		text.rect.y += text.pos[1]
 
-	self.rect.x += pos[0]
-	self.rect.y += pos[1]
+#
+# class Level_text(Text):
+# 	def __init__(self, g, msg, pos, cx=False, cy=False):
+# 		Text.__init__(self, g, msg, pos, cx, cy)
+#
+# 		g.sprites_level_text.add(self)
+#
+#
+# class Level_menu_text(Text):
+# 	def __init__(self, g, msg, pos, cx=False, cy=False):
+# 		pos = (g.level_menu_backgrounds[1].rect.x + pos[0], g.level_menu_backgrounds[1].rect.y + pos[1])
+# 		Text.__init__(self, g, msg, pos, cx, cy)
+#
+# 		g.sprites_level_menu_text.add(self)
 
-class Level_text(pygame.sprite.Sprite):
-	def __init__(self, g, msg, pos, cx=False, cy=False):
-		Text.__init__(self, g, msg, pos, cx, cy)
+#
+# class Main_menu_text_elem(Text):
+# 	def __init__(self, g, msg, pos, cx=False, cy=False):
+# 		Text.__init__(self, g, msg, pos, cx , cy)
 
-		g.sprites_level_text.add(self)
+		# g.sprites_main_menu_text.add(self)
+class Text():
+	def __init__(self):
+		self.all_text = []
+
+	def draw_text(self, window):
+		for text in self.all_text:
+			window.blit(text.image, text.rect)
+
+	#
+	# font = pygame.font.Font(font_name, size)
+	# text_surface = font.render(text, True, WHITE)
+	# text_rect = text_surface.get_rect()
+	# text_rect.midtop = (x, y)
+	# surf.blit(text_surface, text_rect)
 
 
-class Level_menu_text(pygame.sprite.Sprite):
-	def __init__(self, g, msg, pos, cx=False, cy=False):
-		pos = (g.level_menu_backgrounds[1].rect.x + pos[0], g.level_menu_backgrounds[1].rect.y + pos[1])
-		Text.__init__(self, g, msg, pos, cx, cy)
+class Text_main_menu(Text):
+	def __init__(self):
+		Text.__init__(self)
 
-		g.sprites_level_menu_text.add(self)
+		self.y_offset_pos = 75
+		self.prev_pos = 1
+		self.new_pos = 1
+		self.title_font_size = 32
+		self.font_size = 16
+
+		self.all_text.append(Text_line(self.title_font_size, "* Menu *", (X_WINDOW / 2, Y_WINDOW / 4), cx=True))
+		self.all_text.append(Text_line(self.font_size, "* Play *", (X_WINDOW / 2, (Y_WINDOW / 2) + (self.y_offset_pos * 0)), cx=True, selected=True))
+		self.all_text.append(Text_line(self.font_size, "* Options *", (X_WINDOW / 2, (Y_WINDOW / 2) + (self.y_offset_pos * 1)), cx=True, selected=False))
+		self.all_text.append(Text_line(self.font_size, "* Quit *", (X_WINDOW / 2, (Y_WINDOW / 2) + (self.y_offset_pos * 2)), cx=True, selected=False))
+
+		self.len_all_text = len(self.all_text)
+
+	def move_up(self):
+		if (self.new_pos > 1):
+			self.new_pos -= 1
+		else:
+			self.new_pos = self.len_all_text - 1
+
+	def move_down(self):
+		if (self.new_pos < self.len_all_text - 1):
+			self.new_pos += 1
+		else:
+			self.new_pos = 1
+
+	def update_position_text(self, text, size_up):
+		#cx= center_x, cy= center_y
+		print (text.text, str(size_up), str(text.pos))
+		print(text.size)
+		if size_up :
+			text.pos[0] -= text.size[0] / 2
+			text.pos[1] -= text.size[1] / 2
+		else :
+			text.pos[0] += text.size[0] / 2
+			text.pos[1] += text.size[1] / 2
+
+			text.rect.x = text.pos[0]
+			text.rect.y = text.pos[1]
+
+		# tmp = text.new_size
+		# text.new_size = text.old_size
+		# text.old_size = tmp
+
+	def update(self):
+		# self.draw_text()
+
+		if self.prev_pos != self.new_pos:
+			self.all_text[self.prev_pos].image = self.all_text[self.prev_pos].font_low.render(self.all_text[self.prev_pos].text, True, WHITE)
+			self.update_position_text(self.all_text[self.prev_pos], size_up=False)
+			# self.position_text(list(self.all_text[self.prev_pos].pos), self.all_text[self.prev_pos].cx, self.all_text[self.prev_pos].cy)
+
+			self.all_text[self.new_pos].image = self.all_text[self.new_pos].font_big.render(self.all_text[self.new_pos].text, True, WHITE)
+			self.update_position_text(self.all_text[self.new_pos], size_up=True)
+			# self.position_text(list(self.all_text[self.new_pos].pos), self.all_text[self.new_pos].cx, self.all_text[self.new_pos].cy)
+
+			self.prev_pos = self.new_pos
 
 
-class Main_menu_text(pygame.sprite.Sprite):
-	def __init__(self, g, msg, pos, cx=False, cy=False):
-		Text.__init__(self, g, msg, pos, cx , cy)
+#
+#
+# Class Text:
+#
+# Class Text_Menu(Text):
+#
+# Class Text_menu_elem()
+#
 
-		g.sprites_main_menu_text.add(self)
+
+# text1
+# TEXT1
+# text2
+# TEXT2
+# text3
+# TEXT3

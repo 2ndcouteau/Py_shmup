@@ -12,7 +12,8 @@ from class_Explosion	import Explosion
 from class_Player		import Player
 from class_Enemy		import Enemy
 from class_Background	import Level_background, Level_menu_background, Main_menu_background
-from class_Text			import Level_text, Level_menu_text, Main_menu_text
+# from class_Text			import Level_text, Level_menu_text, Main_menu_text
+from class_Text			import Text_main_menu
 
 from constants			import (X_WINDOW,
 								Y_WINDOW,
@@ -37,6 +38,7 @@ class Game():
 		self.timer = 0 # 1seconde
 		self.timer_gen_e = 0
 		self.timer_event = 0 # 1seconde
+		self.menu_timer = 0
 
 		self.last_update = 0
 
@@ -76,6 +78,7 @@ class Game():
 		# self.music_channel_main_menu = pygame.mixer.Channel()
 
 		music.load(os.path.join(media_folder, 'main_menu_music.wav'))
+		music.set_volume(0.05)
 		music.play(-1)
 
 		# self.music_level = pygame.mixer.Sound(os.path.join(media_folder, 'game_music.wav'))
@@ -122,9 +125,10 @@ class Game():
 
 		self.player = Player(self)
 
-		Level_text(self, "Hello  Game  !!", (0, 0))
-		Level_menu_text(self, "** Main menu **", (self.level_menu_backgrounds[1].rect.x, 0), cx=True)
-		Main_menu_text(self, "* Menu *", (X_WINDOW / 2, Y_WINDOW /2), cx=True)
+		# Level_text(self, "Hello  Game  !!", (0, 0))
+		# Level_menu_text(self, "** Main menu **", (self.level_menu_backgrounds[1].rect.x, 0), cx=True)
+		self.text_main_menu = Text_main_menu()
+		# Main_menu_text(self, "* Menu *", (X_WINDOW / 2, Y_WINDOW /2), cx=True)
 
 		# self.neutrals = []
 
@@ -139,7 +143,7 @@ class Game():
 		sprite_frames = []
 		for line in range(8):
 			for column in range(8):
-				print(line, column)
+				# print(line, column)
 				sub_img = img.subsurface(pygame.Rect((posx +(column * width)),  (posy + (line * height)), width, height)).convert_alpha()
 				sub_img = pygame.transform.scale(sub_img, (int(width * ratio), int(height * ratio)))
 				sprite_frames.append(sub_img)

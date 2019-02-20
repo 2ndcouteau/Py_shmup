@@ -79,6 +79,10 @@ OK				explosion enemies
 		slow motion time
 
 	MENU
+		Main menu
+			play
+			options
+			quit
 		Manage event
 			Start Game
 			Restart Game

@@ -15,6 +15,7 @@ from constants		import (GAME,
 
 def main_loop(g):
 	clock = pygame.time.Clock()
+
 	while 42:
 		# dt = time in milliseconds that passed since last tick.
 		g.dt = clock.tick(60)
@@ -42,8 +43,11 @@ def main_loop(g):
 			Event.manage(Event, g)
 
 		else :
-			Layout.draw_main_menu_sprites(Layout, g)
 			Event.manage(Event, g)
+			g.text_main_menu.update()
+
+			Layout.draw_main_menu_sprites(Layout, g)
+
 
 def main():
 
