@@ -56,6 +56,7 @@ class Layout():
 		g.sprites_level_menu_backgrounds.draw(g.window)
 		# g.sprites_level_menu_text.draw(g.window)
 
+		g.text_level_menu.draw_text(g.window)
 		pygame.display.flip()
 
 	def draw_main_menu_sprites(self, g):

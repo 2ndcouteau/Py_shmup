@@ -79,10 +79,12 @@ OK				explosion enemies
 		slow motion time
 
 	MENU
-		Main menu
-			play
-			options
-			quit
+0)		Clean and reduce Text method for menu in one class
+OK)		Main menu
+			Resume
+			Restart
+			Options
+			Main menu
 		Manage event
 			Start Game
 			Restart Game

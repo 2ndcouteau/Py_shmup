@@ -39,8 +39,9 @@ def main_loop(g):
 
 		elif (g.mode is LEVEL_MENU):
 
-			Layout.draw_level_menu_sprites(Layout, g)
 			Event.manage(Event, g)
+			g.text_level_menu.update()
+			Layout.draw_level_menu_sprites(Layout, g)
 
 		else :
 			Event.manage(Event, g)

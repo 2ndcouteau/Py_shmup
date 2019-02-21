@@ -168,6 +168,17 @@ class Event():
 			music.load(os.path.join(media_folder, 'main_menu_music.wav'))
 			music.play(-1)
 
+		g.menu_timer -= g.dt
+		if g.menu_timer <= 0:
+			# print ("Move OK")
+			if keys[K_UP]:
+				g.text_level_menu.move_up()
+				g.menu_timer = MENU_INPUT_DELAY
+			if keys[K_DOWN]:
+				g.text_level_menu.move_down()
+				g.menu_timer = MENU_INPUT_DELAY
+
+
 	def manage(self, g):
 		# g.timer_event -= g.dt
 		# if g.timer_event <= 0:

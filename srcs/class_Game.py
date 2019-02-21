@@ -13,7 +13,7 @@ from class_Player		import Player
 from class_Enemy		import Enemy
 from class_Background	import Level_background, Level_menu_background, Main_menu_background
 # from class_Text			import Level_text, Level_menu_text, Main_menu_text
-from class_Text			import Text_main_menu
+from class_Text			import Text_main_menu, Text_level_menu
 
 from constants			import (X_WINDOW,
 								Y_WINDOW,
@@ -128,6 +128,7 @@ class Game():
 		# Level_text(self, "Hello  Game  !!", (0, 0))
 		# Level_menu_text(self, "** Main menu **", (self.level_menu_backgrounds[1].rect.x, 0), cx=True)
 		self.text_main_menu = Text_main_menu()
+		self.text_level_menu = Text_level_menu()
 		# Main_menu_text(self, "* Menu *", (X_WINDOW / 2, Y_WINDOW /2), cx=True)
 
 		# self.neutrals = []
