@@ -10,13 +10,14 @@ from constants		import (X_WINDOW,
 							Y_WINDOW,
 							IMG_PLAYER,
 							PLAYER_HP,
+							PLAYER_LIFES,
 							ALLIES,
 							PLAYER_SHOOT_FREQUENCY)
 
 class Player(Entities):
 
 	def __init__(self, g):
-		Entities.__init__(self, _hp = PLAYER_HP, _life = 3, _speed = 15, _type = ALLIES)
+		Entities.__init__(self, _hp = PLAYER_HP, _life = PLAYER_LIFES, _speed = 15, _type = ALLIES)
 		self.name = "Player"
 
 		self.timer = 0

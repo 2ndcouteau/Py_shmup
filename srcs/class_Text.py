@@ -4,18 +4,12 @@
 import pygame
 from pygame.locals	import *
 
-from constants			import (Y_WINDOW,
-								X_WINDOW,
+from constants			import (Y_WINDOW, X_WINDOW,
 								FONT,
-								GAME,
-								MAIN_MENU,
-								LEVEL_MENU,
-								WHITE,
-								BLACK,
-								RED,
-								GREEN,
-								BLUE,
-								YELLOW)
+								GAME, MAIN_MENU, LEVEL_MENU,
+								WHITE, BLACK, RED, GREEN, BLUE, YELLOW,
+								POS_HP, POS_LIFES, POS_SCORE, POS_TIME
+								)
 
 
 class Text_line(pygame.sprite.Sprite):
@@ -57,8 +51,6 @@ class Text_line(pygame.sprite.Sprite):
 		text.pos_low = text.pos
 		text.pos_big = text.pos
 
-		print (text.rect_low)
-		print (text.rect_big)
 		if text.cx :
 			text.rect_low.centerx = X_WINDOW / 2
 			text.rect_big.centerx = X_WINDOW / 2
@@ -79,27 +71,6 @@ class Text_line(pygame.sprite.Sprite):
 			text.rect_low.y += text.pos_low[1]
 			text.rect_big.y += text.pos_big[1]
 
-#
-# class Level_text(Text):
-# 	def __init__(self, g, msg, pos, cx=False, cy=False):
-# 		Text.__init__(self, g, msg, pos, cx, cy)
-#
-# 		g.sprites_level_text.add(self)
-#
-#
-# class Level_menu_text(Text):
-# 	def __init__(self, g, msg, pos, cx=False, cy=False):
-# 		pos = (g.level_menu_backgrounds[1].rect.x + pos[0], g.level_menu_backgrounds[1].rect.y + pos[1])
-# 		Text.__init__(self, g, msg, pos, cx, cy)
-#
-# 		g.sprites_level_menu_text.add(self)
-
-#
-# class Main_menu_text_elem(Text):
-# 	def __init__(self, g, msg, pos, cx=False, cy=False):
-# 		Text.__init__(self, g, msg, pos, cx , cy)
-
-		# g.sprites_main_menu_text.add(self)
 class Text():
 	def __init__(self):
 		self.all_text = []
@@ -108,21 +79,74 @@ class Text():
 		for text in self.all_text:
 			window.blit(text.image, text.rect)
 
-	#
-	# font = pygame.font.Font(font_name, size)
-	# text_surface = font.render(text, True, WHITE)
-	# text_rect = text_surface.get_rect()
-	# text_rect.midtop = (x, y)
-	# surf.blit(text_surface, text_rect)
-
-
-class Text_level_menu(Text):
+class Text_menu():
 	def __init__(self):
-		Text.__init__(self)
-
-		self.y_offset_pos = 75
+		self.y_offset_pos = 50
 		self.prev_pos = 1
 		self.new_pos = 1
+
+	def move_up(self):
+		if (self.new_pos > 1):
+			self.new_pos -= 1
+		else:
+			self.new_pos = self.len_all_text - 1
+
+	def move_down(self):
+		if (self.new_pos < self.len_all_text - 1):
+			self.new_pos += 1
+		else:
+			self.new_pos = 1
+
+	def update(self):
+		# self.draw_text()
+
+		if self.prev_pos != self.new_pos:
+			self.all_text[self.prev_pos].image = self.all_text[self.prev_pos].image_low
+			self.all_text[self.prev_pos].rect = self.all_text[self.prev_pos].rect_low
+
+			self.all_text[self.new_pos].image = self.all_text[self.new_pos].image_big
+			self.all_text[self.new_pos].rect = self.all_text[self.new_pos].rect_big
+
+			self.prev_pos = self.new_pos
+
+class Text_game():
+	def __init__(self):
+		self.x_right_time_offset = 200
+		self.x_right_life_offset = 100
+		self.x_left_offset = 5
+		self.y_bottom_offset = 25
+
+	def update(self):
+		self.all_text[POS_HP] = Text_line(self.font_size, ' '.join(["Hp: ", str(self.g.player.hp)]), (self.x_left_offset, Y_WINDOW - self.y_bottom_offset), cx=False, cy=False)
+		self.all_text[POS_LIFES] = Text_line(self.font_size, ' '.join(["Lifes: ", str(self.g.player.life)]), ((X_WINDOW - self.x_right_life_offset), Y_WINDOW - self.y_bottom_offset), cx=False, cy=False)
+		self.all_text[POS_SCORE] = Text_line(self.font_size, ' '.join(["Score: ", str(self.g.player.score)]), (self.x_left_offset, 0), cx=False, cy=False)
+		self.all_text[POS_TIME] = Text_line(self.font_size, ' '.join(["Time: ", str(self.g.player.time)]), (X_WINDOW - self.x_right_time_offset, 0), cx=False, cy=False)
+
+
+class Text_game_level(Text, Text_game):
+	def __init__(self, g):
+		Text.__init__(self)
+		Text_game.__init__(self)
+
+		self.title_font_size = 24
+		self.font_size = 18
+		self.g = g
+
+
+		self.all_text.insert(POS_HP, Text_line(self.font_size, ' '.join(["Hp:", str(g.player.hp)]), (self.x_left_offset, Y_WINDOW - self.y_bottom_offset), cx=False, cy=False))
+		self.all_text.insert(POS_LIFES, Text_line(self.font_size, ' '.join(["Lifes:", str(g.player.life)]), ((X_WINDOW - 100), Y_WINDOW - self.y_bottom_offset), cx=False, cy=False))
+		self.all_text.insert(POS_SCORE, Text_line(self.font_size, ' '.join(["Score:", str(g.player.score)]), (self.x_left_offset, 0), cx=False, cy=False))
+		self.all_text.insert(POS_TIME, Text_line(self.font_size, ' '.join(["Time:", str(g.player.time)]), (X_WINDOW - 100, 0), cx=False, cy=False))
+
+		# self.all_text.append(Text_line(self.title_font_size, "- Menu -", ((X_WINDOW / 2), Y_WINDOW / 4), cx=True, cy=False))
+		self.len_all_text = len(self.all_text)
+
+
+class Text_level_menu(Text, Text_menu):
+	def __init__(self):
+		Text.__init__(self)
+		Text_menu.__init__(self)
+
 		self.title_font_size = 24
 		self.font_size = 12
 
@@ -134,128 +158,19 @@ class Text_level_menu(Text):
 
 		self.len_all_text = len(self.all_text)
 
-	def move_up(self):
-		if (self.new_pos > 1):
-			self.new_pos -= 1
-		else:
-			self.new_pos = self.len_all_text - 1
 
-	def move_down(self):
-		if (self.new_pos < self.len_all_text - 1):
-			self.new_pos += 1
-		else:
-			self.new_pos = 1
-
-	# def update_position_text(self, text):
-	#
-	# 	text.size = text.image.get_size()
-	# 	text.rect.centerx = (X_WINDOW / 2)
-	# 	print ("rect X center == ", str(text.rect.centerx))
-		# if size_up :
-		# 	text.pos[0] -= text.size[0] / 2
-		# 	text.pos[1] -= text.size[1] / 2
-		# else :
-		# 	text.pos[0] += text.size[0] / 2
-		# 	text.pos[1] += text.size[1] / 2
-		#
-		# 	text.rect.x = text.pos[0]
-		# 	text.rect.y = text.pos[1]
-
-		# tmp = text.new_size
-		# text.new_size = text.old_size
-		# text.old_size = tmp
-
-	def update(self):
-		# self.draw_text()
-
-		if self.prev_pos != self.new_pos:
-			self.all_text[self.prev_pos].image = self.all_text[self.prev_pos].image_low
-			self.all_text[self.prev_pos].rect = self.all_text[self.prev_pos].rect_low
-
-			self.all_text[self.new_pos].image = self.all_text[self.new_pos].image_big
-			self.all_text[self.new_pos].rect = self.all_text[self.new_pos].rect_big
-
-			self.prev_pos = self.new_pos
-
-			# self.all_text[self.prev_pos].image = self.all_text[self.prev_pos].font_low.render(self.all_text[self.prev_pos].text, True, WHITE)
-			# self.update_position_text(self.all_text[self.prev_pos])#, size_up=False)
-			# self.position_text(list(self.all_text[self.prev_pos].pos), self.all_text[self.prev_pos].cx, self.all_text[self.prev_pos].cy)
-
-			# self.all_text[self.new_pos].image = self.all_text[self.new_pos].font_big.render(self.all_text[self.new_pos].text, True, WHITE)
-			# self.update_position_text(self.all_text[self.new_pos])#, size_up=True)
-			# self.position_text(list(self.all_text[self.new_pos].pos), self.all_text[self.new_pos].cx, self.all_text[self.new_pos].cy)
-
-
-
-
-class Text_main_menu(Text):
+class Text_main_menu(Text, Text_menu):
 	def __init__(self):
 		Text.__init__(self)
+		Text_menu.__init__(self)
 
-		self.y_offset_pos = 75
-		self.prev_pos = 1
-		self.new_pos = 1
 		self.title_font_size = 32
 		self.font_size = 16
 
-		self.all_text.append(Text_line(self.title_font_size, "* Menu *", ((X_WINDOW / 2), Y_WINDOW / 4), cx=True))
+		self.all_text.append(Text_line(self.title_font_size, "Hard SHMUP 42", ((X_WINDOW / 2), Y_WINDOW / 4), cx=True))
 		self.all_text.append(Text_line(self.font_size, "* Play *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 0)), cx=True, selected=True))
 		self.all_text.append(Text_line(self.font_size, "* Options *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 1)), cx=True, selected=False))
 		self.all_text.append(Text_line(self.font_size, "* Quit *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 2)), cx=True, selected=False))
 
+
 		self.len_all_text = len(self.all_text)
-
-	def move_up(self):
-		if (self.new_pos > 1):
-			self.new_pos -= 1
-		else:
-			self.new_pos = self.len_all_text - 1
-
-	def move_down(self):
-		if (self.new_pos < self.len_all_text - 1):
-			self.new_pos += 1
-		else:
-			self.new_pos = 1
-
-	def update_position_text(self, text):#, size_up):
-		#cx= center_x, cy= center_y
-		print (text.text, str(text.pos))
-		print(text.size)
-
-		print ("WINDOW X Center == ", str(X_WINDOW / 2))
-		text.size = text.image.get_size()
-		text.rect.centerx = (X_WINDOW / 2)# - (text.size[0] / 2)
-		print ("rect X center == ", str(text.rect.centerx))
-		# if size_up :
-		# 	text.pos[0] -= text.size[0] / 2
-		# 	text.pos[1] -= text.size[1] / 2
-		# else :
-		# 	text.pos[0] += text.size[0] / 2
-		# 	text.pos[1] += text.size[1] / 2
-		#
-		# 	text.rect.x = text.pos[0]
-		# 	text.rect.y = text.pos[1]
-
-		# tmp = text.new_size
-		# text.new_size = text.old_size
-		# text.old_size = tmp
-
-	def update(self):
-		# self.draw_text()
-
-		if self.prev_pos != self.new_pos:
-			self.all_text[self.prev_pos].image = self.all_text[self.prev_pos].image_low
-			self.all_text[self.prev_pos].rect = self.all_text[self.prev_pos].rect_low
-
-			self.all_text[self.new_pos].image = self.all_text[self.new_pos].image_big
-			self.all_text[self.new_pos].rect = self.all_text[self.new_pos].rect_big
-
-			# self.all_text[self.prev_pos].image = self.all_text[self.prev_pos].font_low.render(self.all_text[self.prev_pos].text, True, WHITE)
-			# self.update_position_text(self.all_text[self.prev_pos])#, size_up=False)
-			# self.position_text(list(self.all_text[self.prev_pos].pos), self.all_text[self.prev_pos].cx, self.all_text[self.prev_pos].cy)
-
-			# self.all_text[self.new_pos].image = self.all_text[self.new_pos].font_big.render(self.all_text[self.new_pos].text, True, WHITE)
-			# self.update_position_text(self.all_text[self.new_pos])#, size_up=True)
-			# self.position_text(list(self.all_text[self.new_pos].pos), self.all_text[self.new_pos].cx, self.all_text[self.new_pos].cy)
-
-			self.prev_pos = self.new_pos

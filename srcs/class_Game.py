@@ -13,7 +13,7 @@ from class_Player		import Player
 from class_Enemy		import Enemy
 from class_Background	import Level_background, Level_menu_background, Main_menu_background
 # from class_Text			import Level_text, Level_menu_text, Main_menu_text
-from class_Text			import Text_main_menu, Text_level_menu
+from class_Text			import Text_main_menu, Text_level_menu, Text_game_level
 
 from constants			import (X_WINDOW,
 								Y_WINDOW,
@@ -71,14 +71,13 @@ class Game():
 
 
 		self.sound_explosion = pygame.mixer.Sound(os.path.join(media_folder, 'explosion42.wav'))
-
 		self.sound_shoot = pygame.mixer.Sound(os.path.join(media_folder, 'laser51.wav'))
 
 		# self.music_channel_level = pygame.mixer.Channel(0)
 		# self.music_channel_main_menu = pygame.mixer.Channel()
 
 		music.load(os.path.join(media_folder, 'main_menu_music.wav'))
-		music.set_volume(0.05)
+		music.set_volume(0.5)
 		music.play(-1)
 
 		# self.music_level = pygame.mixer.Sound(os.path.join(media_folder, 'game_music.wav'))
@@ -129,6 +128,7 @@ class Game():
 		# Level_menu_text(self, "** Main menu **", (self.level_menu_backgrounds[1].rect.x, 0), cx=True)
 		self.text_main_menu = Text_main_menu()
 		self.text_level_menu = Text_level_menu()
+		self.text_game_level = Text_game_level(self)
 		# Main_menu_text(self, "* Menu *", (X_WINDOW / 2, Y_WINDOW /2), cx=True)
 
 		# self.neutrals = []
@@ -178,6 +178,7 @@ class Game():
 		# Check the list of collisions.
 		for hit in collide_list:
 			print("Collide Player Shoots with Enemies !")
+			self.player.score += 17
 			Explosion(self, hit.rect.center, randint(1, 2))
 
 

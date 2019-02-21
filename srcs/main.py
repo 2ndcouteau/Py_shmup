@@ -35,6 +35,7 @@ def main_loop(g):
 			g.collide_management()
 
 			g.sprites_explosions.update()
+			g.text_game_level.update()
 			Layout.draw_game_sprites(Layout, g)
 
 		elif (g.mode is LEVEL_MENU):

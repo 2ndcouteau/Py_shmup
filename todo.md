@@ -7,7 +7,7 @@ TODO:
 		-- py2app(Osx)
 		-- bbfreeze (linux) -- Nop (Only python 2.X)
 
-2)	Sound
+~)	Sound
 		Add Music
 OK			In Menu
 OK			In Game
@@ -36,18 +36,15 @@ OK				explosion enemies
 	Collide
 		Manage hitbox
 
-3)	Explosion
+1)	Explosion
 		Player
 			no explosion animation but visual bell
 			special sound
 
 
-1)	Print Informations
-		score
+3)	Print Informations
 		weapon
-		hp
-		lifes
-		time
+	make back-end for all informations
 
 	Enemies
 		generate spwan salve formation
@@ -56,6 +53,10 @@ OK				explosion enemies
 			line
 			delta formation
 			etc...
+
+	EVENT
+4)		Manage die
+			manage life, hp, score and time
 
 	Player
 2)		invulnerability for seconds after took a shoot
@@ -78,20 +79,16 @@ OK				explosion enemies
 		speed boost
 		slow motion time
 
-	MENU
-0)		Clean and reduce Text method for menu in one class
-OK)		Main menu
-			Resume
-			Restart
-			Options
-			Main menu
-		Manage event
-			Start Game
-			Restart Game
-			Options ?
-			Quit Game
+4)	MENU
+
+		Manage event with layout selection
+			in level menu
+			in main menu
+				Start Game
+				Restart Game
+				Options ?
+				Quit Game
 		Event Animations
-			Zoom the current text position
 			Change text for selectable options
 				On / Off
 			Progression bar for level selection options
@@ -100,6 +97,7 @@ OK)		Main menu
 	LEVEL
 		Level script management
 
+		Can win more "combo" point in function of the Y position of the player
 
 DONE:
 
@@ -142,9 +140,29 @@ DONE:
 		Create method draw_sprites
 		Create method scroll_background
 
+		Print informations
+			score
+			hp
+			life
+			time
+
+
 
 	TEXT
 		Create Class
+		Clean and reduce Text method for menu in one class
+
+	MENU
+		Main menu
+			Start
+			Options
+			Quit
+		Level menu
+			Resume
+			Restart
+			Options
+			Main menu
+		Zoom the current text position
 
 
 	PLAYER

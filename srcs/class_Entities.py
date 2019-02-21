@@ -10,3 +10,6 @@ class Entities(pygame.sprite.Sprite):
 		self.life = _life
 		self.speed = _speed
 		self.type = _type
+
+		self.score = 0
+		self.time = 0
