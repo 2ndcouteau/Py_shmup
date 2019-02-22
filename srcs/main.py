@@ -6,6 +6,8 @@ import os
 import pygame
 # from pygame.locals	import *
 
+from datetime import datetime
+import time
 from class_Game		import Game
 from class_Event	import Event
 from class_Layout	import Layout
@@ -15,7 +17,6 @@ from constants		import (GAME,
 
 def main_loop(g):
 	clock = pygame.time.Clock()
-
 	while 42:
 		# dt = time in milliseconds that passed since last tick.
 		g.dt = clock.tick(60)
@@ -31,6 +32,7 @@ def main_loop(g):
 			g.sprites_allies_shoots.update()
 			g.sprites_enemies_shoots.update()
 			g.sprites_enemies.update()
+			g.player.update()
 
 			g.collide_management()
 

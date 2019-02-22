@@ -2,6 +2,7 @@
 # _*_ coding: Utf-8 -*
 
 import pygame
+import time
 
 from random			import randint
 from class_Entities	import Entities
@@ -53,7 +54,7 @@ class Player(Entities):
 			self.sound_shoot.play()
 			# self.sound_shoot[randint(0, 5)].play()
 			# print("nb_sound == " + str(self.sound_shoot.get_num_channels()))
-			print()
+
 			# Reset the countdown timer to one second.
 			# print (self.timer)
 			self.timer = PLAYER_SHOOT_FREQUENCY
@@ -64,6 +65,11 @@ class Player(Entities):
 		self.rect.x = (X_WINDOW / 2) - self.size[0] / 2
 		self.rect.y = Y_WINDOW - 150
 		self.hp = PLAYER_HP
+		self.start_time = time.time()
+		self.time = time.time()
 
 		g.sprites_players.add(self)
 		g.all_sprites.add(self)
+
+	def update(self):
+		self.time = time.time() - self.start_time

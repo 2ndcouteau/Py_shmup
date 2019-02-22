@@ -7,7 +7,6 @@ from pygame.locals	import *
 from pygame.mixer	import music
 from random			import randint
 
-
 from class_Explosion	import Explosion
 from class_Player		import Player
 from class_Enemy		import Enemy

@@ -2,6 +2,7 @@
 # _*_ coding: Utf-8 -*
 
 import pygame
+import time
 
 class Entities(pygame.sprite.Sprite):
 	def __init__(self, _hp, _life, _speed, _type):
@@ -12,4 +13,5 @@ class Entities(pygame.sprite.Sprite):
 		self.type = _type
 
 		self.score = 0
-		self.time = 0
+		self.time = time.time()
+		self.start_time = time.time()

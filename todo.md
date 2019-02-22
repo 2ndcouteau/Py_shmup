@@ -36,7 +36,7 @@ OK				explosion enemies
 	Collide
 		Manage hitbox
 
-1)	Explosion
+	Explosion
 		Player
 			no explosion animation but visual bell
 			special sound
@@ -79,7 +79,7 @@ OK				explosion enemies
 		speed boost
 		slow motion time
 
-4)	MENU
+3)	MENU
 
 		Manage event with layout selection
 			in level menu
