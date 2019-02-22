@@ -5,10 +5,10 @@ import pygame
 import time
 
 class Entities(pygame.sprite.Sprite):
-	def __init__(self, _hp, _life, _speed, _type):
+	def __init__(self, _hp, _lives, _speed, _type):
 		pygame.sprite.Sprite.__init__(self)
 		self.hp = _hp
-		self.life = _life
+		self.lives = _lives
 		self.speed = _speed
 		self.type = _type
 

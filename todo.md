@@ -42,9 +42,9 @@ OK				explosion enemies
 			special sound
 
 
-3)	Print Informations
+	Print Informations
 		weapon
-	make back-end for all informations
+1) IN PROGRESS	make back-end for all informations
 
 	Enemies
 		generate spwan salve formation

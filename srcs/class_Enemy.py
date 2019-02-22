@@ -18,7 +18,7 @@ from constants			import (X_WINDOW,
 
 class Enemy(Entities):
 	def __init__(self, g):
-		Entities.__init__(self, _hp = 1, _life = 0, _speed = 5, _type = ENEMIES)
+		Entities.__init__(self, _hp = 1, _lives = 0, _speed = 5, _type = ENEMIES)
 		self.name = "Enemy"
 
 		self.timer = 0

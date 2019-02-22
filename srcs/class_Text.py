@@ -10,7 +10,7 @@ from constants			import (Y_WINDOW, X_WINDOW,
 								FONT,
 								GAME, MAIN_MENU, LEVEL_MENU,
 								WHITE, BLACK, RED, GREEN, BLUE, YELLOW,
-								POS_HP, POS_LIFES, POS_SCORE, POS_TIME
+								POS_HP, POS_LIVES, POS_SCORE, POS_TIME
 								)
 
 
@@ -122,7 +122,7 @@ class Text_game():
 		self.str_time = time.strftime("%M:%S.", time.gmtime(self.g.player.time)) + str(repr(self.g.player.time).split('.')[1][:3])
 
 		self.all_text[POS_HP] = Text_line(self.font_size, ' '.join(["Hp: ", str(self.g.player.hp)]), (self.x_left_offset, Y_WINDOW - self.y_bottom_offset), cx=False, cy=False)
-		self.all_text[POS_LIFES] = Text_line(self.font_size, ' '.join(["Lifes: ", str(self.g.player.life)]), ((X_WINDOW - self.x_right_life_offset), Y_WINDOW - self.y_bottom_offset), cx=False, cy=False)
+		self.all_text[POS_LIVES] = Text_line(self.font_size, ' '.join(["Lifes: ", str(self.g.player.lives)]), ((X_WINDOW - self.x_right_life_offset), Y_WINDOW - self.y_bottom_offset), cx=False, cy=False)
 		self.all_text[POS_SCORE] = Text_line(self.font_size, ' '.join(["Score: ", str(self.g.player.score)]), (self.x_left_offset, 0), cx=False, cy=False)
 		self.all_text[POS_TIME] = Text_line(self.font_size, "Time: {0}".format(self.str_time), (X_WINDOW - self.x_right_time_offset, 0), cx=False, cy=False)
 
@@ -138,7 +138,7 @@ class Text_game_level(Text, Text_game):
 
 		self.str_time = time.strftime("%M:%S.", time.gmtime(self.g.player.time)) + str(repr(self.g.player.time).split('.')[1][:3])
 		self.all_text.insert(POS_HP, Text_line(self.font_size, ' '.join(["Hp:", str(g.player.hp)]), (self.x_left_offset, Y_WINDOW - self.y_bottom_offset), cx=False, cy=False))
-		self.all_text.insert(POS_LIFES, Text_line(self.font_size, ' '.join(["Lifes:", str(g.player.life)]), ((X_WINDOW - 100), Y_WINDOW - self.y_bottom_offset), cx=False, cy=False))
+		self.all_text.insert(POS_LIVES, Text_line(self.font_size, ' '.join(["Lifes:", str(g.player.lives)]), ((X_WINDOW - 100), Y_WINDOW - self.y_bottom_offset), cx=False, cy=False))
 		self.all_text.insert(POS_SCORE, Text_line(self.font_size, ' '.join(["Score:", str(g.player.score)]), (self.x_left_offset, 0), cx=False, cy=False))
 		self.all_text.insert(POS_TIME, Text_line(self.font_size, "Time: {0}".format(self.str_time), ((X_WINDOW - self.x_right_time_offset), 0), cx=False, cy=False))
 

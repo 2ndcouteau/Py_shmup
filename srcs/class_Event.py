@@ -63,7 +63,12 @@ class Event():
 
 		if g.player.hp <= 0:
 			print("You Died")
+			g.player.lives -= 1
+			# if g.player.lives < 0:
+			# 	g.mode = MAIN_MENU	# change to load_menu()
+			# else:
 			g.mode = LEVEL_MENU	# change to load_menu()
+			g.player.reinitialization(g)
 		for input, func in game_event.items():
 			if keys[input]:
 				func[0](*func[1:])

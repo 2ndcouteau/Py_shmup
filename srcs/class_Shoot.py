@@ -17,7 +17,7 @@ from constants		import (X_WINDOW,
 
 class Shoot(Entities):
 	def __init__(self, g, type, speed, x, y):
-		Entities.__init__(self, _hp = 1, _life = 0, _speed = speed, _type = type)
+		Entities.__init__(self, _hp = 1, _lives = 0, _speed = speed, _type = type)
 		self.name = "Shoot"
 
 		# Load image from media

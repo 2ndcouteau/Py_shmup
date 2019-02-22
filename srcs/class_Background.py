@@ -18,7 +18,7 @@ from constants		import (X_WINDOW,
 
 class Background(Entities):
 	def __init__(self):
-		Entities.__init__(self, _hp = None, _life = None, _speed = 1, _type = NEUTRAL)
+		Entities.__init__(self, _hp = None, _lives = None, _speed = 1, _type = NEUTRAL)
 
 
 class Level_background(Background):

@@ -40,6 +40,8 @@ def main_loop(g):
 			g.text_game_level.update()
 			Layout.draw_game_sprites(Layout, g)
 
+			# print (time.strftime("%M:%S:%z", time.gmtime(elapsed_time)))
+
 		elif (g.mode is LEVEL_MENU):
 
 			Event.manage(Event, g)
