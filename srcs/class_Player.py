@@ -56,9 +56,7 @@ class Player(Entities):
 			# print("nb_sound == " + str(self.sound_shoot.get_num_channels()))
 
 			# Reset the countdown timer to one second.
-			# print (self.timer)
 			self.timer = PLAYER_SHOOT_FREQUENCY
-			# print (self.timer)
 
 	def reinitialization(self, g):
 		# Init player position and spec

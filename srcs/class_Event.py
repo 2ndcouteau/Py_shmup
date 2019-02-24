@@ -9,13 +9,10 @@ from random			import randint
 
 from class_Player		import Player
 from class_Enemy		import Enemy
-from constants			import (GAME,
-								LEVEL_MENU,
-								MAIN_MENU,
-								UP,
-								DOWN,
-								RIGHT,
-								LEFT,
+from class_Menu			import Main_menu
+
+from constants			import (F_GAME, F_LEVEL_MENU, F_MAIN_MENU,
+								UP, DOWN, RIGHT, LEFT,
 								MENU_INPUT_DELAY,
 								media_folder)
 
@@ -65,16 +62,16 @@ class Event():
 			print("You Died")
 			g.player.lives -= 1
 			# if g.player.lives < 0:
-			# 	g.mode = MAIN_MENU	# change to load_menu()
+			# 	g.mode = F_MAIN_MENU	# change to load_menu()
 			# else:
-			g.mode = LEVEL_MENU	# change to load_menu()
+			g.mode = F_LEVEL_MENU	# change to load_menu()
 			g.player.reinitialization(g)
 		for input, func in game_event.items():
 			if keys[input]:
 				func[0](*func[1:])
 
 	def k_backspace(g):
-		g.mode = LEVEL_MENU	# change to load_menu()
+		g.mode = F_LEVEL_MENU	# change to load_menu()
 		music.pause()
 	def k_e(g):
 		if g.timer <= 0:
@@ -84,7 +81,7 @@ class Event():
 
 		#
 		# if keys[K_BACKSPACE]:
-		# 	g.mode = LEVEL_MENU	# change to load_menu()
+		# 	g.mode = F_LEVEL_MENU	# change to load_menu()
 		# if keys[K_RETURN]:
 		# 	print("Entrée")
 		# if keys[K_SPACE]:
@@ -138,9 +135,13 @@ class Event():
 		# 	cut_the_sound
 
 	def main_menu(g, keys):
+
 		if keys[K_RETURN]:
+
+			# Main_menu[g.text_main_menu.new_pos](Main_menu, g)
+
 			g.restart_game() ## Init_game() with some differente base value
-			g.mode = GAME
+			g.mode = F_GAME
 			# g.main_menu_music.pause()
 			music.load(os.path.join(media_folder, 'game_music.wav'))
 			music.play(-1)
@@ -159,17 +160,22 @@ class Event():
 
 
 	def level_menu(g, keys):
+			# RESUME
+			# RESTART
+			# OPTIONS_LEVEL
+			# MAIN_MENU
+
 		if (g.player.hp > 0):
-			if keys[K_RETURN] or keys[K_SPACE]:
-				g.mode = GAME
+			if keys[K_RETURN]:
+				g.mode = F_GAME
 				music.unpause()
 		if keys[K_r]:
 			g.restart_game()
-			g.mode = GAME
+			g.mode = F_GAME
 			music.rewind()
 			music.play(-1)
 		if keys[K_q]:
-			g.mode = MAIN_MENU
+			g.mode = F_MAIN_MENU
 			music.load(os.path.join(media_folder, 'main_menu_music.wav'))
 			music.play(-1)
 
@@ -193,9 +199,9 @@ class Event():
 		# if event.type == pygame.KEYDOWN:
 		# print ("Button pressed !")
 		self.general(g, keys)
-		if (g.mode is GAME):
+		if (g.mode is F_GAME):
 			self.game(self, g, keys)
-		elif (g.mode is LEVEL_MENU):
+		elif (g.mode is F_LEVEL_MENU):
 			self.level_menu(g, keys)
 		else:
 			self.main_menu(g, keys)

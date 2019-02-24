@@ -8,9 +8,10 @@ from pygame.locals	import *
 
 from constants			import (Y_WINDOW, X_WINDOW,
 								FONT,
-								GAME, MAIN_MENU, LEVEL_MENU,
 								WHITE, BLACK, RED, GREEN, BLUE, YELLOW,
-								POS_HP, POS_LIVES, POS_SCORE, POS_TIME
+								POS_HP, POS_LIVES, POS_SCORE, POS_TIME,
+								TITLE_MENU, PLAY, OPTIONS_MAIN, QUIT,
+								RESUME, RESTART, OPTIONS_LEVEL, MAIN_MENU,
 								)
 
 
@@ -45,33 +46,28 @@ class Text_line(pygame.sprite.Sprite):
 			self.rect = self.rect_low
 
 		# self.old_size = self.new_size * 2
-		self.position_text(self)
+		self.position_text()
 
 
-	def position_text(self, text):
+	def position_text(self):
 		#cx= center_x, cy= center_y
-		text.pos_low = text.pos
-		text.pos_big = text.pos
+		self.pos_low = self.pos
+		self.pos_big = self.pos
 
-		if text.cx :
-			text.rect_low.centerx = X_WINDOW / 2
-			text.rect_big.centerx = X_WINDOW / 2
-			# text.pos_low[0] -= text.size_low[0] / 2
-			# text.pos_big[0] -= text.size_big[0] / 2
+		# Can't facto code because of layout centering layout issue
+		if self.cx :
+			self.rect_low.x = self.pos_low[0] - (self.size_low[0] / 2)
+			self.rect_big.x = self.pos_big[0] - (self.size_big[0] / 2)
 		else:
-			text.rect_low.x += text.pos_low[0]
-			text.rect_big.x += text.pos_big[0]
+			self.rect_low.x = self.pos_low[0]
+			self.rect_big.x = self.pos_big[0]
 
-		if text.cy :
-			text.rect_low.centery = text.pos_low[1] - text.size_low[1] / 2
-			text.rect_big.centery = text.pos_big[1] - text.size_big[1] / 2
-			# text.rect_low.y += text.pos_low[1]
-			# text.rect_big.y += text.pos_big[1]
-			# text.rect_low.centery = Y_WINDOW / 2
-			# text.rect_big.centery = Y_WINDOW / 2
+		if self.cy :
+			self.rect_low.y = self.pos_low[1] - (self.size_low[1] / 2)
+			self.rect_big.y = self.pos_big[1] - (self.size_big[1] / 2)
 		else:
-			text.rect_low.y += text.pos_low[1]
-			text.rect_big.y += text.pos_big[1]
+			self.rect_low.y = self.pos_low[1]
+			self.rect_big.y = self.pos_big[1]
 
 class Text():
 	def __init__(self):
@@ -154,11 +150,11 @@ class Text_level_menu(Text, Text_menu):
 		self.title_font_size = 24
 		self.font_size = 12
 
-		self.all_text.append(Text_line(self.title_font_size, "- Menu -", ((X_WINDOW / 2), Y_WINDOW / 4), cx=True, cy=False))
-		self.all_text.append(Text_line(self.font_size, "* Resume *", ((X_WINDOW / 2), (Y_WINDOW / 2) - (self.y_offset_pos * 1) - 15), cx=True, selected=True))
-		self.all_text.append(Text_line(self.font_size, "* Restart *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 0) - 15), cx=True, selected=False))
-		self.all_text.append(Text_line(self.font_size, "* Options *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 1) - 15), cx=True, selected=False))
-		self.all_text.append(Text_line(self.font_size, "* Main Menu *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 2) - 15), cx=True, selected=False))
+		self.all_text.insert(TITLE_MENU, Text_line(self.title_font_size, "- Menu -", ((X_WINDOW / 2), Y_WINDOW / 4), cx=True, cy=False))
+		self.all_text.insert(RESUME, Text_line(self.font_size, "* Resume *", ((X_WINDOW / 2), (Y_WINDOW / 2) - (self.y_offset_pos * 1) - 15), cx=True, selected=True))
+		self.all_text.insert(RESTART, Text_line(self.font_size, "* Restart *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 0) - 15), cx=True, selected=False))
+		self.all_text.insert(OPTIONS_LEVEL, Text_line(self.font_size, "* Options *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 1) - 15), cx=True, selected=False))
+		self.all_text.insert(MAIN_MENU, Text_line(self.font_size, "* Main Menu *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 2) - 15), cx=True, selected=False))
 
 		self.len_all_text = len(self.all_text)
 
@@ -171,10 +167,9 @@ class Text_main_menu(Text, Text_menu):
 		self.title_font_size = 32
 		self.font_size = 16
 
-		self.all_text.append(Text_line(self.title_font_size, "Hard SHMUP 42", ((X_WINDOW / 2), Y_WINDOW / 4), cx=True))
-		self.all_text.append(Text_line(self.font_size, "* Play *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 0)), cx=True, selected=True))
-		self.all_text.append(Text_line(self.font_size, "* Options *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 1)), cx=True, selected=False))
-		self.all_text.append(Text_line(self.font_size, "* Quit *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 2)), cx=True, selected=False))
-
+		self.all_text.insert(TITLE_MENU, Text_line(self.title_font_size, "Hard SHMUP 42", ((X_WINDOW / 2), Y_WINDOW / 4), cx=True))
+		self.all_text.insert(PLAY, Text_line(self.font_size, "* Play *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 0)), cx=True, selected=True))
+		self.all_text.insert(OPTIONS_MAIN, Text_line(self.font_size, "* Options *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 1)), cx=True, selected=False))
+		self.all_text.insert(QUIT, Text_line(self.font_size, "* Quit *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 2)), cx=True, selected=False))
 
 		self.len_all_text = len(self.all_text)

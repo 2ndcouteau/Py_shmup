@@ -11,24 +11,15 @@ from class_Explosion	import Explosion
 from class_Player		import Player
 from class_Enemy		import Enemy
 from class_Background	import Level_background, Level_menu_background, Main_menu_background
-# from class_Text			import Level_text, Level_menu_text, Main_menu_text
 from class_Text			import Text_main_menu, Text_level_menu, Text_game_level
 
-from constants			import (X_WINDOW,
-								Y_WINDOW,
-								ENEMIES_SPAWN_FREQUENCY,
-								NEUTRALS_SPAWN_FREQUENCY,
-								GAME,
-								MAIN_MENU,
-								LEVEL_MENU,
-								IMG_LEVEL1_BACKGROUND,
-								IMG_MAIN_MENU_BACKGROUND,
-								IMG_LEVEL_MENU_BACKGROUND_FULL,
-								IMG_LEVEL_MENU_BACKGROUND_TIER,
-								IMG_PLAYER,
-								IMG_EXPLOSION1,
-								IMG_EXPLOSION2,
-								IMG_EXPLOSION3,
+from constants			import (X_WINDOW, Y_WINDOW,
+								ENEMIES_SPAWN_FREQUENCY, NEUTRALS_SPAWN_FREQUENCY,
+								F_GAME, F_MAIN_MENU, F_LEVEL_MENU,
+								IMG_LEVEL1_BACKGROUND, IMG_MAIN_MENU_BACKGROUND,
+								IMG_LEVEL_MENU_BACKGROUND_FULL, IMG_LEVEL_MENU_BACKGROUND_TIER,
+								IMG_PLAYER, IMG_EXPLOSION1, IMG_EXPLOSION2, IMG_EXPLOSION3,
+								HIT_SHOT_ENNEMIES, HIT_SHIP_ENNEMIES, HIT_SHOT_PLAYER,
 								media_folder)
 
 class Game():
@@ -76,7 +67,7 @@ class Game():
 		# self.music_channel_main_menu = pygame.mixer.Channel()
 
 		music.load(os.path.join(media_folder, 'main_menu_music.wav'))
-		music.set_volume(0.5)
+		music.set_volume(0)
 		music.play(-1)
 
 		# self.music_level = pygame.mixer.Sound(os.path.join(media_folder, 'game_music.wav'))
@@ -100,19 +91,19 @@ class Game():
 		self.icone = IMG_PLAYER.convert_alpha()
 		self.title = pygame.display.set_caption("BEST GAME EVER -- Py_SHMUP")
 
-		self.mode = MAIN_MENU
+		self.mode = F_MAIN_MENU
 
 		# Init all backgrounds:
 		self.level_backgrounds = []
-		self.level_backgrounds.append(Level_background(self, (0, 0), IMG_LEVEL1_BACKGROUND, GAME))
-		self.level_backgrounds.append(Level_background(self, (0, -Y_WINDOW), IMG_LEVEL1_BACKGROUND, GAME))
+		self.level_backgrounds.append(Level_background(self, (0, 0), IMG_LEVEL1_BACKGROUND, F_GAME))
+		self.level_backgrounds.append(Level_background(self, (0, -Y_WINDOW), IMG_LEVEL1_BACKGROUND, F_GAME))
 
 		self.main_menu_backgrounds = []
-		self.main_menu_backgrounds.append(Main_menu_background(self, (0, 0), IMG_MAIN_MENU_BACKGROUND, MAIN_MENU))
+		self.main_menu_backgrounds.append(Main_menu_background(self, (0, 0), IMG_MAIN_MENU_BACKGROUND, F_MAIN_MENU))
 
 		self.level_menu_backgrounds = []
-		self.level_menu_backgrounds.append(Level_menu_background(self, (0, 0), IMG_LEVEL_MENU_BACKGROUND_FULL, LEVEL_MENU, opacity=100))
-		self.level_menu_backgrounds.append(Level_menu_background(self, (X_WINDOW / 4, Y_WINDOW / 4), IMG_LEVEL_MENU_BACKGROUND_TIER, LEVEL_MENU, opacity=150))
+		self.level_menu_backgrounds.append(Level_menu_background(self, (0, 0), IMG_LEVEL_MENU_BACKGROUND_FULL, F_LEVEL_MENU, opacity=100))
+		self.level_menu_backgrounds.append(Level_menu_background(self, (X_WINDOW / 4, Y_WINDOW / 4), IMG_LEVEL_MENU_BACKGROUND_TIER, F_LEVEL_MENU, opacity=150))
 
 		self.explosion_imgs = []
 		self.explosion_imgs.append(self.load_sprites(IMG_EXPLOSION1, width=256, height=256, ratio=1/3))
@@ -164,20 +155,20 @@ class Game():
 		collide_list = pygame.sprite.spritecollide(self.player, self.sprites_enemies, True)
 		# Check the list of collisions.
 		for x in collide_list:
-			self.player.hp -= 1
-			print("Collide Player with Enemies !")
+			self.player.hp -= HIT_SHIP_ENNEMIES
+			print("Player Collide with Enemies !")
 
 		collide_list = pygame.sprite.spritecollide(self.player, self.sprites_enemies_shoots, True)
 		for hit in collide_list:
-			self.player.hp -= 1
-			print("Collide Enemies shoots with player !")
+			self.player.hp -= HIT_SHOT_ENNEMIES
+			print("Enemies shots Collide with player !")
 			Explosion(self, hit.rect.center, 0)
 
 		collide_list = pygame.sprite.groupcollide(self.sprites_allies_shoots, self.sprites_enemies, True, True)
 		# Check the list of collisions.
 		for hit in collide_list:
-			print("Collide Player Shoots with Enemies !")
-			self.player.score += 17
+			print("Player Shots Collide with Enemies !")
+			self.player.score += HIT_SHOT_PLAYER
 			Explosion(self, hit.rect.center, randint(1, 2))
 
 
@@ -186,6 +177,16 @@ class Game():
 		self.all_sprites.add(self.level_backgrounds[1])
 		self.level_backgrounds[0].rect.y = 0
 		self.level_backgrounds[1].rect.y = -Y_WINDOW
+
+	def restart_level(self):
+		# Clear all Useless sprites lists
+		self.all_sprites.empty()
+		self.sprites_enemies.empty()
+		self.sprites_enemies_shoots.empty()
+		self.sprites_allies_shoots.empty()
+
+		self.player.reinitialization(self)
+		self.level_backgrounds_reinitialization()
 
 	def restart_game(self):
 		# Clear all Useless sprites lists

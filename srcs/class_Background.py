@@ -4,15 +4,11 @@
 import pygame
 
 from class_Entities	import Entities
-from constants		import (X_WINDOW,
-							Y_WINDOW,
+from constants		import (X_WINDOW, Y_WINDOW,
 							IMG_LEVEL1_BACKGROUND,
 							IMG_MAIN_MENU_BACKGROUND,
 							IMG_LEVEL_MENU_BACKGROUND_FULL,
 							IMG_LEVEL_MENU_BACKGROUND_TIER,
-							GAME,
-							MAIN_MENU,
-							LEVEL_MENU,
 							NEUTRAL,
 							BLACK)
 

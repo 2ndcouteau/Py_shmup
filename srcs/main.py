@@ -11,9 +11,9 @@ import time
 from class_Game		import Game
 from class_Event	import Event
 from class_Layout	import Layout
-from constants		import (GAME,
-							LEVEL_MENU,
-							MAIN_MENU)
+from class_Menu		import Menu #, Level_menu
+
+from constants		import (F_GAME, F_LEVEL_MENU, F_MAIN_MENU)
 
 def main_loop(g):
 	clock = pygame.time.Clock()
@@ -22,7 +22,7 @@ def main_loop(g):
 		g.dt = clock.tick(60)
 		g.timer -= g.dt
 
-		if (g.mode is GAME):
+		if (g.mode is F_GAME):
 			# g.window.fill((0,0,0))
 			g.generate_enemies()
 			Event.manage(Event, g)
@@ -40,19 +40,19 @@ def main_loop(g):
 			g.text_game_level.update()
 			Layout.draw_game_sprites(Layout, g)
 
-			# print (time.strftime("%M:%S:%z", time.gmtime(elapsed_time)))
 
-		elif (g.mode is LEVEL_MENU):
-
+		elif (g.mode is F_LEVEL_MENU):
+			# Menu.level_menu(Menu, g)
 			Event.manage(Event, g)
 			g.text_level_menu.update()
 			Layout.draw_level_menu_sprites(Layout, g)
-
 		else :
+			# Menu.main_menu(Menu, g)
 			Event.manage(Event, g)
 			g.text_main_menu.update()
-
 			Layout.draw_main_menu_sprites(Layout, g)
+
+
 
 
 def main():
