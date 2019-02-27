@@ -44,7 +44,13 @@ OK				explosion enemies
 
 	Print Informations
 		weapon
+
 1) IN PROGRESS	make back-end for all informations
+	OK)	Main_menu
+	OK)	Level_menu
+
+	--> Create a	Death_menu
+					End_game_menu
 
 	Enemies
 		generate spwan salve formation
@@ -82,12 +88,19 @@ OK				explosion enemies
 3)	MENU
 
 		Manage event with layout selection
-			in level menu
-			in main menu
-				Start Game
-				Restart Game
-				Options ?
-				Quit Game
+			in Death menu
+				Remaining lives
+				continue
+				restart_game
+				options_level
+				main menu
+
+			in End_game_menu
+				Score
+				Restart game
+				Options
+				main_menu
+
 		Event Animations
 			Change text for selectable options
 				On / Off
@@ -146,8 +159,6 @@ DONE:
 			life
 			time
 
-
-
 	TEXT
 		Create Class
 		Clean and reduce Text method for menu in one class
@@ -163,6 +174,19 @@ DONE:
 			Options
 			Main menu
 		Zoom the current text position
+
+	Event Management in Menu
+			in level menu
+				Resume level
+				Restart Level
+				Options
+				Go to Main menu
+			in main menu
+				Start Game
+				Restart Game
+				Options ?
+				Quit Game
+
 
 
 	PLAYER

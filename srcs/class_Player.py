@@ -58,7 +58,7 @@ class Player(Entities):
 			# Reset the countdown timer to one second.
 			self.timer = PLAYER_SHOOT_FREQUENCY
 
-	def reinitialization(self, g):
+	def init_game(self, g):
 		# Init player position and spec
 		self.rect.x = (X_WINDOW / 2) - self.size[0] / 2
 		self.rect.y = Y_WINDOW - 150
@@ -69,6 +69,19 @@ class Player(Entities):
 			self.time = time.time()
 			self.score = 0
 			self.lives = PLAYER_LIVES
+
+		g.sprites_players.add(self)
+		g.all_sprites.add(self)
+
+	def init_level(self, g):
+		# Init player position and spec
+		self.rect.x = (X_WINDOW / 2) - self.size[0] / 2
+		self.rect.y = Y_WINDOW - 150
+		self.hp = PLAYER_HP
+
+		self.start_time = time.time()
+		self.time = time.time()
+		self.score = 0
 
 		g.sprites_players.add(self)
 		g.all_sprites.add(self)

@@ -64,8 +64,8 @@ class Event():
 			# if g.player.lives < 0:
 			# 	g.mode = F_MAIN_MENU	# change to load_menu()
 			# else:
-			g.mode = F_LEVEL_MENU	# change to load_menu()
-			g.player.reinitialization(g)
+			g.mode = F_LEVEL_MENU	# Change to DEATH_MENU
+			g.player.init_game(g)	# Remove in DEATH_MENU
 		for input, func in game_event.items():
 			if keys[input]:
 				func[0](*func[1:])
@@ -136,39 +136,21 @@ class Event():
 
 	def main_menu(g, keys):
 
-		if keys[K_RETURN]:
-
-			# Main_menu[g.text_main_menu.new_pos](Main_menu, g)
-
-			g.restart_game() ## Init_game() with some differente base value
-			g.mode = F_GAME
-			# g.main_menu_music.pause()
-			music.load(os.path.join(media_folder, 'game_music.wav'))
-			music.play(-1)
-			# g.music_level.play(-1)
-			print("Entrée")
-
 		g.menu_timer -= g.dt
 		if g.menu_timer <= 0:
-			# print ("Move OK")
+			if keys[K_RETURN]:
+				g.main_menu.function[g.main_menu.text.new_pos - 1](g)
+				g.menu_timer = MENU_INPUT_DELAY
 			if keys[K_UP]:
-				g.text_main_menu.move_up()
+				g.main_menu.text.move_up()
 				g.menu_timer = MENU_INPUT_DELAY
 			if keys[K_DOWN]:
-				g.text_main_menu.move_down()
+				g.main_menu.text.move_down()
 				g.menu_timer = MENU_INPUT_DELAY
 
 
 	def level_menu(g, keys):
-			# RESUME
-			# RESTART
-			# OPTIONS_LEVEL
-			# MAIN_MENU
 
-		if (g.player.hp > 0):
-			if keys[K_RETURN]:
-				g.mode = F_GAME
-				music.unpause()
 		if keys[K_r]:
 			g.restart_game()
 			g.mode = F_GAME
@@ -181,12 +163,14 @@ class Event():
 
 		g.menu_timer -= g.dt
 		if g.menu_timer <= 0:
-			# print ("Move OK")
+			if keys[K_RETURN]:
+				g.level_menu.function[g.level_menu.text.new_pos - 1](g)
+				g.menu_timer = MENU_INPUT_DELAY
 			if keys[K_UP]:
-				g.text_level_menu.move_up()
+				g.level_menu.text.move_up()
 				g.menu_timer = MENU_INPUT_DELAY
 			if keys[K_DOWN]:
-				g.text_level_menu.move_down()
+				g.level_menu.text.move_down()
 				g.menu_timer = MENU_INPUT_DELAY
 
 

@@ -44,12 +44,12 @@ def main_loop(g):
 		elif (g.mode is F_LEVEL_MENU):
 			# Menu.level_menu(Menu, g)
 			Event.manage(Event, g)
-			g.text_level_menu.update()
+			g.level_menu.text.update()
 			Layout.draw_level_menu_sprites(Layout, g)
-		else :
+		elif (g.mode is F_MAIN_MENU):
 			# Menu.main_menu(Menu, g)
 			Event.manage(Event, g)
-			g.text_main_menu.update()
+			g.main_menu.text.update()
 			Layout.draw_main_menu_sprites(Layout, g)
 
 
