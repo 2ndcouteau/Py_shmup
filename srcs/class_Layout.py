@@ -60,6 +60,19 @@ class Layout():
 		g.level_menu.text.draw_text(g.window)
 		pygame.display.flip()
 
+
+	def draw_death_menu_sprites(self, g):
+
+		g.sprites_level_backgrounds.draw(g.window)
+		g.sprites_players.draw(g.window)
+		g.sprites_enemies.draw(g.window)
+
+		g.sprites_level_menu_backgrounds.draw(g.window)
+		# g.sprites_level_menu_text.draw(g.window)
+
+		g.death_menu.text.draw_text(g.window)
+		pygame.display.flip()
+
 	def draw_main_menu_sprites(self, g):
 
 

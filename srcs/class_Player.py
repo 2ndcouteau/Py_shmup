@@ -73,6 +73,17 @@ class Player(Entities):
 		g.sprites_players.add(self)
 		g.all_sprites.add(self)
 
+
+	def continue_level(self, g):
+		# Init player position and spec
+		self.rect.x = (X_WINDOW / 2) - self.size[0] / 2
+		self.rect.y = Y_WINDOW - 150
+		self.hp = PLAYER_HP
+
+		g.sprites_players.add(self)
+		g.all_sprites.add(self)
+
+
 	def init_level(self, g):
 		# Init player position and spec
 		self.rect.x = (X_WINDOW / 2) - self.size[0] / 2

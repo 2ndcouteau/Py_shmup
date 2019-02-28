@@ -12,7 +12,7 @@ from class_Player		import Player
 from class_Enemy		import Enemy
 from class_Background	import Level_background, Level_menu_background, Main_menu_background
 from class_Text			import Text_main_menu, Text_level_menu, Text_game_level
-from class_Menu			import Main_menu, Level_menu
+from class_Menu			import Main_menu, Level_menu, Death_menu
 
 from constants			import (X_WINDOW, Y_WINDOW,
 								ENEMIES_SPAWN_FREQUENCY, NEUTRALS_SPAWN_FREQUENCY,
@@ -123,6 +123,7 @@ class Game():
 
 		self.level_menu = Level_menu(self)
 		self.main_menu = Main_menu(self)
+		self.death_menu = Death_menu(self)
 
 		# Main_menu_text(self, "* Menu *", (X_WINDOW / 2, Y_WINDOW /2), cx=True)
 
@@ -183,14 +184,20 @@ class Game():
 		self.level_backgrounds[0].rect.y = 0
 		self.level_backgrounds[1].rect.y = -Y_WINDOW
 
+	def continue_level(self):
+		self.player.continue_level(self)
+		self.sprites_enemies_shoots.empty()
+		self.sprites_allies_shoots.empty()
+
 	def restart_level(self):
 		# Clear all Useless sprites lists
 		self.all_sprites.empty()
 		self.sprites_enemies.empty()
 		self.sprites_enemies_shoots.empty()
 		self.sprites_allies_shoots.empty()
+		self.sprites_explosions.empty()
 
-		self.player.reinitialization(self)
+		self.player.init_level(self)
 		self.level_backgrounds_reinitialization()
 
 	def restart_game(self):
@@ -199,17 +206,7 @@ class Game():
 		self.sprites_enemies.empty()
 		self.sprites_enemies_shoots.empty()
 		self.sprites_allies_shoots.empty()
+		self.sprites_explosions.empty()
 
 		self.player.init_game(self)
-		self.level_backgrounds_reinitialization()
-
-
-	def restart_level(self):
-		# Clear all Useless sprites lists
-		self.all_sprites.empty()
-		self.sprites_enemies.empty()
-		self.sprites_enemies_shoots.empty()
-		self.sprites_allies_shoots.empty()
-
-		self.player.init_level(self)
 		self.level_backgrounds_reinitialization()

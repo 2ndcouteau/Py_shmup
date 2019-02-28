@@ -11,7 +11,7 @@ from class_Player		import Player
 from class_Enemy		import Enemy
 from class_Menu			import Main_menu
 
-from constants			import (F_GAME, F_LEVEL_MENU, F_MAIN_MENU,
+from constants			import (F_GAME, F_LEVEL_MENU, F_MAIN_MENU, F_DEATH_MENU, F_GAME_OVER,
 								UP, DOWN, RIGHT, LEFT,
 								MENU_INPUT_DELAY,
 								media_folder)
@@ -59,13 +59,13 @@ class Event():
 		}
 
 		if g.player.hp <= 0:
-			print("You Died")
-			g.player.lives -= 1
-			# if g.player.lives < 0:
-			# 	g.mode = F_MAIN_MENU	# change to load_menu()
-			# else:
-			g.mode = F_LEVEL_MENU	# Change to DEATH_MENU
-			g.player.init_game(g)	# Remove in DEATH_MENU
+			if g.player.lives == 0:
+				print("GAME_OVER")
+				g.mode = F_GAME_OVER
+			else:
+				print("You Died")
+				g.mode = F_DEATH_MENU
+
 		for input, func in game_event.items():
 			if keys[input]:
 				func[0](*func[1:])
@@ -136,16 +136,31 @@ class Event():
 
 	def main_menu(g, keys):
 
+		menu = g.main_menu
 		g.menu_timer -= g.dt
 		if g.menu_timer <= 0:
 			if keys[K_RETURN]:
-				g.main_menu.function[g.main_menu.text.new_pos - 1](g)
+				menu.function[menu.text.new_pos - menu.text.offset_title_select](g)
 				g.menu_timer = MENU_INPUT_DELAY
 			if keys[K_UP]:
-				g.main_menu.text.move_up()
+				menu.text.move_up()
 				g.menu_timer = MENU_INPUT_DELAY
 			if keys[K_DOWN]:
-				g.main_menu.text.move_down()
+				menu.text.move_down()
+				g.menu_timer = MENU_INPUT_DELAY
+
+
+	def death_menu(g, keys):
+		g.menu_timer -= g.dt
+		if g.menu_timer <= 0:
+			if keys[K_RETURN]:
+				g.death_menu.function[g.death_menu.text.new_pos - g.death_menu.text.offset_title_select](g)
+				g.menu_timer = MENU_INPUT_DELAY
+			if keys[K_UP]:
+				g.death_menu.text.move_up()
+				g.menu_timer = MENU_INPUT_DELAY
+			if keys[K_DOWN]:
+				g.death_menu.text.move_down()
 				g.menu_timer = MENU_INPUT_DELAY
 
 
@@ -164,7 +179,7 @@ class Event():
 		g.menu_timer -= g.dt
 		if g.menu_timer <= 0:
 			if keys[K_RETURN]:
-				g.level_menu.function[g.level_menu.text.new_pos - 1](g)
+				g.level_menu.function[g.level_menu.text.new_pos - g.level_menu.text.offset_title_select](g)
 				g.menu_timer = MENU_INPUT_DELAY
 			if keys[K_UP]:
 				g.level_menu.text.move_up()
@@ -185,10 +200,15 @@ class Event():
 		self.general(g, keys)
 		if (g.mode is F_GAME):
 			self.game(self, g, keys)
+		elif (g.mode is F_DEATH_MENU):
+			self.death_menu(g, keys)
 		elif (g.mode is F_LEVEL_MENU):
 			self.level_menu(g, keys)
 		else:
 			self.main_menu(g, keys)
+
+
+
 
 		pygame.event.clear()
 		g.player.rect = g.player.rect.clamp(g.window_rect)

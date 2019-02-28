@@ -45,12 +45,16 @@ OK				explosion enemies
 	Print Informations
 		weapon
 
+0) !! Need to clean this object !! with menu version usage
+		self.text_game_level = Text_game_level(self)
+
 1) IN PROGRESS	make back-end for all informations
 	OK)	Main_menu
 	OK)	Level_menu
+	OK)	Death_menu
+--		End_game_menu
 
-	--> Create a	Death_menu
-					End_game_menu
+	--> Create a End_game_menu
 
 	Enemies
 		generate spwan salve formation
@@ -88,12 +92,6 @@ OK				explosion enemies
 3)	MENU
 
 		Manage event with layout selection
-			in Death menu
-				Remaining lives
-				continue
-				restart_game
-				options_level
-				main menu
 
 			in End_game_menu
 				Score
@@ -186,6 +184,12 @@ DONE:
 				Restart Game
 				Options ?
 				Quit Game
+			in Death menu
+				Remaining lives
+				continue
+				restart_game
+				options_level
+				main menu
 
 
 

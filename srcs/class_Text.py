@@ -12,6 +12,8 @@ from constants			import (Y_WINDOW, X_WINDOW,
 								POS_HP, POS_LIVES, POS_SCORE, POS_TIME,
 								TITLE_MENU, PLAY, OPTIONS_MAIN, QUIT,
 								RESUME, RESTART, OPTIONS_LEVEL, MAIN_MENU,
+								REMAINING_LIVES, CONTINUE, RESTART_DEATH, OPTIONS_DEATH, MAIN_MENU_DEATH,
+								SOUL_SELL, GAME_OVER
 								)
 
 
@@ -78,13 +80,14 @@ class Text():
 			window.blit(text.image, text.rect)
 
 class Text_menu():
-	def __init__(self):
+	def __init__(self, offset):
 		self.y_offset_pos = 50
-		self.prev_pos = 1
-		self.new_pos = 1
+		self.prev_pos = offset
+		self.new_pos = offset
+		self.offset = offset
 
 	def move_up(self):
-		if (self.new_pos > 1):
+		if (self.new_pos > self.offset):
 			self.new_pos -= 1
 		else:
 			self.new_pos = self.len_all_text - 1
@@ -93,7 +96,7 @@ class Text_menu():
 		if (self.new_pos < self.len_all_text - 1):
 			self.new_pos += 1
 		else:
-			self.new_pos = 1
+			self.new_pos = self.offset
 
 	def update(self):
 		# self.draw_text()
@@ -106,6 +109,7 @@ class Text_menu():
 			self.all_text[self.new_pos].rect = self.all_text[self.new_pos].rect_big
 
 			self.prev_pos = self.new_pos
+
 
 class Text_game():
 	def __init__(self):
@@ -145,7 +149,8 @@ class Text_game_level(Text, Text_game):
 class Text_level_menu(Text, Text_menu):
 	def __init__(self):
 		Text.__init__(self)
-		Text_menu.__init__(self)
+		self.offset_title_select = 1
+		Text_menu.__init__(self, self.offset_title_select)
 
 		self.title_font_size = 24
 		self.font_size = 12
@@ -159,10 +164,41 @@ class Text_level_menu(Text, Text_menu):
 		self.len_all_text = len(self.all_text)
 
 
+class Text_death_menu(Text, Text_menu):
+	def __init__(self, g):
+		Text.__init__(self)
+		self.g = g
+		self.offset_title_select = 2
+		Text_menu.__init__(self, self.offset_title_select)
+
+		self.title_font_size = 24
+		self.font_size = 12
+
+		self.all_text.insert(TITLE_MENU, Text_line(self.title_font_size, "! YOU ARE DEAD !", ((X_WINDOW / 2), (Y_WINDOW / 4) + 10), cx=True, cy=False))
+		self.all_text.insert(REMAINING_LIVES, Text_line(self.title_font_size, "{0} ship(s) left".format(self.g.player.lives), ((X_WINDOW / 2), (Y_WINDOW / 4) + 75), cx=True, cy=False))
+		self.all_text.insert(CONTINUE, Text_line(self.font_size, "* Continue *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 0) - 15), cx=True, selected=True))
+		# else:
+		# 	self.all_text.insert(GAME_OVER, Text_line(self.title_font_size, "GAME OVER", ((X_WINDOW / 2), (Y_WINDOW / 4) + 15), cx=True, cy=False))
+		# 	self.all_text.insert(CONTINUE, Text_line(self.title_font_size, "", ((X_WINDOW / 2), (Y_WINDOW / 4) + 15), cx=True, cy=False))
+		# 	self.offset_title_select = 3
+			# self.all_text.insert(SOUL_SELL, Text_line(self.font_size, "* Sell your soul *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 0) - 15), cx=True, selected=False))
+		self.all_text.insert(RESTART_DEATH, Text_line(self.font_size, "* Restart Level *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 1) - 15), cx=True, selected=False))
+		self.all_text.insert(OPTIONS_DEATH, Text_line(self.font_size, "* Options *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 2) - 15), cx=True, selected=False))
+		self.all_text.insert(MAIN_MENU_DEATH, Text_line(self.font_size, "* Main Menu *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 3) - 15), cx=True, selected=False))
+
+		self.len_all_text = len(self.all_text)
+
+	def update(self):
+		Text_menu.update(self)
+		self.all_text[REMAINING_LIVES] = Text_line(self.title_font_size, "{0} ship(s) left".format(self.g.player.lives), ((X_WINDOW / 2), (Y_WINDOW / 4) + 75), cx=True, cy=False)
+
+
+
 class Text_main_menu(Text, Text_menu):
 	def __init__(self):
 		Text.__init__(self)
-		Text_menu.__init__(self)
+		self.offset_title_select = 1
+		Text_menu.__init__(self, self.offset_title_select)
 
 		self.title_font_size = 32
 		self.font_size = 16
