@@ -64,10 +64,6 @@ OK				explosion enemies
 			delta formation
 			etc...
 
-	EVENT
-4)		Manage die
-			manage life, hp, score and time
-
 	Player
 2)		invulnerability for seconds after took a shoot
 
@@ -173,7 +169,12 @@ DONE:
 			Main menu
 		Zoom the current text position
 
-	Event Management in Menu
+
+	EVENT
+		Manage die
+			manage life, hp, score and time
+
+		Event Management in Menu
 			in level menu
 				Resume level
 				Restart Level
