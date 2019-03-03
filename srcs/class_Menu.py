@@ -8,12 +8,13 @@ import pygame
 from pygame.mixer	import music
 
 # from class_Layout	import Layout
-from class_Text		import Text_main_menu, Text_level_menu, Text_game_level, Text_death_menu
+from class_Text		import Text_main_menu, Text_level_menu, Text_game_level, Text_death_menu, Text_gameover_menu
 from constants		import (X_WINDOW, Y_WINDOW,
 							F_GAME, F_MAIN_MENU, F_LEVEL_MENU,
 							PLAY, OPTIONS_MAIN, QUIT,
 							RESUME, RESTART, OPTIONS_LEVEL, MAIN_MENU,
 							CONTINUE, RESTART_DEATH, OPTIONS_DEATH, MAIN_MENU_DEATH,
+							OPTIONS_GAMEOVER, MAIN_MENU_GAMEOVER,
 							media_folder)
 
 
@@ -128,32 +129,34 @@ class Death_menu(Menu):
 		self.function.insert(MAIN_MENU_DEATH, main_menu)
 
 
-# class Game_over_menu(Menu):
-# 	def __init__(self, g):
-# 		Menu.__init__(self, g)
-# 		self.text = Text_game_over_menu()
-#
-# 		def continue_level(g):
-# 			g.player.lives -= 1
-# 			g.player.continue_level(g)	# Remove in DEATH_MENU
-# 			g.mode = F_GAME
-# 			music.unpause()
-#
-# 		def restart_level(g):
-# 			g.restart_level()
-# 			g.mode = F_GAME
-# 			music.rewind()
-# 			music.play(-1)
-#
-#
-# 		def options_main(g):
-# 			print("Main options")
-#
-# 		def quit(g):
-# 			exit()
-#
-# 		self.function = []
-# 		self.function.insert(CONTINUE, continue_level)
-# 		self.function.insert(RESTART_DEATH, restart_game)
-# 		self.function.insert(OPTIONS_DEATH, options_death)
-# 		self.function.insert(MAIN_MENU_DEATH, main_menu)
+class Gameover_menu(Menu):
+	def __init__(self, g):
+		Menu.__init__(self, g)
+		self.text = Text_gameover_menu(g)
+
+		# def continue_level(g):
+		# 	g.player.lives -= 1
+		# 	g.player.continue_level(g)	# Remove in DEATH_MENU
+		# 	g.mode = F_GAME
+		# 	music.unpause()
+
+		# def restart_level(g):
+		# 	g.restart_level()
+		# 	g.mode = F_GAME
+		# 	music.rewind()
+		# 	music.play(-1)
+
+
+		def options_gameover(g):
+			print("Main options")
+
+		def main_menu(g):
+			g.mode = F_MAIN_MENU
+			music.load(os.path.join(media_folder, 'main_menu_music.wav'))
+			music.play(-1)
+
+		self.function = []
+		# self.function.insert(CONTINUE, continue_level)
+		# self.function.insert(RESTART_DEATH, restart_game)
+		self.function.insert(OPTIONS_GAMEOVER, options_gameover)
+		self.function.insert(MAIN_MENU_GAMEOVER, main_menu)

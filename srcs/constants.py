@@ -58,7 +58,7 @@ F_GAME = 1 << 0
 F_MAIN_MENU = 1 << 1
 F_LEVEL_MENU = 1 << 2
 F_DEATH_MENU = 1 << 3
-F_GAME_OVER = 1 << 4
+F_GAMEOVER_MENU = 1 << 4
 
 ## EVENT FREQUENCY
 PLAYER_SHOOT_FREQUENCY = 1000 / 20
@@ -107,12 +107,12 @@ MAIN_MENU = 4
 ## DEATH MENU				#
 REMAINING_LIVES = 1
 CONTINUE = 2
-#- - - - - - - - - - - - - -#
-GAME_OVER = 1
-SOUL_SELL = 2
-#- - - - - - - - - - - - - -#
 RESTART_DEATH = 3
 OPTIONS_DEATH = 4
 MAIN_MENU_DEATH = 5
+#---------------------------#
+## GAMEOVER MENU			#
+OPTIONS_GAMEOVER = 1
+MAIN_MENU_GAMEOVER = 2
 							#
 #############################

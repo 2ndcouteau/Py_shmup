@@ -11,7 +11,7 @@ from class_Player		import Player
 from class_Enemy		import Enemy
 from class_Menu			import Main_menu
 
-from constants			import (F_GAME, F_LEVEL_MENU, F_MAIN_MENU, F_DEATH_MENU, F_GAME_OVER,
+from constants			import (F_GAME, F_LEVEL_MENU, F_MAIN_MENU, F_DEATH_MENU, F_GAMEOVER_MENU,
 								UP, DOWN, RIGHT, LEFT,
 								MENU_INPUT_DELAY,
 								media_folder)
@@ -61,7 +61,7 @@ class Event():
 		if g.player.hp <= 0:
 			if g.player.lives == 0:
 				print("GAME_OVER")
-				g.mode = F_GAME_OVER
+				g.mode = F_GAMEOVER_MENU
 			else:
 				print("You Died")
 				g.mode = F_DEATH_MENU
@@ -164,6 +164,20 @@ class Event():
 				g.menu_timer = MENU_INPUT_DELAY
 
 
+	def gameover_menu(g, keys):
+		g.menu_timer -= g.dt
+		if g.menu_timer <= 0:
+			if keys[K_RETURN]:
+				g.gameover_menu.function[g.gameover_menu.text.new_pos - g.gameover_menu.text.offset_title_select](g)
+				g.menu_timer = MENU_INPUT_DELAY
+			if keys[K_UP]:
+				g.gameover_menu.text.move_up()
+				g.menu_timer = MENU_INPUT_DELAY
+			if keys[K_DOWN]:
+				g.gameover_menu.text.move_down()
+				g.menu_timer = MENU_INPUT_DELAY
+
+
 	def level_menu(g, keys):
 
 		if keys[K_r]:
@@ -200,6 +214,8 @@ class Event():
 		self.general(g, keys)
 		if (g.mode is F_GAME):
 			self.game(self, g, keys)
+		elif (g.mode is F_GAMEOVER_MENU):
+			self.gameover_menu(g, keys)
 		elif (g.mode is F_DEATH_MENU):
 			self.death_menu(g, keys)
 		elif (g.mode is F_LEVEL_MENU):

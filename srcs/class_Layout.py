@@ -73,6 +73,15 @@ class Layout():
 		g.death_menu.text.draw_text(g.window)
 		pygame.display.flip()
 
+	def draw_gameover_menu_sprites(self, g):
+
+		g.sprites_level_backgrounds.draw(g.window)
+
+		g.sprites_level_menu_backgrounds.draw(g.window)
+
+		g.gameover_menu.text.draw_text(g.window)
+		pygame.display.flip()
+
 	def draw_main_menu_sprites(self, g):
 
 

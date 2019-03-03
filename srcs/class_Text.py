@@ -13,7 +13,7 @@ from constants			import (Y_WINDOW, X_WINDOW,
 								TITLE_MENU, PLAY, OPTIONS_MAIN, QUIT,
 								RESUME, RESTART, OPTIONS_LEVEL, MAIN_MENU,
 								REMAINING_LIVES, CONTINUE, RESTART_DEATH, OPTIONS_DEATH, MAIN_MENU_DEATH,
-								SOUL_SELL, GAME_OVER
+								OPTIONS_GAMEOVER, MAIN_MENU_GAMEOVER
 								)
 
 
@@ -188,10 +188,25 @@ class Text_death_menu(Text, Text_menu):
 
 		self.len_all_text = len(self.all_text)
 
-	def update(self):
-		Text_menu.update(self)
-		self.all_text[REMAINING_LIVES] = Text_line(self.title_font_size, "{0} ship(s) left".format(self.g.player.lives), ((X_WINDOW / 2), (Y_WINDOW / 4) + 75), cx=True, cy=False)
+class Text_gameover_menu(Text, Text_menu):
+	def __init__(self, g):
+		Text.__init__(self)
+		self.g = g
+		self.offset_title_select = 1
+		Text_menu.__init__(self, self.offset_title_select)
 
+		self.title_font_size = 24
+		self.font_size = 12
+
+		self.all_text.insert(TITLE_MENU, Text_line(self.title_font_size, "! GAMEOVER !", ((X_WINDOW / 2), (Y_WINDOW / 4) + 10), cx=True, cy=False))
+
+		## Print time and Points  Message
+		# 	self.offset_title_select = 3
+		# self.all_text.insert(SOUL_SELL, Text_line(self.font_size, "* Sell your soul *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 0) - 15), cx=True, selected=False))
+		self.all_text.insert(OPTIONS_GAMEOVER, Text_line(self.font_size, "* Options *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 2) - 15), cx=True, selected=True))
+		self.all_text.insert(MAIN_MENU_GAMEOVER, Text_line(self.font_size, "* Main Menu *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 3) - 15), cx=True, selected=False))
+
+		self.len_all_text = len(self.all_text)
 
 
 class Text_main_menu(Text, Text_menu):
