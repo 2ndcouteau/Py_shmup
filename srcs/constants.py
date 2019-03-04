@@ -112,7 +112,9 @@ OPTIONS_DEATH = 4
 MAIN_MENU_DEATH = 5
 #---------------------------#
 ## GAMEOVER MENU			#
-OPTIONS_GAMEOVER = 1
-MAIN_MENU_GAMEOVER = 2
+SCORE_GAMEOVER = 1
+TIME_GAMEOVER = 2
+OPTIONS_GAMEOVER = 3
+MAIN_MENU_GAMEOVER = 4
 							#
 #############################

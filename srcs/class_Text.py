@@ -13,7 +13,7 @@ from constants			import (Y_WINDOW, X_WINDOW,
 								TITLE_MENU, PLAY, OPTIONS_MAIN, QUIT,
 								RESUME, RESTART, OPTIONS_LEVEL, MAIN_MENU,
 								REMAINING_LIVES, CONTINUE, RESTART_DEATH, OPTIONS_DEATH, MAIN_MENU_DEATH,
-								OPTIONS_GAMEOVER, MAIN_MENU_GAMEOVER
+								SCORE_GAMEOVER, TIME_GAMEOVER, OPTIONS_GAMEOVER, MAIN_MENU_GAMEOVER
 								)
 
 
@@ -137,9 +137,9 @@ class Text_game_level(Text, Text_game):
 		self.g = g
 
 		self.str_time = time.strftime("%M:%S.", time.gmtime(self.g.player.time)) + str(repr(self.g.player.time).split('.')[1][:3])
-		self.all_text.insert(POS_HP, Text_line(self.font_size, ' '.join(["Hp:", str(g.player.hp)]), (self.x_left_offset, Y_WINDOW - self.y_bottom_offset), cx=False, cy=False))
-		self.all_text.insert(POS_LIVES, Text_line(self.font_size, ' '.join(["Lifes:", str(g.player.lives)]), ((X_WINDOW - 100), Y_WINDOW - self.y_bottom_offset), cx=False, cy=False))
-		self.all_text.insert(POS_SCORE, Text_line(self.font_size, ' '.join(["Score:", str(g.player.score)]), (self.x_left_offset, 0), cx=False, cy=False))
+		self.all_text.insert(POS_HP, Text_line(self.font_size, "Hp: {0}".format(str(g.player.hp)), (self.x_left_offset, Y_WINDOW - self.y_bottom_offset), cx=False, cy=False))
+		self.all_text.insert(POS_LIVES, Text_line(self.font_size, "Lifes: {0}".format(str(g.player.lives)), ((X_WINDOW - 100), Y_WINDOW - self.y_bottom_offset), cx=False, cy=False))
+		self.all_text.insert(POS_SCORE, Text_line(self.font_size, "Score: {0}".format(str(g.player.score)), (self.x_left_offset, 0), cx=False, cy=False))
 		self.all_text.insert(POS_TIME, Text_line(self.font_size, "Time: {0}".format(self.str_time), ((X_WINDOW - self.x_right_time_offset), 0), cx=False, cy=False))
 
 		# self.all_text.append(Text_line(self.title_font_size, "- Menu -", ((X_WINDOW / 2), Y_WINDOW / 4), cx=True, cy=False))
@@ -192,21 +192,28 @@ class Text_gameover_menu(Text, Text_menu):
 	def __init__(self, g):
 		Text.__init__(self)
 		self.g = g
-		self.offset_title_select = 1
+		self.offset_title_select = 3
 		Text_menu.__init__(self, self.offset_title_select)
 
 		self.title_font_size = 24
 		self.font_size = 12
 
 		self.all_text.insert(TITLE_MENU, Text_line(self.title_font_size, "! GAMEOVER !", ((X_WINDOW / 2), (Y_WINDOW / 4) + 10), cx=True, cy=False))
-
+		self.all_text.insert(SCORE_GAMEOVER, Text_line(self.title_font_size, "SCORE : {0}".format(self.g.player.score), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 2) - 15), cx=True, cy=False))
+		self.all_text.insert(TIME_GAMEOVER, Text_line(self.title_font_size, "TIME : {0} ".format(self.g.text_game_level.str_time), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 35), cx=True, cy=False))
 		## Print time and Points  Message
 		# 	self.offset_title_select = 3
 		# self.all_text.insert(SOUL_SELL, Text_line(self.font_size, "* Sell your soul *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 0) - 15), cx=True, selected=False))
-		self.all_text.insert(OPTIONS_GAMEOVER, Text_line(self.font_size, "* Options *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 2) - 15), cx=True, selected=True))
-		self.all_text.insert(MAIN_MENU_GAMEOVER, Text_line(self.font_size, "* Main Menu *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 3) - 15), cx=True, selected=False))
+		self.all_text.insert(OPTIONS_GAMEOVER, Text_line(self.font_size, "* Options *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 1) - 15), cx=True, selected=True))
+		self.all_text.insert(MAIN_MENU_GAMEOVER, Text_line(self.font_size, "* Main Menu *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 2) - 15), cx=True, selected=False))
 
 		self.len_all_text = len(self.all_text)
+
+	def update(self):
+		Text_menu.update(self)
+		self.all_text[SCORE_GAMEOVER] = Text_line(self.title_font_size, "SCORE : {0}".format(self.g.player.score), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 2) - 15), cx=True, cy=False)
+		self.all_text[TIME_GAMEOVER] = Text_line(self.title_font_size, "TIME : {0} ".format(self.g.text_game_level.str_time), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 35), cx=True, cy=False)
+
 
 
 class Text_main_menu(Text, Text_menu):
