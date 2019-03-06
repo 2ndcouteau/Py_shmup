@@ -11,7 +11,7 @@ from class_Explosion	import Explosion
 from class_Player		import Player
 from class_Enemy		import Enemy
 from class_Background	import Level_background, Level_menu_background, Main_menu_background
-from class_Text			import Text_main_menu, Text_level_menu, Text_game_level
+from class_Text			import Text_main_menu, Text_level_menu, Text_level
 from class_Menu			import Main_menu, Level_menu, Death_menu, Gameover_menu
 
 from constants			import (X_WINDOW, Y_WINDOW,
@@ -119,8 +119,9 @@ class Game():
 		# Level_menu_text(self, "** Main menu **", (self.level_menu_backgrounds[1].rect.x, 0), cx=True)
 		# self.text_main_menu = Text_main_menu()
 		# self.text_level_menu = Text_level_menu()
-		self.text_game_level = Text_game_level(self)
+		# self.text_game_level = Text_game_level(self)
 
+		self.level_text = Text_level(self)
 		self.level_menu = Level_menu(self)
 		self.main_menu = Main_menu(self)
 		self.death_menu = Death_menu(self)
@@ -162,12 +163,12 @@ class Game():
 		collide_list = pygame.sprite.spritecollide(self.player, self.sprites_enemies, True)
 		# Check the list of collisions.
 		for x in collide_list:
-			self.player.hp -= HIT_SHIP_ENNEMIES
+			self.player.take_dammage(self, HIT_SHIP_ENNEMIES)
 			print("Player Collide with Enemies !")
 
 		collide_list = pygame.sprite.spritecollide(self.player, self.sprites_enemies_shoots, True)
 		for hit in collide_list:
-			self.player.hp -= HIT_SHOT_ENNEMIES
+			self.player.take_dammage(self, HIT_SHOT_ENNEMIES)
 			print("Enemies shots Collide with player !")
 			Explosion(self, hit.rect.center, 0)
 

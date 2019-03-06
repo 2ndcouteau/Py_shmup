@@ -23,7 +23,7 @@ class Layout():
 		if g.level_backgrounds[1].rect.y >= Y_WINDOW:
 			g.level_backgrounds[1].rect.y = -Y_WINDOW
 
-	def draw_game_sprites(self, g):
+	def draw_level_sprites(self, g):
 		# Draw All Spirte list
 		# g.all_sprites.draw(g.window)
 		g.sprites_level_backgrounds.draw(g.window)
@@ -43,7 +43,7 @@ class Layout():
 				# update() is faster than flip()
 			# pygame.display.update(g.all_sprites_list)
 
-		g.text_game_level.draw_text(g.window)
+		g.level_text.draw_text(g.window)
 		pygame.display.flip()
 
 	def draw_level_menu_sprites(self, g):

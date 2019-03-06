@@ -13,7 +13,8 @@ from constants		import (X_WINDOW,
 							PLAYER_HP,
 							PLAYER_LIVES,
 							ALLIES,
-							PLAYER_SHOOT_FREQUENCY)
+							PLAYER_SHOOT_FREQUENCY,
+							DAMAGE_UNVULNERABILITY_TIME)
 
 class Player(Entities):
 
@@ -21,10 +22,11 @@ class Player(Entities):
 		Entities.__init__(self, _hp = PLAYER_HP, _lives = PLAYER_LIVES, _speed = 15, _type = ALLIES)
 		self.name = "Player"
 
-		self.timer = 0
+		self.timer_shoot = 0
+		self.timer_damage = 0
 		self.sound_shoot = g.sound_shoot
 		self.sound_shoot.set_volume(0.5)
-
+		self.g = g
 
 		# Load image from media
 		self.image = IMG_PLAYER.convert_alpha()
@@ -47,8 +49,8 @@ class Player(Entities):
 		self.rect = self.rect.move(direction[0] * self.speed, direction[1] * self.speed)
 
 	def shoot(self, g):
-		self.timer -= g.dt
-		if self.timer <= 0:
+		self.timer_shoot -= g.dt
+		if self.timer_shoot <= 0:
 			Shoot(g, ALLIES, self.speed + 1, self.rect.centerx, self.rect.top)
 
 			self.sound_shoot.play()
@@ -56,7 +58,12 @@ class Player(Entities):
 			# print("nb_sound == " + str(self.sound_shoot.get_num_channels()))
 
 			# Reset the countdown timer to one second.
-			self.timer = PLAYER_SHOOT_FREQUENCY
+			self.timer_shoot = PLAYER_SHOOT_FREQUENCY
+
+	def take_dammage(self, g, dammage):
+		if self.timer_damage <= 0:
+			self.hp -= dammage
+			self.timer_damage = DAMAGE_UNVULNERABILITY_TIME
 
 	def init_game(self, g):
 		# Init player position and spec
@@ -64,11 +71,11 @@ class Player(Entities):
 		self.rect.y = Y_WINDOW - 150
 		self.hp = PLAYER_HP
 
-		if self.lives < 0:
-			self.start_time = time.time()
-			self.time = time.time()
-			self.score = 0
-			self.lives = PLAYER_LIVES
+		# if self.lives < 0:
+		self.start_time = time.time()
+		self.time = time.time()
+		self.score = 0
+		self.lives = PLAYER_LIVES
 
 		g.sprites_players.add(self)
 		g.all_sprites.add(self)
@@ -99,3 +106,4 @@ class Player(Entities):
 
 	def update(self):
 		self.time = time.time() - self.start_time
+		self.timer_damage -= self.g.dt

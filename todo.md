@@ -33,6 +33,15 @@ OK				explosion enemies
 		enemies
 			color by type
 
+1)	Event Animations
+	Change text for selectable options
+		for Music / Sfx :
+			On / Off
+			Progression bar for level selection options
+
+	Player
+		animation invulnerability
+
 	Collide
 		Manage hitbox
 
@@ -45,17 +54,6 @@ OK				explosion enemies
 	Print Informations
 		weapon
 
-0) !! Need to clean this object !! with menu version usage
-		self.text_game_level = Text_game_level(self)
-
-1) IN PROGRESS	make back-end for all informations
-	OK)	Main_menu
-	OK)	Level_menu
-	OK)	Death_menu
---		End_game_menu
-
-	--> Create a End_game_menu
-
 	Enemies
 		generate spwan salve formation
 			duo
@@ -63,10 +61,6 @@ OK				explosion enemies
 			line
 			delta formation
 			etc...
-
-	Player
-2)		invulnerability for seconds after took a shoot
-
 
 	Shoot class
 		generate salve
@@ -85,21 +79,8 @@ OK				explosion enemies
 		speed boost
 		slow motion time
 
-3)	MENU
+	MENU
 
-		Manage event with layout selection
-
-			in End_game_menu
-				Score
-				Restart game
-				Options
-				main_menu
-
-		Event Animations
-			Change text for selectable options
-				On / Off
-			Progression bar for level selection options
-				Music / Sfx
 
 	LEVEL
 		Level script management
@@ -158,6 +139,7 @@ DONE:
 		Clean and reduce Text method for menu in one class
 
 	MENU
+	Zoom the current text position
 		Main menu
 			Start
 			Options
@@ -167,12 +149,23 @@ DONE:
 			Restart
 			Options
 			Main menu
-		Zoom the current text position
+		Death_menu
+			Remaining Lives
+			Resume
+			Restart
+			Options
+			Main menu
+		End_game_menu
+			Score
+			Time
+			Options
+			Main menu
 
 
 	EVENT
 		Manage die
 			manage life, hp, score and time
+			remove current shots
 
 		Event Management in Menu
 			in level menu
@@ -200,6 +193,8 @@ DONE:
 		shoot()
 		Collide enemies management
 		Shoot frequency management
+		Invulnerability for seconds after took a shoot
+
 
 	ENEMIES
 		Class Enemy

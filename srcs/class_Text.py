@@ -79,6 +79,37 @@ class Text():
 		for text in self.all_text:
 			window.blit(text.image, text.rect)
 
+
+class Text_level(Text):
+	def __init__(self, g):
+		Text.__init__(self)
+
+		self.x_right_time_offset = 170
+		self.x_right_life_offset = 100
+		self.x_left_offset = 5
+		self.y_bottom_offset = 25
+
+		self.title_font_size = 24
+		self.font_size = 18
+		self.g = g
+
+		self.str_time = time.strftime("%M:%S.", time.gmtime(self.g.player.time)) + str(repr(self.g.player.time).split('.')[1][:3])
+		self.all_text.insert(POS_HP, Text_line(self.font_size, "Hp: {0}".format(str(g.player.hp)), (self.x_left_offset, Y_WINDOW - self.y_bottom_offset), cx=False, cy=False))
+		self.all_text.insert(POS_LIVES, Text_line(self.font_size, "Lifes: {0}".format(str(g.player.lives)), ((X_WINDOW - 100), Y_WINDOW - self.y_bottom_offset), cx=False, cy=False))
+		self.all_text.insert(POS_SCORE, Text_line(self.font_size, "Score: {0}".format(str(g.player.score)), (self.x_left_offset, 0), cx=False, cy=False))
+		self.all_text.insert(POS_TIME, Text_line(self.font_size, "Time: {0}".format(self.str_time), ((X_WINDOW - self.x_right_time_offset), 0), cx=False, cy=False))
+
+		# self.all_text.append(Text_line(self.title_font_size, "- Menu -", ((X_WINDOW / 2), Y_WINDOW / 4), cx=True, cy=False))
+		self.len_all_text = len(self.all_text)
+
+	def update(self):
+		self.str_time = time.strftime("%M:%S.", time.gmtime(self.g.player.time)) + str(repr(self.g.player.time).split('.')[1][:3])
+
+		self.all_text[POS_HP] = Text_line(self.font_size, ' '.join(["Hp: ", str(self.g.player.hp)]), (self.x_left_offset, Y_WINDOW - self.y_bottom_offset), cx=False, cy=False)
+		self.all_text[POS_LIVES] = Text_line(self.font_size, ' '.join(["Lifes: ", str(self.g.player.lives)]), ((X_WINDOW - self.x_right_life_offset), Y_WINDOW - self.y_bottom_offset), cx=False, cy=False)
+		self.all_text[POS_SCORE] = Text_line(self.font_size, ' '.join(["Score: ", str(self.g.player.score)]), (self.x_left_offset, 0), cx=False, cy=False)
+		self.all_text[POS_TIME] = Text_line(self.font_size, "Time: {0}".format(self.str_time), (X_WINDOW - self.x_right_time_offset, 0), cx=False, cy=False)
+
 class Text_menu():
 	def __init__(self, offset):
 		self.y_offset_pos = 50
@@ -109,41 +140,6 @@ class Text_menu():
 			self.all_text[self.new_pos].rect = self.all_text[self.new_pos].rect_big
 
 			self.prev_pos = self.new_pos
-
-
-class Text_game():
-	def __init__(self):
-		self.x_right_time_offset = 170
-		self.x_right_life_offset = 100
-		self.x_left_offset = 5
-		self.y_bottom_offset = 25
-
-	def update(self):
-		self.str_time = time.strftime("%M:%S.", time.gmtime(self.g.player.time)) + str(repr(self.g.player.time).split('.')[1][:3])
-
-		self.all_text[POS_HP] = Text_line(self.font_size, ' '.join(["Hp: ", str(self.g.player.hp)]), (self.x_left_offset, Y_WINDOW - self.y_bottom_offset), cx=False, cy=False)
-		self.all_text[POS_LIVES] = Text_line(self.font_size, ' '.join(["Lifes: ", str(self.g.player.lives)]), ((X_WINDOW - self.x_right_life_offset), Y_WINDOW - self.y_bottom_offset), cx=False, cy=False)
-		self.all_text[POS_SCORE] = Text_line(self.font_size, ' '.join(["Score: ", str(self.g.player.score)]), (self.x_left_offset, 0), cx=False, cy=False)
-		self.all_text[POS_TIME] = Text_line(self.font_size, "Time: {0}".format(self.str_time), (X_WINDOW - self.x_right_time_offset, 0), cx=False, cy=False)
-
-
-class Text_game_level(Text, Text_game):
-	def __init__(self, g):
-		Text.__init__(self)
-		Text_game.__init__(self)
-
-		self.title_font_size = 24
-		self.font_size = 18
-		self.g = g
-
-		self.str_time = time.strftime("%M:%S.", time.gmtime(self.g.player.time)) + str(repr(self.g.player.time).split('.')[1][:3])
-		self.all_text.insert(POS_HP, Text_line(self.font_size, "Hp: {0}".format(str(g.player.hp)), (self.x_left_offset, Y_WINDOW - self.y_bottom_offset), cx=False, cy=False))
-		self.all_text.insert(POS_LIVES, Text_line(self.font_size, "Lifes: {0}".format(str(g.player.lives)), ((X_WINDOW - 100), Y_WINDOW - self.y_bottom_offset), cx=False, cy=False))
-		self.all_text.insert(POS_SCORE, Text_line(self.font_size, "Score: {0}".format(str(g.player.score)), (self.x_left_offset, 0), cx=False, cy=False))
-		self.all_text.insert(POS_TIME, Text_line(self.font_size, "Time: {0}".format(self.str_time), ((X_WINDOW - self.x_right_time_offset), 0), cx=False, cy=False))
-
-		# self.all_text.append(Text_line(self.title_font_size, "- Menu -", ((X_WINDOW / 2), Y_WINDOW / 4), cx=True, cy=False))
-		self.len_all_text = len(self.all_text)
 
 
 class Text_level_menu(Text, Text_menu):
@@ -200,7 +196,7 @@ class Text_gameover_menu(Text, Text_menu):
 
 		self.all_text.insert(TITLE_MENU, Text_line(self.title_font_size, "! GAMEOVER !", ((X_WINDOW / 2), (Y_WINDOW / 4) + 10), cx=True, cy=False))
 		self.all_text.insert(SCORE_GAMEOVER, Text_line(self.title_font_size, "SCORE : {0}".format(self.g.player.score), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 2) - 15), cx=True, cy=False))
-		self.all_text.insert(TIME_GAMEOVER, Text_line(self.title_font_size, "TIME : {0} ".format(self.g.text_game_level.str_time), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 35), cx=True, cy=False))
+		self.all_text.insert(TIME_GAMEOVER, Text_line(self.title_font_size, "TIME : {0} ".format(self.g.level_text.str_time), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 35), cx=True, cy=False))
 		## Print time and Points  Message
 		# 	self.offset_title_select = 3
 		# self.all_text.insert(SOUL_SELL, Text_line(self.font_size, "* Sell your soul *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 0) - 15), cx=True, selected=False))
@@ -212,7 +208,7 @@ class Text_gameover_menu(Text, Text_menu):
 	def update(self):
 		Text_menu.update(self)
 		self.all_text[SCORE_GAMEOVER] = Text_line(self.title_font_size, "SCORE : {0}".format(self.g.player.score), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 2) - 15), cx=True, cy=False)
-		self.all_text[TIME_GAMEOVER] = Text_line(self.title_font_size, "TIME : {0} ".format(self.g.text_game_level.str_time), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 35), cx=True, cy=False)
+		self.all_text[TIME_GAMEOVER] = Text_line(self.title_font_size, "TIME : {0} ".format(self.g.level_text.str_time), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 35), cx=True, cy=False)
 
 
 

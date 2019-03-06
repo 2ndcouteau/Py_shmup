@@ -8,7 +8,7 @@ import pygame
 from pygame.mixer	import music
 
 # from class_Layout	import Layout
-from class_Text		import Text_main_menu, Text_level_menu, Text_game_level, Text_death_menu, Text_gameover_menu
+from class_Text		import Text_main_menu, Text_level_menu, Text_death_menu, Text_gameover_menu
 from constants		import (X_WINDOW, Y_WINDOW,
 							F_GAME, F_MAIN_MENU, F_LEVEL_MENU,
 							PLAY, OPTIONS_MAIN, QUIT,
@@ -101,8 +101,8 @@ class Death_menu(Menu):
 		self.text = Text_death_menu(g)
 
 		def continue_level(g):
+			g.continue_level()
 			g.player.lives -= 1
-			g.player.continue_level(g)	# Remove in DEATH_MENU
 			g.mode = F_GAME
 			music.unpause()
 
@@ -154,6 +154,7 @@ class Gameover_menu(Menu):
 			g.mode = F_MAIN_MENU
 			music.load(os.path.join(media_folder, 'main_menu_music.wav'))
 			music.play(-1)
+			g.player.init_game(g)
 
 		self.function = []
 		# self.function.insert(CONTINUE, continue_level)

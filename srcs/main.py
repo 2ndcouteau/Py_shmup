@@ -37,10 +37,11 @@ def main_loop(g):
 			g.collide_management()
 
 			g.sprites_explosions.update()
-			g.text_game_level.update()
-			Layout.draw_game_sprites(Layout, g)
+			# g.text_game_level.update()
+			g.level_text.update()
+			Layout.draw_level_sprites(Layout, g)
 
-		elif(g.mode is F_DEATH_MENU):
+		elif (g.mode is F_DEATH_MENU):
 			Layout.draw_death_menu_sprites(Layout, g)
 			Event.manage(Event, g)
 			g.death_menu.text.update()
@@ -49,16 +50,13 @@ def main_loop(g):
 			Layout.draw_gameover_menu_sprites(Layout, g)
 			Event.manage(Event, g)
 			g.gameover_menu.text.update()
-			#
-			# g.mode = F_LEVEL_MENU
 
 		elif (g.mode is F_LEVEL_MENU):
-			# Menu.level_menu(Menu, g)
 			Layout.draw_level_menu_sprites(Layout, g)
 			Event.manage(Event, g)
 			g.level_menu.text.update()
+
 		elif (g.mode is F_MAIN_MENU):
-			# Menu.main_menu(Menu, g)
 			Layout.draw_main_menu_sprites(Layout, g)
 			Event.manage(Event, g)
 			g.main_menu.text.update()
