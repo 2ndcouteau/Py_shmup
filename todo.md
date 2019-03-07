@@ -33,11 +33,8 @@ OK				explosion enemies
 		enemies
 			color by type
 
-1)	Event Animations
-	Change text for selectable options
-		for Music / Sfx :
-			On / Off
-			Progression bar for level selection options
+	SOUND:
+		Progression bar for level selection options
 
 	Player
 		animation invulnerability
@@ -161,6 +158,9 @@ DONE:
 			Options
 			Main menu
 
+	Change text for selectable options
+		for Music / Sfx :
+			On / Off
 
 	EVENT
 		Manage die
@@ -224,6 +224,14 @@ DONE:
 
 		Update sprites with new media
 
+	SOUND
+		Choose and implement sounds:
+			shots
+			explosions
+			music
+		Manage activation of sound in options
+			music
+			sfx (shots and menu sounds)
 
 	EXPLOSION
 		animation
