@@ -12,7 +12,7 @@ from class_Player		import Player
 from class_Enemy		import Enemy
 from class_Background	import Level_background, Level_menu_background, Main_menu_background
 from class_Text			import Text_main_menu, Text_level_menu, Text_level
-from class_Menu			import Main_menu, Level_menu, Death_menu, Gameover_menu
+from class_Menu			import Main_menu, Level_menu, Death_menu, Gameover_menu, Opt_level_menu
 
 from constants			import (X_WINDOW, Y_WINDOW,
 								ENEMIES_SPAWN_FREQUENCY, NEUTRALS_SPAWN_FREQUENCY,
@@ -66,10 +66,13 @@ class Game():
 
 		# self.music_channel_level = pygame.mixer.Channel(0)
 		# self.music_channel_main_menu = pygame.mixer.Channel()
+		self.opt_music = True
+		self.opt_sfx = True
 
 		music.load(os.path.join(media_folder, 'main_menu_music.wav'))
 		music.set_volume(0)
 		music.play(-1)
+
 
 		# self.music_level = pygame.mixer.Sound(os.path.join(media_folder, 'game_music.wav'))
 		# self.music_main_menu = pygame.mixer.music.load(os.path.join(media_folder, 'main_menu_music.wav'))
@@ -126,6 +129,7 @@ class Game():
 		self.main_menu = Main_menu(self)
 		self.death_menu = Death_menu(self)
 		self.gameover_menu = Gameover_menu(self)
+		self.opt_level_menu = Opt_level_menu(self)
 
 		# Main_menu_text(self, "* Menu *", (X_WINDOW / 2, Y_WINDOW /2), cx=True)
 

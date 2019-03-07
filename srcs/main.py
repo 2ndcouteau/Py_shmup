@@ -13,7 +13,7 @@ from class_Event	import Event
 from class_Layout	import Layout
 from class_Menu		import Menu #, Level_menu
 
-from constants		import (F_GAME, F_LEVEL_MENU, F_MAIN_MENU, F_DEATH_MENU, F_GAMEOVER_MENU)
+from constants		import F_GAME, F_LEVEL_MENU, F_MAIN_MENU, F_DEATH_MENU, F_GAMEOVER_MENU, F_OPTIONS_LEVEL
 
 def main_loop(g):
 	clock = pygame.time.Clock()
@@ -61,6 +61,10 @@ def main_loop(g):
 			Event.manage(Event, g)
 			g.main_menu.text.update()
 
+		elif (g.mode is F_OPTIONS_LEVEL):
+			Layout.draw_opt_level_menu_sprites(Layout, g)
+			Event.manage(Event, g)
+			g.opt_level_menu.text.update()
 
 
 

@@ -8,13 +8,14 @@ import pygame
 from pygame.mixer	import music
 
 # from class_Layout	import Layout
-from class_Text		import Text_main_menu, Text_level_menu, Text_death_menu, Text_gameover_menu
+from class_Text		import Text_main_menu, Text_level_menu, Text_death_menu, Text_gameover_menu, Text_opt_level_menu
 from constants		import (X_WINDOW, Y_WINDOW,
-							F_GAME, F_MAIN_MENU, F_LEVEL_MENU,
+							F_GAME, F_MAIN_MENU, F_LEVEL_MENU, F_OPTIONS_LEVEL,
 							PLAY, OPTIONS_MAIN, QUIT,
 							RESUME, RESTART, OPTIONS_LEVEL, MAIN_MENU,
 							CONTINUE, RESTART_DEATH, OPTIONS_DEATH, MAIN_MENU_DEATH,
 							OPTIONS_GAMEOVER, MAIN_MENU_GAMEOVER,
+							OPT_MUSIC, OPT_SFX, OPT_RETURN_MENU,
 							media_folder)
 
 
@@ -64,6 +65,32 @@ class Main_menu(Menu):
 	# 	Layout.draw_main_menu_sprites(Layout, g)
 
 
+class Opt_level_menu(Menu):
+	def __init__(self, g):
+		Menu.__init__(self, g)
+		self.text = Text_opt_level_menu(g)
+
+		def switch_sound(g):
+			if (g.opt_music == False):
+				g.opt_music = True
+			else :
+				g.opt_music = False
+
+		def switch_sfx(g):
+			if (g.opt_sfx == False):
+				g.opt_sfx = True
+			else :
+				g.opt_sfx = False
+
+		def return_level_menu(g):
+			g.mode = F_LEVEL_MENU
+
+
+		self.function = []
+		self.function.insert(OPT_MUSIC, switch_sound)
+		self.function.insert(OPT_SFX, switch_sfx)
+		self.function.insert(OPT_RETURN_MENU, return_level_menu)
+
 
 
 class Level_menu(Menu):
@@ -82,7 +109,7 @@ class Level_menu(Menu):
 			music.play(-1)
 
 		def options_level(g):
-			print("Level options")
+			g.mode = F_OPTIONS_LEVEL
 
 		def main_menu(g):
 			g.mode = F_MAIN_MENU

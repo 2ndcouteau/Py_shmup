@@ -59,6 +59,7 @@ F_MAIN_MENU = 1 << 1
 F_LEVEL_MENU = 1 << 2
 F_DEATH_MENU = 1 << 3
 F_GAMEOVER_MENU = 1 << 4
+F_OPTIONS_LEVEL = 1 << 5
 
 ## EVENT FREQUENCY
 PLAYER_SHOOT_FREQUENCY = 1000 / 20
@@ -117,5 +118,10 @@ SCORE_GAMEOVER = 1
 TIME_GAMEOVER = 2
 OPTIONS_GAMEOVER = 3
 MAIN_MENU_GAMEOVER = 4
-							#
+#---------------------------#
+## OPTIONS MENU				#
+OPT_MUSIC = 1
+OPT_SFX = 2
+OPT_RETURN_MENU = 3
+#---------------------------#
 #############################

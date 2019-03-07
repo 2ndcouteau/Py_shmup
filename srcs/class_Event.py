@@ -11,7 +11,7 @@ from class_Player		import Player
 from class_Enemy		import Enemy
 from class_Menu			import Main_menu
 
-from constants			import (F_GAME, F_LEVEL_MENU, F_MAIN_MENU, F_DEATH_MENU, F_GAMEOVER_MENU,
+from constants			import (F_GAME, F_LEVEL_MENU, F_MAIN_MENU, F_DEATH_MENU, F_GAMEOVER_MENU, F_OPTIONS_LEVEL,
 								UP, DOWN, RIGHT, LEFT,
 								MENU_INPUT_DELAY,
 								media_folder)
@@ -203,6 +203,24 @@ class Event():
 				g.menu_timer = MENU_INPUT_DELAY
 
 
+	def opt_level_menu(g, keys):
+
+		g.menu_timer -= g.dt
+		if g.menu_timer <= 0:
+			if keys[K_BACKSPACE]:
+				g.mode = F_LEVEL_MENU
+				g.menu_timer = MENU_INPUT_DELAY
+			if keys[K_RETURN]:
+				g.opt_level_menu.function[g.opt_level_menu.text.new_pos - g.opt_level_menu.text.offset_title_select](g)
+				g.menu_timer = MENU_INPUT_DELAY
+			if keys[K_UP]:
+				g.opt_level_menu.text.move_up()
+				g.menu_timer = MENU_INPUT_DELAY
+			if keys[K_DOWN]:
+				g.opt_level_menu.text.move_down()
+				g.menu_timer = MENU_INPUT_DELAY
+
+
 	def manage(self, g):
 		# g.timer_event -= g.dt
 		# if g.timer_event <= 0:
@@ -220,9 +238,12 @@ class Event():
 			self.death_menu(g, keys)
 		elif (g.mode is F_LEVEL_MENU):
 			self.level_menu(g, keys)
-		else:
+		elif (g.mode is F_OPTIONS_LEVEL):
+			self.opt_level_menu(g, keys)
+		elif (g.mode is F_MAIN_MENU):
 			self.main_menu(g, keys)
-
+		else :
+			print ("error input Event")
 
 
 

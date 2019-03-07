@@ -13,8 +13,14 @@ from constants			import (Y_WINDOW, X_WINDOW,
 								TITLE_MENU, PLAY, OPTIONS_MAIN, QUIT,
 								RESUME, RESTART, OPTIONS_LEVEL, MAIN_MENU,
 								REMAINING_LIVES, CONTINUE, RESTART_DEATH, OPTIONS_DEATH, MAIN_MENU_DEATH,
-								SCORE_GAMEOVER, TIME_GAMEOVER, OPTIONS_GAMEOVER, MAIN_MENU_GAMEOVER
+								SCORE_GAMEOVER, TIME_GAMEOVER, OPTIONS_GAMEOVER, MAIN_MENU_GAMEOVER,
+								OPT_MUSIC, OPT_SFX, OPT_RETURN_MENU,
 								)
+
+
+# class Text_opt(pygame.sprite.Sprite):
+# 	def __init__(self, font_size, text, pos, cx=False, cy=True, selected=False):
+# 		pygame.sprite.Sprite.__init__(self)
 
 
 class Text_line(pygame.sprite.Sprite):
@@ -205,11 +211,44 @@ class Text_gameover_menu(Text, Text_menu):
 
 		self.len_all_text = len(self.all_text)
 
+
 	def update(self):
 		Text_menu.update(self)
 		self.all_text[SCORE_GAMEOVER] = Text_line(self.title_font_size, "SCORE : {0}".format(self.g.player.score), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 2) - 15), cx=True, cy=False)
 		self.all_text[TIME_GAMEOVER] = Text_line(self.title_font_size, "TIME : {0} ".format(self.g.level_text.str_time), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 35), cx=True, cy=False)
 
+
+class Text_opt_level_menu(Text, Text_menu):
+	def __init__(self, g):
+		Text.__init__(self)
+		self.g = g
+		self.offset_title_select = 1
+		Text_menu.__init__(self, self.offset_title_select)
+
+		self.title_font_size = 24
+		self.font_size = 12
+
+		self.all_text.insert(TITLE_MENU, Text_line(self.title_font_size, "OPTIONS", ((X_WINDOW / 2), (Y_WINDOW / 4) + 10), cx=True, cy=False))
+		self.all_text.insert(OPT_MUSIC, Text_line(self.font_size, "MUSIC : {0}".format(self.music_state(g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 2) - 15), cx=True, cy=False, selected=True))
+		self.all_text.insert(OPT_SFX, Text_line(self.font_size, "SFX : {0}".format(self.sfx_state(g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 35), cx=True, cy=False))
+		self.all_text.insert(OPT_RETURN_MENU, Text_line(self.font_size, "RETURN", ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 4) - 35), cx=True, cy=False))
+
+		self.len_all_text = len(self.all_text)
+
+	def music_state(self, g):
+		if (g.opt_music is True):
+			return "ON"
+		return "OFF"
+
+	def sfx_state(self, g):
+		if (g.opt_sfx is True):
+			return "ON"
+		return "OFF"
+
+	def update(self):
+		self.all_text[OPT_MUSIC] = Text_line(self.font_size, "MUSIC : {0}".format(self.music_state(self.g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 2) - 35), cx=True, cy=False)
+		self.all_text[OPT_SFX] = Text_line(self.font_size, "SFX : {0}".format(self.sfx_state(self.g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 35), cx=True, cy=False)
+		Text_menu.update(self)
 
 
 class Text_main_menu(Text, Text_menu):
