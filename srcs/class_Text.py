@@ -17,12 +17,6 @@ from constants			import (Y_WINDOW, X_WINDOW,
 								OPT_MUSIC, OPT_SFX, OPT_RETURN_MENU,
 								)
 
-
-# class Text_opt(pygame.sprite.Sprite):
-# 	def __init__(self, font_size, text, pos, cx=False, cy=True, selected=False):
-# 		pygame.sprite.Sprite.__init__(self)
-
-
 class Text_line(pygame.sprite.Sprite):
 	def __init__(self, font_size, text, pos, cx=False, cy=True, selected=False):
 		pygame.sprite.Sprite.__init__(self)
@@ -105,7 +99,6 @@ class Text_level(Text):
 		self.all_text.insert(POS_SCORE, Text_line(self.font_size, "Score: {0}".format(str(g.player.score)), (self.x_left_offset, 0), cx=False, cy=False))
 		self.all_text.insert(POS_TIME, Text_line(self.font_size, "Time: {0}".format(self.str_time), ((X_WINDOW - self.x_right_time_offset), 0), cx=False, cy=False))
 
-		# self.all_text.append(Text_line(self.title_font_size, "- Menu -", ((X_WINDOW / 2), Y_WINDOW / 4), cx=True, cy=False))
 		self.len_all_text = len(self.all_text)
 
 	def update(self):
@@ -136,8 +129,6 @@ class Text_menu():
 			self.new_pos = self.offset
 
 	def update(self):
-		# self.draw_text()
-
 		if self.prev_pos != self.new_pos:
 			self.all_text[self.prev_pos].image = self.all_text[self.prev_pos].image_low
 			self.all_text[self.prev_pos].rect = self.all_text[self.prev_pos].rect_low
@@ -203,9 +194,6 @@ class Text_gameover_menu(Text, Text_menu):
 		self.all_text.insert(TITLE_MENU, Text_line(self.title_font_size, "! GAMEOVER !", ((X_WINDOW / 2), (Y_WINDOW / 4) + 10), cx=True, cy=False))
 		self.all_text.insert(SCORE_GAMEOVER, Text_line(self.title_font_size, "SCORE : {0}".format(self.g.player.score), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 2) - 15), cx=True, cy=False))
 		self.all_text.insert(TIME_GAMEOVER, Text_line(self.title_font_size, "TIME : {0} ".format(self.g.level_text.str_time), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 35), cx=True, cy=False))
-		## Print time and Points  Message
-		# 	self.offset_title_select = 3
-		# self.all_text.insert(SOUL_SELL, Text_line(self.font_size, "* Sell your soul *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 0) - 15), cx=True, selected=False))
 		self.all_text.insert(OPTIONS_GAMEOVER, Text_line(self.font_size, "* Options *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 1) - 15), cx=True, selected=True))
 		self.all_text.insert(MAIN_MENU_GAMEOVER, Text_line(self.font_size, "* Main Menu *", ((X_WINDOW / 2), (Y_WINDOW / 2) + (self.y_offset_pos * 2) - 15), cx=True, selected=False))
 
@@ -229,9 +217,9 @@ class Text_opt_level_menu(Text, Text_menu):
 		self.font_size = 12
 
 		self.all_text.insert(TITLE_MENU, Text_line(self.title_font_size, "OPTIONS", ((X_WINDOW / 2), (Y_WINDOW / 4) + 10), cx=True, cy=False))
-		self.all_text.insert(OPT_MUSIC, Text_line(self.font_size, "MUSIC : {0}".format(self.music_state(g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 2) - 15), cx=True, cy=False, selected=True))
-		self.all_text.insert(OPT_SFX, Text_line(self.font_size, "SFX : {0}".format(self.sfx_state(g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 35), cx=True, cy=False))
-		self.all_text.insert(OPT_RETURN_MENU, Text_line(self.font_size, "RETURN", ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 4) - 35), cx=True, cy=False))
+		self.all_text.insert(OPT_MUSIC, Text_line(self.font_size, "MUSIC : {0}".format(self.music_state(g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 15), cx=True, cy=False, selected=True))
+		self.all_text.insert(OPT_SFX, Text_line(self.font_size, "SFX : {0}".format(self.sfx_state(g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 4) - 15), cx=True, cy=False))
+		self.all_text.insert(OPT_RETURN_MENU, Text_line(self.font_size, "RETURN", ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 6) - 15), cx=True, cy=False))
 
 		self.len_all_text = len(self.all_text)
 
@@ -246,9 +234,16 @@ class Text_opt_level_menu(Text, Text_menu):
 		return "OFF"
 
 	def update(self):
-		self.all_text[OPT_MUSIC] = Text_line(self.font_size, "MUSIC : {0}".format(self.music_state(self.g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 2) - 35), cx=True, cy=False)
-		self.all_text[OPT_SFX] = Text_line(self.font_size, "SFX : {0}".format(self.sfx_state(self.g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 35), cx=True, cy=False)
 		Text_menu.update(self)
+		if (self.new_pos == OPT_MUSIC):
+			self.all_text[OPT_MUSIC] = Text_line(self.font_size, "MUSIC : {0}".format(self.music_state(self.g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 15), cx=True, cy=False, selected=True)
+			self.all_text[OPT_SFX] = Text_line(self.font_size, "SFX : {0}".format(self.sfx_state(self.g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 4) - 15), cx=True, cy=False)
+		elif (self.new_pos == OPT_SFX) :
+			self.all_text[OPT_MUSIC] = Text_line(self.font_size, "MUSIC : {0}".format(self.music_state(self.g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 15), cx=True, cy=False)
+			self.all_text[OPT_SFX] = Text_line(self.font_size, "SFX : {0}".format(self.sfx_state(self.g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 4) - 15), cx=True, cy=False, selected=True)
+		else :
+			self.all_text[OPT_MUSIC] = Text_line(self.font_size, "MUSIC : {0}".format(self.music_state(self.g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 15), cx=True, cy=False)
+			self.all_text[OPT_SFX] = Text_line(self.font_size, "SFX : {0}".format(self.sfx_state(self.g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 4) - 15), cx=True, cy=False)
 
 
 class Text_main_menu(Text, Text_menu):

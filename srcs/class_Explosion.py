@@ -20,7 +20,8 @@ class Explosion(pygame.sprite.Sprite):
 		self.image = g.explosion_imgs[self.explosion_style][0]
 		self.sound = g.sound_explosion
 		self.sound.set_volume(0.5)
-		self.sound.play()
+		if (g.opt_sfx == True):
+			self.sound.play()
 
 		# print(self.image)
 

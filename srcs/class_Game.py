@@ -70,7 +70,7 @@ class Game():
 		self.opt_sfx = True
 
 		music.load(os.path.join(media_folder, 'main_menu_music.wav'))
-		music.set_volume(0)
+		music.set_volume(100)
 		music.play(-1)
 
 

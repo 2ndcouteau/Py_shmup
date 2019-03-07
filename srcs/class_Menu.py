@@ -10,7 +10,7 @@ from pygame.mixer	import music
 # from class_Layout	import Layout
 from class_Text		import Text_main_menu, Text_level_menu, Text_death_menu, Text_gameover_menu, Text_opt_level_menu
 from constants		import (X_WINDOW, Y_WINDOW,
-							F_GAME, F_MAIN_MENU, F_LEVEL_MENU, F_OPTIONS_LEVEL,
+							F_GAME, F_LEVEL_MENU, F_MAIN_MENU, F_DEATH_MENU, F_GAMEOVER_MENU, F_OPTIONS_LEVEL,
 							PLAY, OPTIONS_MAIN, QUIT,
 							RESUME, RESTART, OPTIONS_LEVEL, MAIN_MENU,
 							CONTINUE, RESTART_DEATH, OPTIONS_DEATH, MAIN_MENU_DEATH,
@@ -43,8 +43,9 @@ class Main_menu(Menu):
 			g.restart_game() ## Init_game() with some differente base value
 			g.mode = F_GAME
 			# g.main_menu_music.pause()
-			music.load(os.path.join(media_folder, 'game_music.wav'))
-			music.play(-1)
+			if (g.opt_music == True):
+				music.load(os.path.join(media_folder, 'game_music.wav'))
+				music.play(-1)
 			# g.music_level.play(-1)
 			print("Play Game")
 
@@ -83,7 +84,8 @@ class Opt_level_menu(Menu):
 				g.opt_sfx = False
 
 		def return_level_menu(g):
-			g.mode = F_LEVEL_MENU
+			g.mode = g.previous_mode
+			g.previous_mode = F_OPTIONS_LEVEL
 
 
 		self.function = []
@@ -100,21 +102,25 @@ class Level_menu(Menu):
 
 		def resume_level(g):
 			g.mode = F_GAME
-			music.unpause()
+			if (g.opt_music == True):
+				music.unpause()
 
 		def restart_level(g):
 			g.restart_level()
 			g.mode = F_GAME
-			music.rewind()
-			music.play(-1)
+			if (g.opt_music == True):
+				music.rewind()
+				music.play(-1)
 
 		def options_level(g):
+			g.previous_mode = F_LEVEL_MENU
 			g.mode = F_OPTIONS_LEVEL
 
 		def main_menu(g):
 			g.mode = F_MAIN_MENU
-			music.load(os.path.join(media_folder, 'main_menu_music.wav'))
-			music.play(-1)
+			if (g.opt_music == True):
+				music.load(os.path.join(media_folder, 'main_menu_music.wav'))
+				music.play(-1)
 
 		self.function = []
 		self.function.insert(RESUME, resume_level)
@@ -131,23 +137,28 @@ class Death_menu(Menu):
 			g.continue_level()
 			g.player.lives -= 1
 			g.mode = F_GAME
-			music.unpause()
+			if (g.opt_music == True):
+				music.unpause()
 
 		def restart_level(g):
 			g.restart_level()
 			g.mode = F_GAME
-			music.rewind()
-			music.play(-1)
+			if (g.opt_music == True):
+				music.rewind()
+				music.play(-1)
 
 
 		def options(g):
-			print("Main options")
+			g.previous_mode = F_DEATH_MENU
+			g.mode = F_OPTIONS_LEVEL
 
 
 		def main_menu(g):
+			g.previous_mode = F_DEATH_MENU
 			g.mode = F_MAIN_MENU
-			music.load(os.path.join(media_folder, 'main_menu_music.wav'))
-			music.play(-1)
+			if (g.opt_music == True):
+				music.load(os.path.join(media_folder, 'main_menu_music.wav'))
+				music.play(-1)
 
 		self.function = []
 		self.function.insert(CONTINUE, continue_level)
@@ -175,12 +186,15 @@ class Gameover_menu(Menu):
 
 
 		def options_gameover(g):
-			print("Main options")
+			g.previous_mode = F_GAMEOVER_MENU
+			g.mode = F_OPTIONS_LEVEL
 
 		def main_menu(g):
+			g.previous_mode = F_GAMEOVER_MENU
 			g.mode = F_MAIN_MENU
-			music.load(os.path.join(media_folder, 'main_menu_music.wav'))
-			music.play(-1)
+			if (g.opt_music == True):
+				music.load(os.path.join(media_folder, 'main_menu_music.wav'))
+				music.play(-1)
 			g.player.init_game(g)
 
 		self.function = []

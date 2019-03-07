@@ -53,7 +53,8 @@ class Player(Entities):
 		if self.timer_shoot <= 0:
 			Shoot(g, ALLIES, self.speed + 1, self.rect.centerx, self.rect.top)
 
-			self.sound_shoot.play()
+			if (g.opt_sfx == True):
+				self.sound_shoot.play()
 			# self.sound_shoot[randint(0, 5)].play()
 			# print("nb_sound == " + str(self.sound_shoot.get_num_channels()))
 
