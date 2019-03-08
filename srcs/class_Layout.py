@@ -5,8 +5,8 @@ import pygame
 from pygame.locals	import *
 
 from class_Background	import Background
-from constants			import (Y_WINDOW,
-								X_WINDOW,
+from constants			import (Y_WINDOW, X_WINDOW,
+								F_MAIN_MENU,
 								FONT)
 
 class Layout():
@@ -63,11 +63,13 @@ class Layout():
 
 	def draw_opt_level_menu_sprites(self, g):
 
-		g.sprites_level_backgrounds.draw(g.window)
-		g.sprites_players.draw(g.window)
-		g.sprites_enemies.draw(g.window)
-
-		g.sprites_level_menu_backgrounds.draw(g.window)
+		if (g.previous_mode == F_MAIN_MENU) :
+			g.sprites_main_menu_backgrounds.draw(g.window)
+		else :
+			g.sprites_level_backgrounds.draw(g.window)
+			g.sprites_players.draw(g.window)
+			g.sprites_enemies.draw(g.window)
+			g.sprites_level_menu_backgrounds.draw(g.window)
 
 		g.opt_level_menu.text.draw_text(g.window)
 		pygame.display.flip()

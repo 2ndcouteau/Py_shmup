@@ -77,7 +77,9 @@ OK				explosion enemies
 		slow motion time
 
 	MENU
+1)		Option Main Menu
 
+		Add option auto shoot
 
 	LEVEL
 		Level script management

@@ -25,6 +25,12 @@ class Menu():
 	def __init__(self, g):
 		self.toto = 0
 
+	def load_music(self, g, music_name):
+		music.load(os.path.join(media_folder, music_name))
+		music.play(-1)
+		if (g.opt_music == False):
+			music.pause()
+
 
 	# def level_menu(self, g): # run
 	# 	Event.manage(Event, g)
@@ -42,15 +48,11 @@ class Main_menu(Menu):
 		def play_game(g):
 			g.restart_game() ## Init_game() with some differente base value
 			g.mode = F_GAME
-			# g.main_menu_music.pause()
-			if (g.opt_music == True):
-				music.load(os.path.join(media_folder, 'game_music.wav'))
-				music.play(-1)
-			# g.music_level.play(-1)
-			print("Play Game")
+			self.load_music(g, 'game_music.wav')
 
 		def options_main(g):
-			print("Main options")
+			g.previous_mode = F_MAIN_MENU
+			g.mode = F_OPTIONS_LEVEL
 
 		def quit(g):
 			exit()
@@ -74,8 +76,14 @@ class Opt_level_menu(Menu):
 		def switch_sound(g):
 			if (g.opt_music == False):
 				g.opt_music = True
+				if (g.previous_mode == F_MAIN_MENU):
+					# music.play(-1)
+					music.rewind()
+					music.unpause()
+				# else :
 			else :
 				g.opt_music = False
+				music.pause()
 
 		def switch_sfx(g):
 			if (g.opt_sfx == False):
@@ -108,8 +116,8 @@ class Level_menu(Menu):
 		def restart_level(g):
 			g.restart_level()
 			g.mode = F_GAME
+			music.rewind()
 			if (g.opt_music == True):
-				music.rewind()
 				music.play(-1)
 
 		def options_level(g):
@@ -118,9 +126,7 @@ class Level_menu(Menu):
 
 		def main_menu(g):
 			g.mode = F_MAIN_MENU
-			if (g.opt_music == True):
-				music.load(os.path.join(media_folder, 'main_menu_music.wav'))
-				music.play(-1)
+			self.load_music(g, 'main_menu_music.wav')
 
 		self.function = []
 		self.function.insert(RESUME, resume_level)
@@ -143,8 +149,8 @@ class Death_menu(Menu):
 		def restart_level(g):
 			g.restart_level()
 			g.mode = F_GAME
+			music.rewind()
 			if (g.opt_music == True):
-				music.rewind()
 				music.play(-1)
 
 
@@ -156,9 +162,7 @@ class Death_menu(Menu):
 		def main_menu(g):
 			g.previous_mode = F_DEATH_MENU
 			g.mode = F_MAIN_MENU
-			if (g.opt_music == True):
-				music.load(os.path.join(media_folder, 'main_menu_music.wav'))
-				music.play(-1)
+			self.load_music(g, 'main_menu_music.wav')
 
 		self.function = []
 		self.function.insert(CONTINUE, continue_level)
@@ -192,9 +196,7 @@ class Gameover_menu(Menu):
 		def main_menu(g):
 			g.previous_mode = F_GAMEOVER_MENU
 			g.mode = F_MAIN_MENU
-			if (g.opt_music == True):
-				music.load(os.path.join(media_folder, 'main_menu_music.wav'))
-				music.play(-1)
+			self.load_music(g, 'main_menu_music.wav')
 			g.player.init_game(g)
 
 		self.function = []

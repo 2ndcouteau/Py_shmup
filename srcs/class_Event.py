@@ -216,7 +216,8 @@ class Event():
 		if g.menu_timer <= 0:
 
 			if keys[K_BACKSPACE]:
-				g.mode = F_LEVEL_MENU
+				g.mode = g.previous_mode
+				g.previous_mode = F_OPTIONS_LEVEL
 				g.menu_timer = MENU_INPUT_DELAY
 
 			if keys[K_LEFT] or keys[K_RIGHT]:
