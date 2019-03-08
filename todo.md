@@ -52,7 +52,7 @@ OK				explosion enemies
 		weapon
 
 	Enemies
-		generate spwan salve formation
+		generate spawn salve formation
 			duo
 			triple
 			line
@@ -77,9 +77,6 @@ OK				explosion enemies
 		slow motion time
 
 	MENU
-1)		Option Main Menu
-
-		Add option auto shoot
 
 	LEVEL
 		Level script management
@@ -90,13 +87,12 @@ DONE:
 
 
 	Clean all the Code
-		Oject style organisation
+		Object style organization
 		Create multiple files structures
-
 
 	GAME
 		Display background
-			postion
+			position
 			scale
 		Display player
 			position
@@ -104,11 +100,11 @@ DONE:
 			scale
 		Manage Input:
 			manage multiple inputs
-			manage inputs in differentes modes
+			manage inputs in different modes
 		Manage game frequency
 		Manage Collide with border
 
-		Interuption Management (Futur Menu)
+		Interruption Management (Future Menu)
 			Pause
 			Die Management
 			Restart Game Management
@@ -159,9 +155,11 @@ DONE:
 			Time
 			Options
 			Main menu
+		Option Main Menu
+
 
 	Change text for selectable options
-		for Music / Sfx :
+		for Music / Sfx / Auto_shoot :
 			On / Off
 
 	EVENT
@@ -196,6 +194,7 @@ DONE:
 		Collide enemies management
 		Shoot frequency management
 		Invulnerability for seconds after took a shoot
+		Auto_shoot
 
 
 	ENEMIES
@@ -204,7 +203,7 @@ DONE:
 			move()
 			delete(), if go too out the window
 		Manage x position at the creation to stay in the window
-		Need to generate regulary
+		Need to generate regularly
 			manage number
 			manage frequency
 		Pseudo random spawn frequency
