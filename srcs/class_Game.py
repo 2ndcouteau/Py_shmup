@@ -68,6 +68,8 @@ class Game():
 		# self.music_channel_main_menu = pygame.mixer.Channel()
 		self.opt_music = True
 		self.opt_sfx = True
+		self.opt_autoshoot = False
+
 
 		music.load(os.path.join(media_folder, 'main_menu_music.wav'))
 		music.set_volume(100)

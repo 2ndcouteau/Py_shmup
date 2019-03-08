@@ -15,7 +15,7 @@ from constants		import (X_WINDOW, Y_WINDOW,
 							RESUME, RESTART, OPTIONS_LEVEL, MAIN_MENU,
 							CONTINUE, RESTART_DEATH, OPTIONS_DEATH, MAIN_MENU_DEATH,
 							OPTIONS_GAMEOVER, MAIN_MENU_GAMEOVER,
-							OPT_MUSIC, OPT_SFX, OPT_RETURN_MENU,
+							OPT_MUSIC, OPT_SFX, OPT_AUTOSHOOT, OPT_RETURN_MENU,
 							media_folder)
 
 
@@ -91,6 +91,12 @@ class Opt_level_menu(Menu):
 			else :
 				g.opt_sfx = False
 
+		def switch_autoshoot(g):
+			if (g.opt_autoshoot == False):
+				g.opt_autoshoot = True
+			else :
+				g.opt_autoshoot = False
+
 		def return_level_menu(g):
 			g.mode = g.previous_mode
 			g.previous_mode = F_OPTIONS_LEVEL
@@ -99,6 +105,7 @@ class Opt_level_menu(Menu):
 		self.function = []
 		self.function.insert(OPT_MUSIC, switch_sound)
 		self.function.insert(OPT_SFX, switch_sfx)
+		self.function.insert(OPT_AUTOSHOOT, switch_autoshoot)
 		self.function.insert(OPT_RETURN_MENU, return_level_menu)
 
 

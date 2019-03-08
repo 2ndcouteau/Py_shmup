@@ -108,3 +108,5 @@ class Player(Entities):
 	def update(self):
 		self.time = time.time() - self.start_time
 		self.timer_damage -= self.g.dt
+		if (self.g.opt_autoshoot == True):
+			self.shoot(self.g)

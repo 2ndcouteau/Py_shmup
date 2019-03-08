@@ -47,7 +47,7 @@ class Event():
 			K_e: [self.k_e, g],
 			K_BACKSPACE: [self.k_backspace, g],	# change to load_menu()
 			K_RETURN: [print, "Entrée", "ENTER"],
-			K_SPACE: [g.player.shoot, g],
+			K_SPACE: [self.shoot, g],
 			K_b: [print, "Bomb"],
 			K_UP: [g.player.move, UP],
 			K_DOWN: [g.player.move, DOWN],
@@ -73,6 +73,10 @@ class Event():
 		for input, func in game_event.items():
 			if keys[input]:
 				func[0](*func[1:])
+
+	def	shoot(g):
+		if (g.opt_autoshoot == False):
+			g.player.shoot(g)
 
 	def k_backspace(g):
 		g.mode = F_LEVEL_MENU	# change to load_menu()

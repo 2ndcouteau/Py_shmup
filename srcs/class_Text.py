@@ -14,7 +14,7 @@ from constants			import (Y_WINDOW, X_WINDOW,
 								RESUME, RESTART, OPTIONS_LEVEL, MAIN_MENU,
 								REMAINING_LIVES, CONTINUE, RESTART_DEATH, OPTIONS_DEATH, MAIN_MENU_DEATH,
 								SCORE_GAMEOVER, TIME_GAMEOVER, OPTIONS_GAMEOVER, MAIN_MENU_GAMEOVER,
-								OPT_MUSIC, OPT_SFX, OPT_RETURN_MENU,
+								OPT_MUSIC, OPT_SFX, OPT_AUTOSHOOT, OPT_RETURN_MENU,
 								)
 
 class Text_line(pygame.sprite.Sprite):
@@ -217,33 +217,38 @@ class Text_opt_level_menu(Text, Text_menu):
 		self.font_size = 12
 
 		self.all_text.insert(TITLE_MENU, Text_line(self.title_font_size, "OPTIONS", ((X_WINDOW / 2), (Y_WINDOW / 4) + 10), cx=True, cy=False))
-		self.all_text.insert(OPT_MUSIC, Text_line(self.font_size, "MUSIC : {0}".format(self.music_state(g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 15), cx=True, cy=False, selected=True))
-		self.all_text.insert(OPT_SFX, Text_line(self.font_size, "SFX : {0}".format(self.sfx_state(g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 4) - 15), cx=True, cy=False))
+		self.all_text.insert(OPT_MUSIC, Text_line(self.font_size, "MUSIC : {0}".format(self.check_state(g.opt_music)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 15), cx=True, cy=False, selected=True))
+		self.all_text.insert(OPT_SFX, Text_line(self.font_size, "SFX : {0}".format(self.check_state(g.opt_sfx)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 4) - 15), cx=True, cy=False))
+		self.all_text.insert(OPT_AUTOSHOOT, Text_line(self.font_size, "AUTOSHOOT : {0}".format(self.check_state(g.opt_autoshoot)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 5) - 15), cx=True, cy=False))
+
 		self.all_text.insert(OPT_RETURN_MENU, Text_line(self.font_size, "RETURN", ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 6) - 15), cx=True, cy=False))
+
 
 		self.len_all_text = len(self.all_text)
 
-	def music_state(self, g):
-		if (g.opt_music is True):
-			return "ON"
-		return "OFF"
-
-	def sfx_state(self, g):
-		if (g.opt_sfx is True):
+	def check_state(self, state):
+		if (state is True):
 			return "ON"
 		return "OFF"
 
 	def update(self):
 		Text_menu.update(self)
 		if (self.new_pos == OPT_MUSIC):
-			self.all_text[OPT_MUSIC] = Text_line(self.font_size, "MUSIC : {0}".format(self.music_state(self.g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 15), cx=True, cy=False, selected=True)
-			self.all_text[OPT_SFX] = Text_line(self.font_size, "SFX : {0}".format(self.sfx_state(self.g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 4) - 15), cx=True, cy=False)
+			self.all_text[OPT_MUSIC] = Text_line(self.font_size, "MUSIC : {0}".format(self.check_state(self.g.opt_music)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 15), cx=True, cy=False, selected=True)
+			self.all_text[OPT_SFX] = Text_line(self.font_size, "SFX : {0}".format(self.check_state(self.g.opt_sfx)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 4) - 15), cx=True, cy=False)
+			self.all_text[OPT_AUTOSHOOT] = Text_line(self.font_size, "AUTOSHOOT : {0}".format(self.check_state(self.g.opt_autoshoot)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 5) - 15), cx=True, cy=False)
 		elif (self.new_pos == OPT_SFX) :
-			self.all_text[OPT_MUSIC] = Text_line(self.font_size, "MUSIC : {0}".format(self.music_state(self.g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 15), cx=True, cy=False)
-			self.all_text[OPT_SFX] = Text_line(self.font_size, "SFX : {0}".format(self.sfx_state(self.g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 4) - 15), cx=True, cy=False, selected=True)
+			self.all_text[OPT_MUSIC] = Text_line(self.font_size, "MUSIC : {0}".format(self.check_state(self.g.opt_music)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 15), cx=True, cy=False)
+			self.all_text[OPT_SFX] = Text_line(self.font_size, "SFX : {0}".format(self.check_state(self.g.opt_sfx)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 4) - 15), cx=True, cy=False, selected=True)
+			self.all_text[OPT_AUTOSHOOT] = Text_line(self.font_size, "AUTOSHOOT : {0}".format(self.check_state(self.g.opt_autoshoot)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 5) - 15), cx=True, cy=False)
+		elif (self.new_pos == OPT_AUTOSHOOT) :
+			self.all_text[OPT_MUSIC] = Text_line(self.font_size, "MUSIC : {0}".format(self.check_state(self.g.opt_music)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 15), cx=True, cy=False)
+			self.all_text[OPT_SFX] = Text_line(self.font_size, "SFX : {0}".format(self.check_state(self.g.opt_sfx)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 4) - 15), cx=True, cy=False)
+			self.all_text[OPT_AUTOSHOOT] = Text_line(self.font_size, "AUTOSHOOT : {0}".format(self.check_state(self.g.opt_autoshoot)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 5) - 15), cx=True, cy=False, selected=True)
 		else :
-			self.all_text[OPT_MUSIC] = Text_line(self.font_size, "MUSIC : {0}".format(self.music_state(self.g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 15), cx=True, cy=False)
-			self.all_text[OPT_SFX] = Text_line(self.font_size, "SFX : {0}".format(self.sfx_state(self.g)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 4) - 15), cx=True, cy=False)
+			self.all_text[OPT_MUSIC] = Text_line(self.font_size, "MUSIC : {0}".format(self.check_state(self.g.opt_music)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 3) - 15), cx=True, cy=False)
+			self.all_text[OPT_SFX] = Text_line(self.font_size, "SFX : {0}".format(self.check_state(self.g.opt_sfx)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 4) - 15), cx=True, cy=False)
+			self.all_text[OPT_AUTOSHOOT] = Text_line(self.font_size, "AUTOSHOOT : {0}".format(self.check_state(self.g.opt_autoshoot)), ((X_WINDOW / 2), (Y_WINDOW / 4) + (self.y_offset_pos * 5) - 15), cx=True, cy=False)
 
 
 class Text_main_menu(Text, Text_menu):

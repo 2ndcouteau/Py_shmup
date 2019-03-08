@@ -122,6 +122,7 @@ MAIN_MENU_GAMEOVER = 4
 ## OPTIONS MENU				#
 OPT_MUSIC = 1
 OPT_SFX = 2
-OPT_RETURN_MENU = 3
+OPT_AUTOSHOOT = 3
+OPT_RETURN_MENU = 4
 #---------------------------#
 #############################
