@@ -31,8 +31,9 @@ IMG_MAIN_MENU_BACKGROUND = pygame.image.load(os.path.join(media_folder, 'menu_sp
 IMG_LEVEL_MENU_BACKGROUND_FULL = pygame.Surface((X_WINDOW, Y_WINDOW))
 IMG_LEVEL_MENU_BACKGROUND_TIER = pygame.Surface((int(X_WINDOW / 2), int(Y_WINDOW / 2)))
 
-
 IMG_PLAYER = pygame.image.load(os.path.join(media_folder, "SF06.png"))
+IMG_PLAYER_SPRITES = pygame.image.load(os.path.join(media_folder, "SF06a_strip60.png"))
+
 IMG_LASER_PLAYER = pygame.image.load(os.path.join(media_folder, "laserBlue.png"))
 IMG_LASER_ENEMY = pygame.image.load(os.path.join(media_folder, "laserRed.png"))
 
@@ -71,8 +72,9 @@ NEUTRALS_SPAWN_FREQUENCY = 1000
 MENU_INPUT_DELAY = 125
 
 EXPLOSION_FRAME_RATE = 1000 / 60
+PLAYER_FRAME_RATE = 1000 / 60
 
-DAMAGE_UNVULNERABILITY_TIME = 0 # 750
+DAMAGE_UNVULNERABILITY_TIME = 1000000 # 750
 
 ## DEFAULT CARACTERISTICS
 PLAYER_HP = 100

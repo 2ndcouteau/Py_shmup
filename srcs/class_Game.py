@@ -66,8 +66,8 @@ class Game():
 
 		# self.music_channel_level = pygame.mixer.Channel(0)
 		# self.music_channel_main_menu = pygame.mixer.Channel()
-		self.opt_music = True
-		self.opt_sfx = True
+		self.opt_music = False
+		self.opt_sfx = False
 		self.opt_autoshoot = False
 
 

@@ -195,6 +195,7 @@ DONE:
 		Shoot frequency management
 		Invulnerability for seconds after took a shoot
 		Auto_shoot
+		Movement animations
 
 
 	ENEMIES
