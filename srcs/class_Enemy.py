@@ -15,25 +15,12 @@ from constants			import (X_WINDOW, Y_WINDOW,
 								RED,
 								DOWN)
 
-#
-# class Hitbox(pygame.sprite.Sprite):
-# 	def __init__(self, elem, g):
-# 		pygame.sprite.Sprite.__init__(self)
-# 		self.radius = int(elem.rect.width / 2)
-# 		# self.radius = 5
-# 		self.image = elem.image
-# 		self.rect = pygame.draw.circle(elem.image, RED, elem.rect.center, self.radius)
-# 		g.sprites_hitbox.add(self)
-#
-# 	def update(self, elem):
-# 		self.image = elem.image
-# 		self.rect = pygame.draw.circle(elem.image, RED, elem.rect.center, self.radius)
-
 class Enemy(Entities):
 	def __init__(self, g):
 		Entities.__init__(self, _hp = 1, _lives = 0, _speed = 5, _type = ENEMIES)
 		self.name = "Enemy"
 
+		self.g = g
 		self.timer = 0
 
 		# Load image from media
@@ -55,12 +42,9 @@ class Enemy(Entities):
 
 		self.mask = pygame.mask.from_surface(self.image)
 
-		# self.toto = Hitbox(self, g)
-		# self.g = g
 		g.all_sprites.add(self)
 		g.sprites_enemies.add(self)
 
-		self.g = g
 
 	def shoot(self):
 		self.timer -= self.g.dt
@@ -76,7 +60,6 @@ class Enemy(Entities):
 		self.move(DOWN)
 		self.shoot()
 
-		# self.toto.update(self)
 		# If the enemy go out the window, unreference it
 		if (self.rect.y > Y_WINDOW):
 			self.kill()

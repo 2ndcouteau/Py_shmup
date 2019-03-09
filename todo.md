@@ -211,6 +211,11 @@ DONE:
 		Shoot in multiple direction
 		Manage position to avoid collisions at creation
 
+	WEAPONS
+		Simple
+		Double
+		Triple
+
 
 	SHOOT
 		generate shoot item
