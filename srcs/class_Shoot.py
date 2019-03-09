@@ -35,6 +35,7 @@ class Shoot(Entities):
 		self.size = (self.size[0] / 2, self.size[1] / 2)
 		self.image = pygame.transform.scale(self.image, (int(self.size[0]), int(self.size[1])))
 
+		self.mask = pygame.mask.from_surface(self.image)
 
 		# Init shoot ship position
 		self.rect = self.image.get_rect()
@@ -58,7 +59,10 @@ class Shoot(Entities):
 	def target_player(self, g):
 		self.direction = g.player.rect.centerx - self.rect.centerx, g.player.rect.top - self.rect.centery
 
-		angle = degrees(atan(self.direction[0] / self.direction[1]))
+		if (self.direction[1] != 0) :
+			angle = degrees(atan(self.direction[0] / self.direction[1]))
+		else :
+			angle = 0
 
 		if abs(self.direction[0]) > abs(self.direction[1]):
 			if self.direction[0] != 0:

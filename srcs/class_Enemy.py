@@ -8,13 +8,26 @@ from random import randint
 from class_Entities	import Entities
 from class_Shoot	import Shoot
 
-from constants			import (X_WINDOW,
-								Y_WINDOW,
+from constants			import (X_WINDOW, Y_WINDOW,
 								ENEMIES,
 								IMG_PLAYER,
 								ENEMIES_SHOOT_FREQUENCY,
+								RED,
 								DOWN)
 
+#
+# class Hitbox(pygame.sprite.Sprite):
+# 	def __init__(self, elem, g):
+# 		pygame.sprite.Sprite.__init__(self)
+# 		self.radius = int(elem.rect.width / 2)
+# 		# self.radius = 5
+# 		self.image = elem.image
+# 		self.rect = pygame.draw.circle(elem.image, RED, elem.rect.center, self.radius)
+# 		g.sprites_hitbox.add(self)
+#
+# 	def update(self, elem):
+# 		self.image = elem.image
+# 		self.rect = pygame.draw.circle(elem.image, RED, elem.rect.center, self.radius)
 
 class Enemy(Entities):
 	def __init__(self, g):
@@ -28,17 +41,21 @@ class Enemy(Entities):
 
 		# Scale player ship
 		self.size = self.image.get_size()	# Returns tupple
-		self.size = (self.size[0] / 4, self.size[1] / 4)
+		self.size = (self.size[0] / 3, self.size[1] / 3)
 		self.image = pygame.transform.scale(self.image, (int(self.size[0]), int(self.size[1])))
 		self.image = pygame.transform.rotate(self.image, 180);
 		self.hit_box_player = pygame.transform.scale(self.image, (int(self.size[0]) - 10, int(self.size[1]) - 10))
 
 		# Init player ship position
 		self.rect = self.image.get_rect()
-		self.rect = self.rect.move(randint(self.size[0], X_WINDOW) - self.size[0] , -self.size[1])
+		self.rect = self.rect.move(randint(int(self.size[0]), X_WINDOW) - int(self.size[0]) , -int(self.size[1]))
+
 		while pygame.sprite.spritecollide(self, g.sprites_enemies, False):
 			self.rect.centery -= self.size[1] / 2
 
+		self.mask = pygame.mask.from_surface(self.image)
+
+		# self.toto = Hitbox(self, g)
 		# self.g = g
 		g.all_sprites.add(self)
 		g.sprites_enemies.add(self)
@@ -59,6 +76,7 @@ class Enemy(Entities):
 		self.move(DOWN)
 		self.shoot()
 
+		# self.toto.update(self)
 		# If the enemy go out the window, unreference it
 		if self.rect.y > Y_WINDOW:
 			self.kill()

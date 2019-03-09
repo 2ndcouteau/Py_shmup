@@ -29,13 +29,15 @@ class Player(Entities):
 		self.sound_shoot.set_volume(0.5)
 		self.direction = None
 		self.frame_rate = PLAYER_FRAME_RATE
+		self.sprite_frames = []
+		self.sprite_frames_mask = []
 		self.range = 0
-		self.range_left = -10
-		self.range_right = 10
+		self.range_left = -10 # min: -15, max: 0
+		self.range_right = 10 # min: 0, max: 15
 		self.g = g
 
 		# Load all sprites positions
-		self.sprites = self.load_sprites(IMG_PLAYER_SPRITES, width=256, height=256, ratio=1/3)
+		self.load_sprites(IMG_PLAYER_SPRITES, width=256, height=256, ratio=1/3)
 
 		# Insert Face ship img
 		main_img = IMG_PLAYER.convert_alpha()
@@ -43,10 +45,13 @@ class Player(Entities):
 		self.size = (self.size[0] / 3, self.size[1] / 3)
 		main_img = pygame.transform.scale(main_img, (int(self.size[0]), int(self.size[1])))
 		# self.image = pygame.transform.rotate(self.image, -90);
-		self.sprites.insert(0, main_img)
-		self.image = self.sprites[0]
+		self.sprite_frames.insert(0, main_img)
+		self.sprite_frames_mask.insert(0, pygame.mask.from_surface(main_img))
 
-		self.hit_box_player = pygame.transform.scale(self.image, (int(self.size[0]) - 10, int(self.size[1]) - 10))
+		self.image = self.sprite_frames[0]
+		self.mask = self.sprite_frames_mask[0]
+
+		# self.hit_box_player = pygame.transform.scale(self.image, (int(self.size[0]) - 10, int(self.size[1]) - 10))
 
 		# Init player ship position
 		self.rect = self.image.get_rect(center=[(X_WINDOW / 2) - self.size[0] / 2, Y_WINDOW - 150])
@@ -57,14 +62,11 @@ class Player(Entities):
 
 
 	def load_sprites(self, img, posx=0, posy=0, width=10, height=10, ratio=(1/2)):
-		sprite_frames = []
 		for index in range(60):
 			sub_img = img.subsurface(pygame.Rect((posx + (index * width)), posy, width, height)).convert_alpha()
 			sub_img = pygame.transform.scale(sub_img, (int(width * ratio), int(height * ratio)))
-			sprite_frames.append(sub_img)
-
-		return sprite_frames
-
+			self.sprite_frames.append(sub_img)
+			self.sprite_frames_mask.append(pygame.mask.from_surface(sub_img))
 
 	def move(self, direction):
 		self.direction = direction
@@ -129,7 +131,8 @@ class Player(Entities):
 
 	def update_image(self):
 		center = self.rect.center  ## ??
-		self.image = self.sprites[self.range]
+		self.image = self.sprite_frames[self.range]
+		self.mask = self.sprite_frames_mask[self.range]
 		self.rect = self.image.get_rect()
 		self.rect.center = center
 

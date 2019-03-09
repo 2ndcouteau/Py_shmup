@@ -60,6 +60,8 @@ class Game():
 
 		self.sprites_explosions = pygame.sprite.Group()
 
+		self.sprites_hitbox = pygame.sprite.Group()
+
 
 		self.sound_explosion = pygame.mixer.Sound(os.path.join(media_folder, 'explosion42.wav'))
 		self.sound_shoot = pygame.mixer.Sound(os.path.join(media_folder, 'laser51.wav'))
@@ -74,6 +76,8 @@ class Game():
 		music.load(os.path.join(media_folder, 'main_menu_music.wav'))
 		music.set_volume(100)
 		music.play(-1)
+		if (self.opt_music is False):
+			music.pause()
 
 
 		# self.music_level = pygame.mixer.Sound(os.path.join(media_folder, 'game_music.wav'))
@@ -166,19 +170,19 @@ class Game():
 
 	def collide_management(self):
 		# See if the enemies collide with player
-		collide_list = pygame.sprite.spritecollide(self.player, self.sprites_enemies, True)
+		collide_list = pygame.sprite.spritecollide(self.player, self.sprites_enemies, True, pygame.sprite.collide_mask)
 		# Check the list of collisions.
 		for x in collide_list:
 			self.player.take_dammage(self, HIT_SHIP_ENNEMIES)
 			print("Player Collide with Enemies !")
 
-		collide_list = pygame.sprite.spritecollide(self.player, self.sprites_enemies_shoots, True)
+		collide_list = pygame.sprite.spritecollide(self.player, self.sprites_enemies_shoots, True, pygame.sprite.collide_mask)
 		for hit in collide_list:
 			self.player.take_dammage(self, HIT_SHOT_ENNEMIES)
 			print("Enemies shots Collide with player !")
 			Explosion(self, hit.rect.center, 0)
 
-		collide_list = pygame.sprite.groupcollide(self.sprites_allies_shoots, self.sprites_enemies, True, True)
+		collide_list = pygame.sprite.groupcollide(self.sprites_allies_shoots, self.sprites_enemies, True, True, pygame.sprite.collide_mask)
 		# Check the list of collisions.
 		for hit in collide_list:
 			print("Player Shots Collide with Enemies !")

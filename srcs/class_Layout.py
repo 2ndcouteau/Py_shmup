@@ -31,12 +31,12 @@ class Layout():
 		g.sprites_enemies.draw(g.window)
 		g.sprites_enemies_shoots.draw(g.window)
 		g.sprites_allies_shoots.draw(g.window)
-
 		# g.sprites_level_text.draw(g.window)
 
 		# print(g.sprites_explosions)
 		g.sprites_explosions.draw(g.window)
 
+		# g.sprites_hitbox.draw(g.window)
 		# g.sprites_neutrals.draw(g.window)
 
 			# Refresh ALL the Display
