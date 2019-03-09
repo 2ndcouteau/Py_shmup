@@ -39,9 +39,6 @@ OK				explosion enemies
 	Player
 		animation invulnerability
 
-	Collide
-		Manage hitbox
-
 	Explosion
 		Player
 			no explosion animation but visual bell
@@ -185,6 +182,8 @@ DONE:
 				options_level
 				main menu
 
+	COLLIDE
+		Manage Pefect mask hitbox for all collide
 
 
 	PLAYER
