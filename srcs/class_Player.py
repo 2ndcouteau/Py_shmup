@@ -6,11 +6,12 @@ import time
 
 from random			import randint
 from class_Entities	import Entities
-from class_Shoot	import Shoot
+from class_Shoot	import Simple_shot, Double_shots, Triple_shots
 from constants		import (X_WINDOW, Y_WINDOW,
 							LEFT, RIGHT,
 							IMG_PLAYER, IMG_PLAYER_SPRITES,
 							PLAYER_HP, PLAYER_LIVES,
+							W_SIMPLE, W_DOUBLE, W_TRIPLE,
 							ALLIES,
 							PLAYER_SHOOT_FREQUENCY,
 							PLAYER_FRAME_RATE,
@@ -34,6 +35,8 @@ class Player(Entities):
 		self.range = 0
 		self.range_left = -10 # min: -15, max: 0
 		self.range_right = 10 # min: 0, max: 15
+		# self.weapon = W_SIMPLE
+		self.weapon = W_TRIPLE
 		self.g = g
 
 		# Load all sprites positions
@@ -75,8 +78,12 @@ class Player(Entities):
 	def shoot(self, g):
 		self.timer_shoot -= g.dt
 		if self.timer_shoot <= 0:
-			Shoot(g, ALLIES, self.speed + 1, self.rect.centerx, self.rect.top)
-
+			if (self.weapon == W_SIMPLE):
+				Simple_shot(g, ALLIES, self)
+			elif (self.weapon == W_DOUBLE):
+				Double_shots(g, ALLIES, self)
+			elif (self.weapon == W_TRIPLE):
+				Triple_shots(g, ALLIES, self)
 			if (g.opt_sfx == True):
 				self.sound_shoot.play()
 			# self.sound_shoot[randint(0, 5)].play()
@@ -86,7 +93,7 @@ class Player(Entities):
 			self.timer_shoot = PLAYER_SHOOT_FREQUENCY
 
 	def take_dammage(self, g, dammage):
-		if self.timer_damage <= 0:
+		if (self.timer_damage <= 0):
 			self.hp -= dammage
 			self.timer_damage = DAMAGE_UNVULNERABILITY_TIME
 
@@ -139,7 +146,7 @@ class Player(Entities):
 	def manage_direction_animation(self):
 		self.timer -= self.g.dt
 		if (self.direction is not None) : # Animation from player input
-			if self.timer <= 0:
+			if (self.timer <= 0):
 				if (self.direction == RIGHT):
 					if ((self.range + 1) < self.range_right):
 						self.range += 6 if (self.range < 0) else 1

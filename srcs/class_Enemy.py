@@ -64,7 +64,7 @@ class Enemy(Entities):
 
 	def shoot(self):
 		self.timer -= self.g.dt
-		if self.timer <= 0:
+		if (self.timer <= 0):
 			Shoot(self.g, ENEMIES, self.speed * 2, self.rect.centerx, self.rect.bottom)
 			# Reset the countdown shoot timer + salt time
 			self.timer = ENEMIES_SHOOT_FREQUENCY + randint(0, 1000)
@@ -78,5 +78,5 @@ class Enemy(Entities):
 
 		# self.toto.update(self)
 		# If the enemy go out the window, unreference it
-		if self.rect.y > Y_WINDOW:
+		if (self.rect.y > Y_WINDOW):
 			self.kill()

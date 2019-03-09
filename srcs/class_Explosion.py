@@ -41,9 +41,9 @@ class Explosion(pygame.sprite.Sprite):
 
 	def update(self):
 		self.timer -= self.g.dt
-		if self.timer <= 0:
+		if (self.timer <= 0):
 			self.frame += 1
-			if self.frame == self.len:
+			if (self.frame == self.len):
 				self.kill()
 			else:
 				center = self.rect.center  ## ??
