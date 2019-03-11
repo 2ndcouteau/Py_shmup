@@ -23,8 +23,6 @@ class Explosion(pygame.sprite.Sprite):
 		if (g.opt_sfx == True):
 			self.sound.play()
 
-		# print(self.image)
-
 		self.rect = self.image.get_rect()
 		self.rect.center = center
 

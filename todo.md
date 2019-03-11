@@ -45,6 +45,31 @@ OK				explosion enemies
 			special sound
 
 
+1) ADD items
+		Icon UI
+OK)			Lives counter
+OK)			Lives
+OK)			Weapons Up
+OK)			Hp
+OK)			Unvulnerability
+OK)			slow motion time
+
+		sound UI
+OK)			move/cursor
+OK)			Launch Game
+OK)			select
+OK)			OFF
+OK)			ON
+OK)			return
+			bad input
+
+
+3)	Create Sound Class
+		init sound in
+		access to them
+
+2) Change Enemies color
+
 	Print Informations
 		weapon
 
@@ -60,9 +85,9 @@ OK				explosion enemies
 		generate salve
 
 	Weapon
-		basic
-		double
-		triple
+OK)		basic
+OK)		double
+OK)		triple
 		targeted
 		Bomb
 

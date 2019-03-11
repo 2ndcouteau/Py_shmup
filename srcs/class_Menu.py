@@ -16,17 +16,17 @@ from constants		import (X_WINDOW, Y_WINDOW,
 							CONTINUE, RESTART_DEATH, OPTIONS_DEATH, MAIN_MENU_DEATH,
 							OPTIONS_GAMEOVER, MAIN_MENU_GAMEOVER,
 							OPT_MUSIC, OPT_SFX, OPT_AUTOSHOOT, OPT_RETURN_MENU,
-							media_folder)
+							sounds_folder)
 
 
 
 
 class Menu():
 	def __init__(self, g):
-		self.toto = 0
+		self.g = g
 
 	def load_music(self, g, music_name):
-		music.load(os.path.join(media_folder, music_name))
+		music.load(os.path.join(sounds_folder, music_name))
 		music.play(-1)
 		if (g.opt_music == False):
 			music.pause()
@@ -48,9 +48,13 @@ class Main_menu(Menu):
 		def play_game(g):
 			g.restart_game() ## Init_game() with some differente base value
 			g.mode = F_GAME
+			if (g.opt_sfx is True):
+				g.sound_launch_game.play()
 			self.load_music(g, 'game_music.wav')
 
 		def options_main(g):
+			if (g.opt_sfx is True):
+				g.sound_select.play()
 			g.previous_mode = F_MAIN_MENU
 			g.mode = F_OPTIONS_LEVEL
 
@@ -76,29 +80,41 @@ class Opt_level_menu(Menu):
 		def switch_sound(g):
 			if (g.opt_music == False):
 				g.opt_music = True
+				if (g.opt_sfx is True):
+					g.sound_on.play()
 				if (g.previous_mode == F_MAIN_MENU):
 					# music.play(-1)
 					music.rewind()
 					music.unpause()
 				# else :
 			else :
+				if (g.opt_sfx is True):
+					g.sound_off.play()
 				g.opt_music = False
 				music.pause()
 
 		def switch_sfx(g):
 			if (g.opt_sfx == False):
+				g.sound_on.play()
 				g.opt_sfx = True
 			else :
+				g.sound_off.play()
 				g.opt_sfx = False
 
 		def switch_autoshoot(g):
 			if (g.opt_autoshoot == False):
+				if (g.opt_sfx is True):
+					g.sound_on.play()
 				g.opt_autoshoot = True
 			else :
+				if (g.opt_sfx is True):
+					g.sound_off.play()
 				g.opt_autoshoot = False
 
 		def return_level_menu(g):
 			g.mode = g.previous_mode
+			if (g.opt_sfx is True):
+				g.sound_return.play()
 			g.previous_mode = F_OPTIONS_LEVEL
 
 
@@ -117,12 +133,16 @@ class Level_menu(Menu):
 
 		def resume_level(g):
 			g.mode = F_GAME
+			if (g.opt_sfx is True):
+				g.sound_select.play()
 			if (g.opt_music == True):
 				music.unpause()
 
 		def restart_level(g):
 			g.restart_level()
 			g.mode = F_GAME
+			if (g.opt_sfx is True):
+				g.sound_select.play()
 			music.rewind()
 			if (g.opt_music == True):
 				music.play(-1)
@@ -130,9 +150,14 @@ class Level_menu(Menu):
 		def options_level(g):
 			g.previous_mode = F_LEVEL_MENU
 			g.mode = F_OPTIONS_LEVEL
+			if (g.opt_sfx is True):
+				g.sound_select.play()
+
 
 		def main_menu(g):
 			g.mode = F_MAIN_MENU
+			if (g.opt_sfx is True):
+				g.sound_return.play()
 			self.load_music(g, 'main_menu_music.wav')
 
 		self.function = []
@@ -150,6 +175,8 @@ class Death_menu(Menu):
 			g.continue_level()
 			g.player.lives -= 1
 			g.mode = F_GAME
+			if (g.opt_sfx is True):
+				g.sound_select.play()
 			if (g.opt_music == True):
 				music.unpause()
 
@@ -157,6 +184,8 @@ class Death_menu(Menu):
 			g.restart_level()
 			g.mode = F_GAME
 			music.rewind()
+			if (g.opt_sfx is True):
+				g.sound_select.play()
 			if (g.opt_music == True):
 				music.play(-1)
 
@@ -164,11 +193,14 @@ class Death_menu(Menu):
 		def options(g):
 			g.previous_mode = F_DEATH_MENU
 			g.mode = F_OPTIONS_LEVEL
-
+			if (g.opt_sfx is True):
+				g.sound_select.play()
 
 		def main_menu(g):
 			g.previous_mode = F_DEATH_MENU
 			g.mode = F_MAIN_MENU
+			if (g.opt_sfx is True):
+				g.sound_return.play()
 			self.load_music(g, 'main_menu_music.wav')
 
 		self.function = []
@@ -203,6 +235,8 @@ class Gameover_menu(Menu):
 		def main_menu(g):
 			g.previous_mode = F_GAMEOVER_MENU
 			g.mode = F_MAIN_MENU
+			if (g.opt_sfx is True):
+				g.sound_return.play()
 			self.load_music(g, 'main_menu_music.wav')
 			g.player.init_game(g)
 

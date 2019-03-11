@@ -21,7 +21,7 @@ from constants			import (X_WINDOW, Y_WINDOW,
 								IMG_LEVEL_MENU_BACKGROUND_FULL, IMG_LEVEL_MENU_BACKGROUND_TIER,
 								IMG_PLAYER, IMG_EXPLOSION1, IMG_EXPLOSION2, IMG_EXPLOSION3,
 								HIT_SHOT_ENNEMIES, HIT_SHIP_ENNEMIES, HIT_SHOT_PLAYER,
-								media_folder)
+								sounds_folder)
 
 class Game():
 	def __init__(self):
@@ -63,8 +63,17 @@ class Game():
 		self.sprites_hitbox = pygame.sprite.Group()
 
 
-		self.sound_explosion = pygame.mixer.Sound(os.path.join(media_folder, 'explosion42.wav'))
-		self.sound_shoot = pygame.mixer.Sound(os.path.join(media_folder, 'laser51.wav'))
+		self.sound_explosion = pygame.mixer.Sound(os.path.join(sounds_folder, 'explosion42.wav'))
+		self.sound_shoot = pygame.mixer.Sound(os.path.join(sounds_folder, 'laser51.wav'))
+
+		self.sound_move_cursor = pygame.mixer.Sound(os.path.join(sounds_folder, 'cursor.wav'))
+		self.sound_launch_game = pygame.mixer.Sound(os.path.join(sounds_folder, 'launch_game_iceball.wav'))
+		self.sound_select = pygame.mixer.Sound(os.path.join(sounds_folder, 'select_flaunch.wav'))
+		self.sound_off = pygame.mixer.Sound(os.path.join(sounds_folder, 'off_Close.wav'))
+		self.sound_on = pygame.mixer.Sound(os.path.join(sounds_folder, 'on_Open.wav'))
+		self.sound_return = pygame.mixer.Sound(os.path.join(sounds_folder, 'back_Wrong_2.wav'))
+
+
 
 		# self.music_channel_level = pygame.mixer.Channel(0)
 		# self.music_channel_main_menu = pygame.mixer.Channel()
@@ -73,7 +82,7 @@ class Game():
 		self.opt_autoshoot = False
 
 
-		music.load(os.path.join(media_folder, 'main_menu_music.wav'))
+		music.load(os.path.join(sounds_folder, 'main_menu_music.wav'))
 		music.set_volume(100)
 		music.play(-1)
 		if (self.opt_music is False):
@@ -102,6 +111,8 @@ class Game():
 		self.title = pygame.display.set_caption("BEST GAME EVER -- Py_SHMUP")
 
 		self.mode = F_MAIN_MENU
+		self.previous_mode = F_MAIN_MENU
+
 
 		# Init all backgrounds:
 		self.level_backgrounds = []

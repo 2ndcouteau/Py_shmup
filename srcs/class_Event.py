@@ -1,6 +1,6 @@
-#!/usr/bin/env python3.7
 # _*_ coding: Utf-8 -*
 
+#!/usr/bin/env python3.7
 import os
 import pygame
 from pygame.locals	import *
@@ -140,22 +140,42 @@ class Event():
 	def general(g, keys):
 		if keys[K_ESCAPE]:
 			exit()
-		# if keys[K_S]:
-		# 	cut_the_sound
+
+		if (g.mode == F_GAME):
+			g.menu_timer -= g.dt
+		if (g.menu_timer <= 0):
+			if keys[K_m]:
+				if (g.opt_music == False):
+					g.opt_music = True
+					if (g.opt_sfx is True):
+						g.sound_on.play()
+					if ((g.mode != F_GAME and g.previous_mode == F_MAIN_MENU) or g.mode == F_GAME):
+						# music.play(-1)
+						music.rewind()
+						music.unpause()
+				else :
+					if (g.opt_sfx is True):
+						g.sound_off.play()
+					g.opt_music = False
+					music.pause()
+				g.menu_timer = MENU_INPUT_DELAY
 
 	def main_menu(g, keys):
 
-		menu = g.main_menu
 		g.menu_timer -= g.dt
-		if g.menu_timer <= 0:
+		if (g.menu_timer <= 0):
 			if keys[K_RETURN]:
-				menu.function[menu.text.new_pos - menu.text.offset_title_select](g)
+				g.main_menu.function[g.main_menu.text.new_pos - g.main_menu.text.offset_title_select](g)
 				g.menu_timer = MENU_INPUT_DELAY
 			if keys[K_UP]:
-				menu.text.move_up()
+				if (g.opt_sfx is True):
+					g.sound_move_cursor.play()
+				g.main_menu.text.move_up()
 				g.menu_timer = MENU_INPUT_DELAY
 			if keys[K_DOWN]:
-				menu.text.move_down()
+				if (g.opt_sfx is True):
+					g.sound_move_cursor.play()
+				g.main_menu.text.move_down()
 				g.menu_timer = MENU_INPUT_DELAY
 
 
@@ -166,9 +186,13 @@ class Event():
 				g.death_menu.function[g.death_menu.text.new_pos - g.death_menu.text.offset_title_select](g)
 				g.menu_timer = MENU_INPUT_DELAY
 			if keys[K_UP]:
+				if (g.opt_sfx is True):
+					g.sound_move_cursor.play()
 				g.death_menu.text.move_up()
 				g.menu_timer = MENU_INPUT_DELAY
 			if keys[K_DOWN]:
+				if (g.opt_sfx is True):
+					g.sound_move_cursor.play()
 				g.death_menu.text.move_down()
 				g.menu_timer = MENU_INPUT_DELAY
 
@@ -180,9 +204,13 @@ class Event():
 				g.gameover_menu.function[g.gameover_menu.text.new_pos - g.gameover_menu.text.offset_title_select](g)
 				g.menu_timer = MENU_INPUT_DELAY
 			if keys[K_UP]:
+				if (g.opt_sfx is True):
+					g.sound_move_cursor.play()
 				g.gameover_menu.text.move_up()
 				g.menu_timer = MENU_INPUT_DELAY
 			if keys[K_DOWN]:
+				if (g.opt_sfx is True):
+					g.sound_move_cursor.play()
 				g.gameover_menu.text.move_down()
 				g.menu_timer = MENU_INPUT_DELAY
 
@@ -207,9 +235,13 @@ class Event():
 				g.level_menu.function[g.level_menu.text.new_pos - g.level_menu.text.offset_title_select](g)
 				g.menu_timer = MENU_INPUT_DELAY
 			if keys[K_UP]:
+				if (g.opt_sfx is True):
+					g.sound_move_cursor.play()
 				g.level_menu.text.move_up()
 				g.menu_timer = MENU_INPUT_DELAY
 			if keys[K_DOWN]:
+				if (g.opt_sfx is True):
+					g.sound_move_cursor.play()
 				g.level_menu.text.move_down()
 				g.menu_timer = MENU_INPUT_DELAY
 
@@ -235,9 +267,13 @@ class Event():
 				g.opt_level_menu.function[g.opt_level_menu.text.new_pos - g.opt_level_menu.text.offset_title_select](g)
 				g.menu_timer = MENU_INPUT_DELAY
 			if keys[K_UP]:
+				if (g.opt_sfx is True):
+					g.sound_move_cursor.play()
 				g.opt_level_menu.text.move_up()
 				g.menu_timer = MENU_INPUT_DELAY
 			if keys[K_DOWN]:
+				if (g.opt_sfx is True):
+					g.sound_move_cursor.play()
 				g.opt_level_menu.text.move_down()
 				g.menu_timer = MENU_INPUT_DELAY
 
