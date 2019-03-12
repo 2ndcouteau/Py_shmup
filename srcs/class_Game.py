@@ -33,6 +33,7 @@ class Game():
 
 		self.last_update = 0
 
+		pygame.mixer.pre_init(frequency=22050, size=-16, channels=2, buffer=1024)
 		pygame.init()
 		pygame.mixer.set_num_channels(64)
 		pygame.mixer.init()
