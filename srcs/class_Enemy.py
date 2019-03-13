@@ -12,7 +12,7 @@ from constants			import (X_WINDOW, Y_WINDOW,
 								ENEMIES,
 								IMG_PLAYER,
 								ENEMIES_SHOOT_FREQUENCY,
-								RED,
+								RED_ENEMY, WHITE, BLUE,
 								DOWN)
 
 class Enemy(Entities):
@@ -41,6 +41,35 @@ class Enemy(Entities):
 			self.rect.centery -= self.size[1] / 2
 
 		self.mask = pygame.mask.from_surface(self.image)
+
+
+		# self.pixels_1 = pygame.transform.threshold(
+		# 			dest_surf=None,
+		# 			surf=self.image,
+		# 			search_color=WHITE,
+		# 			threshold=(20, 20, 20, 0), # rgba
+		# 			set_color=None,
+		# 			set_behavior=0,
+		# 			search_surf=None,
+		# 			inverse_set=True
+		# 		)
+		#
+		#
+		# self.pixels_within_threshold = pygame.transform.threshold(
+		# 			dest_surf=self.image,
+		# 			surf=self.image,
+		# 			search_color=None,
+		# 			threshold=(255, 255, 255, 0), # rgba
+		# 			set_color=RED_ENEMY,
+		# 			set_behavior=1,
+		# 			search_surf=self.pixels_1,
+		# 			inverse_set=False
+		# 		)
+		# self.image_pixel_array = pygame.PixelArray(self.image)
+		# self.image_pixel_array.replace(WHITE, RED)
+		# self.image_pixel_array = None
+		# del self.image_pixel_array
+
 
 		g.all_sprites.add(self)
 		g.sprites_enemies.add(self)

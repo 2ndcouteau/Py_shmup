@@ -52,6 +52,10 @@ OK)			return
 	Player
 		animation invulnerability
 
+		Implement:
+			Shield
+			slowmotion
+
 	Explosion
 		Player
 			no explosion animation but visual bell
