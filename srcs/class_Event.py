@@ -17,25 +17,6 @@ from constants			import (F_GAME, F_LEVEL_MENU, F_MAIN_MENU, F_DEATH_MENU, F_GAME
 								OPT_SFX, OPT_MUSIC,
 								media_folder)
 
-# func_table = {
-# 		1: (truc, (1, 2, 3)),
-# 		2: (bidule, (4, 1, 2, 5, 6)),
-# 		3: (machin, (5, 8, 9))
-# 	}
-
-
-# [for x in t.values()]
-# ['string value', [1, 2]]
-
-# [for x in t.keys()]
-# ['first', 'csecond']
-
-# [for x in t.items()]
-# [('a', 'string value'), ('b', [1, 2])]
-
-
-
-
 class Event():
 	def __init__(self):
 		self.timer = 0 # 1seconde
@@ -252,6 +233,8 @@ class Event():
 		if g.menu_timer <= 0:
 
 			if keys[K_BACKSPACE]:
+				if (g.opt_sfx is True):
+					g.sound_return.play()
 				g.mode = g.previous_mode
 				g.previous_mode = F_OPTIONS_LEVEL
 				g.menu_timer = MENU_INPUT_DELAY
@@ -301,8 +284,6 @@ class Event():
 			self.main_menu(g, keys)
 		else :
 			print ("error input Event")
-
-
 
 		pygame.event.clear()
 		g.player.rect = g.player.rect.clamp(g.window_rect)

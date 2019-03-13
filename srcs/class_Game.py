@@ -10,6 +10,7 @@ from random			import randint
 from class_Explosion	import Explosion
 from class_Player		import Player
 from class_Enemy		import Enemy
+from class_Items		import Items
 from class_Background	import Level_background, Level_menu_background, Main_menu_background
 from class_Text			import Text_main_menu, Text_level_menu, Text_level
 from class_Menu			import Main_menu, Level_menu, Death_menu, Gameover_menu, Opt_level_menu
@@ -21,6 +22,7 @@ from constants			import (X_WINDOW, Y_WINDOW,
 								IMG_LEVEL_MENU_BACKGROUND_FULL, IMG_LEVEL_MENU_BACKGROUND_TIER,
 								IMG_PLAYER, IMG_EXPLOSION1, IMG_EXPLOSION2, IMG_EXPLOSION3,
 								HIT_SHOT_ENNEMIES, HIT_SHIP_ENNEMIES, HIT_SHOT_PLAYER,
+								TYPE_HP, TYPE_LIFE, TYPE_SHIELD, TYPE_WEAPON, TYPE_SLOWMOTION, TYPE_INVULNERABILITY,
 								sounds_folder)
 
 class Game():
@@ -54,6 +56,7 @@ class Game():
 
 		self.sprites_players = pygame.sprite.Group()
 		self.sprites_enemies = pygame.sprite.Group()
+		self.sprites_items = pygame.sprite.Group()
 
 		self.sprites_allies_shoots = pygame.sprite.Group()
 		self.sprites_enemies_shoots = pygame.sprite.Group()
@@ -61,7 +64,7 @@ class Game():
 
 		self.sprites_explosions = pygame.sprite.Group()
 
-		self.sprites_hitbox = pygame.sprite.Group()
+		# self.sprites_hitbox = pygame.sprite.Group()
 
 
 		self.sound_explosion = pygame.mixer.Sound(os.path.join(sounds_folder, 'explosion42.wav'))
@@ -200,6 +203,13 @@ class Game():
 			print("Player Shots Collide with Enemies !")
 			self.player.score += HIT_SHOT_PLAYER
 			Explosion(self, hit.rect.center, randint(1, 2))
+			Items.generate(Items, self, hit.rect.center)
+
+		collide_list = pygame.sprite.spritecollide(self.player, self.sprites_items, True, pygame.sprite.collide_mask)
+		# Check the list of collisions.
+		for hit in collide_list:
+			self.player.get_item(hit)
+			print("Player Collide with Items !")
 
 
 	def level_backgrounds_reinitialization(self):
@@ -220,6 +230,7 @@ class Game():
 		self.sprites_enemies_shoots.empty()
 		self.sprites_allies_shoots.empty()
 		self.sprites_explosions.empty()
+		self.sprites_items.empty()
 
 		self.player.init_level(self)
 		self.level_backgrounds_reinitialization()
@@ -231,6 +242,7 @@ class Game():
 		self.sprites_enemies_shoots.empty()
 		self.sprites_allies_shoots.empty()
 		self.sprites_explosions.empty()
+		self.sprites_items.empty()
 
 		self.player.init_game(self)
 		self.level_backgrounds_reinitialization()

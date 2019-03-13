@@ -35,25 +35,6 @@ OK				explosion enemies
 
 	SOUND:
 		Progression bar for level selection options
-
-	Player
-		animation invulnerability
-
-	Explosion
-		Player
-			no explosion animation but visual bell
-			special sound
-
-
-1) ADD items
-		Icon UI
-OK)			Lives counter
-OK)			Lives
-OK)			Weapons Up
-OK)			Hp
-OK)			Unvulnerability
-OK)			slow motion time
-
 		sound UI
 OK)			move/cursor
 OK)			Launch Game
@@ -63,10 +44,19 @@ OK)			ON
 OK)			return
 			bad input
 
+3)		Create Sound Class
+			init sound in
+			access to them
 
-3)	Create Sound Class
-		init sound in
-		access to them
+
+	Player
+		animation invulnerability
+
+	Explosion
+		Player
+			no explosion animation but visual bell
+			special sound
+
 
 2) Change Enemies color
 
@@ -85,18 +75,10 @@ OK)			return
 		generate salve
 
 	Weapon
-OK)		basic
-OK)		double
-OK)		triple
 		targeted
 		Bomb
 
 	Loot
-		weapon
-		life
-		hp+
-		speed boost
-		slow motion time
 
 	MENU
 
@@ -105,8 +87,14 @@ OK)		triple
 
 		Can win more "combo" point in function of the Y position of the player
 
-DONE:
 
+<!--
+################################################################################
+################################################################################
+################################################################################
+-->
+
+DONE:
 
 	Clean all the Code
 		Object style organization
@@ -208,7 +196,7 @@ DONE:
 				main menu
 
 	COLLIDE
-		Manage Pefect mask hitbox for all collide
+		Manage Perfect mask hitbox for all collide
 
 
 	PLAYER
@@ -240,6 +228,22 @@ DONE:
 		Simple
 		Double
 		Triple
+
+	ITEMS/LOOT
+		ADD items
+			Icon UI
+				Lives counter
+				Lives
+				Weapons Up
+				Hp
+				Invulnerability
+				slow motion time
+		Create Class Item
+			init()
+			update()
+		Manage interactivity with the player
+			Collide
+			Effects
 
 
 	SHOOT

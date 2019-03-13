@@ -32,6 +32,7 @@ def main_loop(g):
 			g.sprites_allies_shoots.update()
 			g.sprites_enemies_shoots.update()
 			g.sprites_enemies.update()
+			g.sprites_items.update()
 			g.player.update()
 
 			g.collide_management()

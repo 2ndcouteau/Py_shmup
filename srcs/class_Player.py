@@ -10,12 +10,13 @@ from class_Shoot	import Simple_shot, Double_shots, Triple_shots
 from constants		import (X_WINDOW, Y_WINDOW,
 							LEFT, RIGHT,
 							IMG_PLAYER, IMG_PLAYER_SPRITES,
-							PLAYER_HP, PLAYER_LIVES,
+							PLAYER_HP, PLAYER_HP_MAX, PLAYER_LIVES,
 							W_SIMPLE, W_DOUBLE, W_TRIPLE,
+							TYPE_HP, TYPE_LIFE, TYPE_SHIELD, TYPE_WEAPON, TYPE_SLOWMOTION, TYPE_INVULNERABILITY,
 							ALLIES,
 							PLAYER_SHOOT_FREQUENCY,
 							PLAYER_FRAME_RATE,
-							DAMAGE_UNVULNERABILITY_TIME)
+							DAMAGE_INVULNERABILITY_TIME, ITEM_DAMAGE_INVULNERABILITY_TIME)
 
 class Player(Entities):
 
@@ -36,7 +37,7 @@ class Player(Entities):
 		self.range_left = -10 # min: -15, max: 0
 		self.range_right = 10 # min: 0, max: 15
 		# self.weapon = W_SIMPLE
-		self.weapon = W_TRIPLE
+		self.weapon = W_SIMPLE
 		self.g = g
 
 		# Load all sprites positions
@@ -62,6 +63,15 @@ class Player(Entities):
 
 		g.all_sprites.add(self)
 		g.sprites_players.add(self)
+
+		self.items_fct = []
+		self.items_fct.insert(TYPE_HP, self.get_hp)
+		self.items_fct.insert(TYPE_LIFE, self.get_life)
+		self.items_fct.insert(TYPE_SHIELD, self.get_shield)
+		self.items_fct.insert(TYPE_WEAPON, self.get_weapon)
+		self.items_fct.insert(TYPE_SLOWMOTION, self.get_slowmotion)
+		self.items_fct.insert(TYPE_INVULNERABILITY, self.get_invulnerability)
+
 
 
 	def load_sprites(self, img, posx=0, posy=0, width=10, height=10, ratio=(1/2)):
@@ -95,19 +105,21 @@ class Player(Entities):
 	def take_dammage(self, g, dammage):
 		if (self.timer_damage <= 0):
 			self.hp -= dammage
-			self.timer_damage = DAMAGE_UNVULNERABILITY_TIME
+			self.timer_damage = DAMAGE_INVULNERABILITY_TIME
 
 	def init_game(self, g):
 		# Init player position and spec
 		self.rect.x = (X_WINDOW / 2) - self.size[0] / 2
 		self.rect.y = Y_WINDOW - 150
 		self.hp = PLAYER_HP
+		self.lives = PLAYER_LIVES
+		self.weapon = W_SIMPLE
+		self.timer_damage = 0
 
 		# if self.lives < 0:
 		self.start_time = time.time()
 		self.time = time.time()
 		self.score = 0
-		self.lives = PLAYER_LIVES
 
 		g.sprites_players.add(self)
 		g.all_sprites.add(self)
@@ -118,6 +130,8 @@ class Player(Entities):
 		self.rect.x = (X_WINDOW / 2) - self.size[0] / 2
 		self.rect.y = Y_WINDOW - 150
 		self.hp = PLAYER_HP
+		self.weapon = W_SIMPLE
+		self.timer_damage = 0
 
 		g.sprites_players.add(self)
 		g.all_sprites.add(self)
@@ -128,6 +142,8 @@ class Player(Entities):
 		self.rect.x = (X_WINDOW / 2) - self.size[0] / 2
 		self.rect.y = Y_WINDOW - 150
 		self.hp = PLAYER_HP
+		self.weapon = W_SIMPLE
+		self.timer_damage = 0
 
 		self.start_time = time.time()
 		self.time = time.time()
@@ -161,6 +177,32 @@ class Player(Entities):
 			if (self.range != 0):
 				self.range += -1 if (self.range > 0) else 1
 				self.update_image()
+
+	def get_hp(self):
+		if ((self.hp + 50) < PLAYER_HP_MAX):
+			self.hp += 50
+		else :
+			self.hp = PLAYER_HP_MAX
+
+	def get_life(self):
+		self.lives += 1
+
+	def get_shield(self):
+		print("item shield")
+
+	def get_weapon(self):
+		if (self.weapon < W_TRIPLE):
+			self.weapon += 1
+
+	def get_slowmotion(self):
+		print("item slowmotion")
+
+	def get_invulnerability(self):
+		self.timer_damage = ITEM_DAMAGE_INVULNERABILITY_TIME
+
+	def get_item(self, item):
+		self.items_fct[item.type]()
+		self.score += 25
 
 	def update(self):
 		self.time = time.time() - self.start_time
