@@ -11,6 +11,7 @@ from class_Shoot	import Shoot
 from constants			import (X_WINDOW, Y_WINDOW,
 								ENEMIES,
 								IMG_PLAYER,
+								IMG_ENEMY_1, IMG_ENEMY_2, IMG_ENEMY_3, IMG_ENEMY_4,
 								ENEMIES_SHOOT_FREQUENCY,
 								RED_ENEMY, WHITE, BLUE,
 								DOWN)
@@ -24,13 +25,13 @@ class Enemy(Entities):
 		self.timer = 0
 
 		# Load image from media
-		self.image = IMG_PLAYER.convert_alpha()
+		self.image = IMG_ENEMY_4.convert_alpha()
 
 		# Scale player ship
 		self.size = self.image.get_size()	# Returns tupple
 		self.size = (self.size[0] / 3, self.size[1] / 3)
 		self.image = pygame.transform.scale(self.image, (int(self.size[0]), int(self.size[1])))
-		self.image = pygame.transform.rotate(self.image, 180);
+		# self.image = pygame.transform.rotate(self.image, 180);
 		self.hit_box_player = pygame.transform.scale(self.image, (int(self.size[0]) - 10, int(self.size[1]) - 10))
 
 		# Init player ship position

@@ -23,9 +23,9 @@ class Shoot(Entities):
 		# self.image = IMG_PLAYER.convert_alpha()
 		# g.Rect_entities.append(pygame.draw.circle(g.window, [120, 0, 255], (g.player.rect[0], g.player.rect[1] + 15), 5))
 		if (self.type == ALLIES):
-			self.image = IMG_LASER_PLAYER.convert_alpha()
-		else :
 			self.image = IMG_LASER_ENEMY.convert_alpha()
+		else :
+			self.image = IMG_LASER_PLAYER.convert_alpha()
 			self.sound = None
 
 

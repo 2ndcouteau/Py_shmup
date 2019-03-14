@@ -37,6 +37,12 @@ IMG_LEVEL_MENU_BACKGROUND_TIER = pygame.Surface((int(X_WINDOW / 2), int(Y_WINDOW
 
 IMG_PLAYER = pygame.image.load(os.path.join(images_folder, "SF06.png"))
 IMG_PLAYER_SPRITES = pygame.image.load(os.path.join(images_folder, "SF06a_strip60.png"))
+IMG_ENEMY_1 = pygame.image.load(os.path.join(images_folder, "SF06_red.png"))
+IMG_ENEMY_2 = pygame.image.load(os.path.join(images_folder, "SF06_blue.png"))
+IMG_ENEMY_3 = pygame.image.load(os.path.join(images_folder, "SF06_sand.png"))
+IMG_ENEMY_4 = pygame.image.load(os.path.join(images_folder, "SF06_peach.png"))
+
+
 
 IMG_LASER_PLAYER = pygame.image.load(os.path.join(images_folder, "laserBlue.png"))
 IMG_LASER_ENEMY = pygame.image.load(os.path.join(images_folder, "laserRed.png"))
