@@ -8,15 +8,17 @@ from random			import randint
 from class_Entities	import Entities
 from class_Shoot	import Simple_shot, Double_shots, Triple_shots
 from constants		import (X_WINDOW, Y_WINDOW,
+							SLOW_SPEED_GAME, NORMAL_SPEED_GAME, SLOWMOTION_TIME,
 							LEFT, RIGHT,
 							IMG_PLAYER, IMG_PLAYER_SPRITES,
 							PLAYER_HP, PLAYER_HP_MAX, PLAYER_LIVES,
 							W_SIMPLE, W_DOUBLE, W_TRIPLE,
+							INIT_SHIELD,
 							TYPE_HP, TYPE_LIFE, TYPE_SHIELD, TYPE_WEAPON, TYPE_SLOWMOTION, TYPE_INVULNERABILITY,
 							ALLIES,
 							PLAYER_SHOOT_FREQUENCY,
 							PLAYER_FRAME_RATE,
-							DAMAGE_INVULNERABILITY_TIME, ITEM_DAMAGE_INVULNERABILITY_TIME)
+							INIT_DAMAGE_INVULNERABILITY_TIME, DAMAGE_INVULNERABILITY_TIME, ITEM_DAMAGE_INVULNERABILITY_TIME)
 
 class Player(Entities):
 
@@ -24,9 +26,11 @@ class Player(Entities):
 		Entities.__init__(self, _hp = PLAYER_HP, _lives = PLAYER_LIVES, _speed = 15, _type = ALLIES)
 		self.name = "Player"
 
-		self.timer = 0
 		self.timer_shoot = 0
 		self.timer_damage = 0
+		self.timer_animation = 0
+		self.timer_slowmotion = 0
+
 		self.sound_shoot = g.sound_shoot
 		self.sound_shoot.set_volume(0.5)
 		self.direction = None
@@ -38,6 +42,7 @@ class Player(Entities):
 		self.range_right = 10 # min: 0, max: 15
 		# self.weapon = W_SIMPLE
 		self.weapon = W_SIMPLE
+		self.shield = INIT_SHIELD
 		self.g = g
 
 		# Load all sprites positions
@@ -104,8 +109,11 @@ class Player(Entities):
 
 	def take_dammage(self, g, dammage):
 		if (self.timer_damage <= 0):
-			self.hp -= dammage
-			self.timer_damage = DAMAGE_INVULNERABILITY_TIME
+			if (self.shield > 0):
+				self.shield -= 1
+			else :
+				self.hp -= dammage
+				self.timer_damage = DAMAGE_INVULNERABILITY_TIME
 
 	def init_game(self, g):
 		# Init player position and spec
@@ -114,7 +122,8 @@ class Player(Entities):
 		self.hp = PLAYER_HP
 		self.lives = PLAYER_LIVES
 		self.weapon = W_SIMPLE
-		self.timer_damage = 0
+		self.shield = INIT_SHIELD
+		self.timer_damage = INIT_DAMAGE_INVULNERABILITY_TIME
 
 		# if self.lives < 0:
 		self.start_time = time.time()
@@ -131,7 +140,8 @@ class Player(Entities):
 		self.rect.y = Y_WINDOW - 150
 		self.hp = PLAYER_HP
 		self.weapon = W_SIMPLE
-		self.timer_damage = 0
+		self.shield = INIT_SHIELD
+		self.timer_damage = INIT_DAMAGE_INVULNERABILITY_TIME
 
 		g.sprites_players.add(self)
 		g.all_sprites.add(self)
@@ -143,7 +153,8 @@ class Player(Entities):
 		self.rect.y = Y_WINDOW - 150
 		self.hp = PLAYER_HP
 		self.weapon = W_SIMPLE
-		self.timer_damage = 0
+		self.shield = INIT_SHIELD
+		self.timer_damage = INIT_DAMAGE_INVULNERABILITY_TIME
 
 		self.start_time = time.time()
 		self.time = time.time()
@@ -160,9 +171,9 @@ class Player(Entities):
 		self.rect.center = center
 
 	def manage_direction_animation(self):
-		self.timer -= self.g.dt
+		self.timer_animation -= self.g.dt
 		if (self.direction is not None) : # Animation from player input
-			if (self.timer <= 0):
+			if (self.timer_animation <= 0):
 				if (self.direction == RIGHT):
 					if ((self.range + 1) < self.range_right):
 						self.range += 6 if (self.range < 0) else 1
@@ -171,7 +182,7 @@ class Player(Entities):
 					if ((self.range - 1) > self.range_left):
 						self.range -= 6 if (self.range > 0) else 1
 						self.update_image()
-				self.timer = self.frame_rate
+				self.timer_animation = self.frame_rate
 				self.direction = None
 		else :		# Animation without player input
 			if (self.range != 0):
@@ -188,14 +199,15 @@ class Player(Entities):
 		self.lives += 1
 
 	def get_shield(self):
-		print("item shield")
+		self.shield += 1
 
 	def get_weapon(self):
 		if (self.weapon < W_TRIPLE):
 			self.weapon += 1
 
 	def get_slowmotion(self):
-		print("item slowmotion")
+		self.g.speed_game = SLOW_SPEED_GAME
+		self.timer_slowmotion = SLOWMOTION_TIME
 
 	def get_invulnerability(self):
 		self.timer_damage = ITEM_DAMAGE_INVULNERABILITY_TIME
@@ -207,6 +219,9 @@ class Player(Entities):
 	def update(self):
 		self.time = time.time() - self.start_time
 		self.timer_damage -= self.g.dt
+		self.timer_slowmotion -= self.g.dt
+		if (self.timer_slowmotion < 1):
+			self.g.speed_game = NORMAL_SPEED_GAME
 		if (self.g.opt_autoshoot == True):
 			self.shoot(self.g)
 		self.manage_direction_animation()

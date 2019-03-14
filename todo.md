@@ -7,54 +7,44 @@ TODO:
 		-- py2app(Osx)
 		-- bbfreeze (linux) -- Nop (Only python 2.X)
 
-~)	Sound
-		Add Music
-OK			In Menu
-OK			In Game
+
+~)	SOUND:
+OK)		Add Music
+OK)			In Menu
+OK)			In Game
 		Add SFX
-			menu
-				move selection
-				selection validation
-				selection invalid
-			game
-OK				shoot player
-OK				shoot enemies
-OK				explosion enemies
+			MENU
+OK)				move/cursor
+OK)				Launch Game
+OK)				select
+OK)				OFF
+OK)				ON
+OK)				return
+				bad input
+			GAME
+OK)				shoot player
+OK)				shoot enemies
+OK)				explosion enemies
+				Get Items
 				loose game
 				(
-				win game (define some objectives before PLZ)
-				special dodge movement
+					win game (define some objectives before PLZ)
+					special dodge movement
 				)
 
-~~	Clean Event class
-		use dict/hash table function for manage input
 
-	Layout
-		enemies
-			color by type
-
-	SOUND:
-		Progression bar for level selection options
-		sound UI
-OK)			move/cursor
-OK)			Launch Game
-OK)			select
-OK)			OFF
-OK)			ON
-OK)			return
-			bad input
+	Progression bar for level selection options
+	sound UI
 
 3)		Create Sound Class
 			init sound in
 			access to them
 
+~~	Clean Event class
+		use dict/hash table function for manage input
 
 	Player
 		animation invulnerability
-
-		Implement:
-			Shield
-			slowmotion
 
 	Explosion
 		Player
@@ -62,10 +52,16 @@ OK)			return
 			special sound
 
 
-2) Change Enemies color
+	Layout
+	~~) Change Enemies color
+			color by type
 
-	Print Informations
+
+2)	Print Informations
 		weapon
+		Shield
+		Invulnerability
+		--> use icons
 
 	Enemies
 		generate spawn salve formation
@@ -82,7 +78,11 @@ OK)			return
 		targeted
 		Bomb
 
-	Loot
+1)	Backgrounds:
+		Clean methods
+			--> use update()
+			Change its speed if slowmotion
+		Animate Main menu background
 
 	MENU
 
@@ -236,12 +236,13 @@ DONE:
 	ITEMS/LOOT
 		ADD items
 			Icon UI
-				Lives counter
+				Hp
 				Lives
 				Weapons Up
 				Hp
 				Invulnerability
-				slow motion time
+				Slowmotion time
+				Shield
 		Create Class Item
 			init()
 			update()

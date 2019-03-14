@@ -49,7 +49,9 @@ class Items(Entities):
 			Items(g, position)
 
 	def move(self, direction):
-		self.rect = self.rect.move(direction[0] * self.speed, direction[1] * self.speed)
+		self.rect = self.rect.move(direction[0] * self.speed, direction[1] * self.speed * self.g.speed_game)
 
 	def update(self):
 		self.move(DOWN)
+		if (self.rect.top > Y_WINDOW):
+			self.kill()

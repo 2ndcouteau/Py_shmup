@@ -15,7 +15,7 @@ from class_Background	import Level_background, Level_menu_background, Main_menu_
 from class_Text			import Text_main_menu, Text_level_menu, Text_level
 from class_Menu			import Main_menu, Level_menu, Death_menu, Gameover_menu, Opt_level_menu
 
-from constants			import (X_WINDOW, Y_WINDOW,
+from constants			import (X_WINDOW, Y_WINDOW, NORMAL_SPEED_GAME,
 								ENEMIES_SPAWN_FREQUENCY, NEUTRALS_SPAWN_FREQUENCY,
 								F_GAME, F_MAIN_MENU, F_LEVEL_MENU,
 								IMG_LEVEL1_BACKGROUND, IMG_MAIN_MENU_BACKGROUND,
@@ -82,9 +82,10 @@ class Game():
 		# self.music_channel_level = pygame.mixer.Channel(0)
 		# self.music_channel_main_menu = pygame.mixer.Channel()
 		self.opt_music = False
-		self.opt_sfx = False
-		self.opt_autoshoot = False
+		self.opt_sfx = True
+		self.opt_autoshoot = True
 
+		self.speed_game = NORMAL_SPEED_GAME
 
 		music.load(os.path.join(sounds_folder, 'main_menu_music.wav'))
 		music.set_volume(100)

@@ -28,6 +28,7 @@ class Shoot(Entities):
 			self.image = IMG_LASER_PLAYER.convert_alpha()
 			self.sound = None
 
+		self.g = g
 
 		# Scale player ship
 		self.size = self.image.get_size()	# Returns tupple
@@ -78,21 +79,22 @@ class Shoot(Entities):
 
 
 	def move(self):
-		self.rect = self.rect.move(self.direction[0] * self.speed, self.direction[1] * self.speed)
+		self.rect = self.rect.move(self.direction[0] * self.speed, self.direction[1] * (self.speed * self.g.speed_game))
 
 	def update(self):
 		self.move()
 
 		# If the shoot go out the window, unreference it
-		if (self.rect.top > Y_WINDOW and self.type == ENEMIES):
-			self.kill()
+		if (self.type == ENEMIES):
+			if (self.rect.top > Y_WINDOW or self.rect.bottom < -20 or self.rect.left > X_WINDOW or self.rect.right < 0):
+				self.kill()
 		elif (self.rect.bottom < 0 and self.type == ALLIES):
 			self.kill()
 
 class Simple_shot():
 	def __init__(self, g, type, shooter):
 		self.name = "Simple shot"
-		Shoot(g, type, shooter.speed + 1, shooter.rect.centerx + 7, shooter.rect.top)
+		Shoot(g, type, shooter.speed + 1, shooter.rect.centerx, shooter.rect.top)
 
 class Double_shots():
 	def __init__(self, g, type, shooter):

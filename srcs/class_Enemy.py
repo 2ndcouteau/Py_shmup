@@ -81,10 +81,10 @@ class Enemy(Entities):
 		if (self.timer <= 0):
 			Shoot(self.g, ENEMIES, self.speed * 2, self.rect.centerx, self.rect.bottom)
 			# Reset the countdown shoot timer + salt time
-			self.timer = ENEMIES_SHOOT_FREQUENCY + randint(0, 1000)
+			self.timer = (ENEMIES_SHOOT_FREQUENCY + randint(0, 1000)) / self.g.speed_game
 
 	def move(self, direction):
-		self.rect = self.rect.move(direction[0] * self.speed, direction[1] * self.speed)
+		self.rect = self.rect.move(direction[0] * self.speed * self.g.speed_game, direction[1] * self.speed * self.g.speed_game)
 
 	def update(self):
 		self.move(DOWN)

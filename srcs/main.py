@@ -42,6 +42,10 @@ def main_loop(g):
 			g.level_text.update()
 			Layout.draw_level_sprites(Layout, g)
 
+			## DEBUG
+			print("nb all sprites == {0}".format(str(len(g.all_sprites))))
+			print("FPS : {0}".format(str(clock.get_fps())))
+
 		elif (g.mode is F_DEATH_MENU):
 			Layout.draw_death_menu_sprites(Layout, g)
 			Event.manage(Event, g)

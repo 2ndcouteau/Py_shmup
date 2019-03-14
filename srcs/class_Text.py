@@ -9,7 +9,7 @@ from pygame.locals	import *
 from constants			import (Y_WINDOW, X_WINDOW,
 								FONT,
 								WHITE, BLACK, RED, GREEN, BLUE, YELLOW,
-								POS_HP, POS_LIVES, POS_SCORE, POS_TIME,
+								POS_HP, POS_LIVES, POS_SCORE, POS_TIME, POS_SHIELD,
 								TITLE_MENU, PLAY, OPTIONS_MAIN, QUIT,
 								RESUME, RESTART, OPTIONS_LEVEL, MAIN_MENU,
 								REMAINING_LIVES, CONTINUE, RESTART_DEATH, OPTIONS_DEATH, MAIN_MENU_DEATH,
@@ -98,16 +98,18 @@ class Text_level(Text):
 		self.all_text.insert(POS_LIVES, Text_line(self.font_size, "Lifes: {0}".format(str(g.player.lives)), ((X_WINDOW - 100), Y_WINDOW - self.y_bottom_offset), cx=False, cy=False))
 		self.all_text.insert(POS_SCORE, Text_line(self.font_size, "Score: {0}".format(str(g.player.score)), (self.x_left_offset, 0), cx=False, cy=False))
 		self.all_text.insert(POS_TIME, Text_line(self.font_size, "Time: {0}".format(self.str_time), ((X_WINDOW - self.x_right_time_offset), 0), cx=False, cy=False))
+		self.all_text.insert(POS_SHIELD, Text_line(self.font_size, "Shield: {0}".format(str(g.player.shield)), ((X_WINDOW / 2), Y_WINDOW - self.y_bottom_offset), cx=True, cy=False))
 
 		self.len_all_text = len(self.all_text)
 
 	def update(self):
 		self.str_time = time.strftime("%M:%S.", time.gmtime(self.g.player.time)) + str(repr(self.g.player.time).split('.')[1][:3])
 
-		self.all_text[POS_HP] = Text_line(self.font_size, ' '.join(["Hp: ", str(self.g.player.hp)]), (self.x_left_offset, Y_WINDOW - self.y_bottom_offset), cx=False, cy=False)
-		self.all_text[POS_LIVES] = Text_line(self.font_size, ' '.join(["Lifes: ", str(self.g.player.lives)]), ((X_WINDOW - self.x_right_life_offset), Y_WINDOW - self.y_bottom_offset), cx=False, cy=False)
-		self.all_text[POS_SCORE] = Text_line(self.font_size, ' '.join(["Score: ", str(self.g.player.score)]), (self.x_left_offset, 0), cx=False, cy=False)
+		self.all_text[POS_HP] = Text_line(self.font_size, "Hp: {0}".format(str(self.g.player.hp)), (self.x_left_offset, Y_WINDOW - self.y_bottom_offset), cx=False, cy=False)
+		self.all_text[POS_LIVES] = Text_line(self.font_size, "Lifes: {0}".format(str(self.g.player.lives)), ((X_WINDOW - self.x_right_life_offset), Y_WINDOW - self.y_bottom_offset), cx=False, cy=False)
+		self.all_text[POS_SCORE] = Text_line(self.font_size, "Score: {0}".format(str(self.g.player.score)), (self.x_left_offset, 0), cx=False, cy=False)
 		self.all_text[POS_TIME] = Text_line(self.font_size, "Time: {0}".format(self.str_time), (X_WINDOW - self.x_right_time_offset, 0), cx=False, cy=False)
+		self.all_text[POS_SHIELD] = Text_line(self.font_size, "Shield: {0}".format(str(self.g.player.shield)), ((X_WINDOW / 2), Y_WINDOW - self.y_bottom_offset), cx=True, cy=False)
 
 class Text_menu():
 	def __init__(self, offset):
