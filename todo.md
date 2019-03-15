@@ -1,7 +1,7 @@
 
 TODO:
 
-	Format Render, Binary
+3)	Format Render, Binary
 		Freeze Format distribution		
 		-- check pyinstaller (Osx/linux)
 		-- py2app(Osx)
@@ -36,7 +36,7 @@ OK)				explosion enemies
 	Progression bar for level selection options
 	sound UI
 
-3)		Create Sound Class
+2)		Create Sound Class
 			init sound in
 			access to them
 
@@ -57,7 +57,7 @@ OK)				explosion enemies
 			color by type
 
 
-2)	Print Informations
+1)	Print Informations
 		weapon
 		Shield
 		Invulnerability
@@ -78,11 +78,6 @@ OK)				explosion enemies
 		targeted
 		Bomb
 
-1)	Backgrounds:
-		Clean methods
-			--> use update()
-			Change its speed if slowmotion
-		Animate Main menu background
 
 	MENU
 
@@ -142,6 +137,13 @@ DONE:
 			hp
 			life
 			time
+
+	BACKGROUNDS:
+		Clean methods
+			--> use update()
+			Change its speed if slowmotion
+				Now, background is stopped
+		Animate Main menu background
 
 	TEXT
 		Create Class
