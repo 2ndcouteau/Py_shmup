@@ -128,6 +128,8 @@ NORMAL_SPEED_GAME = 1
 SLOW_SPEED_GAME = 0.5
 SLOWMOTION_TIME = 5000
 
+## Background speed
+BACKGROUND_DELAY = 40
 
 #############################
 ## ARRAY GAME LINE POSITION #

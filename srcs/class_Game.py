@@ -11,7 +11,7 @@ from class_Explosion	import Explosion
 from class_Player		import Player
 from class_Enemy		import Enemy
 from class_Items		import Items
-from class_Background	import Level_background, Level_menu_background, Main_menu_background
+from class_Background	import Level_backgrounds, Level_menu_backgrounds, Main_menu_backgrounds
 from class_Text			import Text_main_menu, Text_level_menu, Text_level
 from class_Menu			import Main_menu, Level_menu, Death_menu, Gameover_menu, Opt_level_menu
 
@@ -49,6 +49,7 @@ class Game():
 		self.sprites_level_backgrounds = pygame.sprite.Group()
 		self.sprites_level_menu_backgrounds = pygame.sprite.Group()
 		self.sprites_main_menu_backgrounds = pygame.sprite.Group()
+
 
 		self.sprites_level_text = pygame.sprite.Group()
 		self.sprites_level_menu_text = pygame.sprite.Group()
@@ -119,17 +120,6 @@ class Game():
 		self.previous_mode = F_MAIN_MENU
 
 
-		# Init all backgrounds:
-		self.level_backgrounds = []
-		self.level_backgrounds.append(Level_background(self, (0, 0), IMG_LEVEL1_BACKGROUND, F_GAME))
-		self.level_backgrounds.append(Level_background(self, (0, -Y_WINDOW), IMG_LEVEL1_BACKGROUND, F_GAME))
-
-		self.main_menu_backgrounds = []
-		self.main_menu_backgrounds.append(Main_menu_background(self, (0, 0), IMG_MAIN_MENU_BACKGROUND, F_MAIN_MENU))
-
-		self.level_menu_backgrounds = []
-		self.level_menu_backgrounds.append(Level_menu_background(self, (0, 0), IMG_LEVEL_MENU_BACKGROUND_FULL, F_LEVEL_MENU, opacity=100))
-		self.level_menu_backgrounds.append(Level_menu_background(self, (X_WINDOW / 4, Y_WINDOW / 4), IMG_LEVEL_MENU_BACKGROUND_TIER, F_LEVEL_MENU, opacity=150))
 
 		self.explosion_imgs = []
 		self.explosion_imgs.append(self.load_sprites(IMG_EXPLOSION1, width=256, height=256, ratio=1/3))
@@ -138,22 +128,21 @@ class Game():
 
 
 
+		# Init Player:
 		self.player = Player(self)
 
-		# Level_text(self, "Hello  Game  !!", (0, 0))
-		# Level_menu_text(self, "** Main menu **", (self.level_menu_backgrounds[1].rect.x, 0), cx=True)
-		# self.text_main_menu = Text_main_menu()
-		# self.text_level_menu = Text_level_menu()
-		# self.text_game_level = Text_game_level(self)
+		# Init all backgrounds:
+		self.level_backgrounds = Level_backgrounds(self)
+		self.level_menu_backgrounds = Level_menu_backgrounds(self)
+		self.main_menu_backgrounds = Main_menu_backgrounds(self)
 
+		# Init all Menu:
 		self.level_text = Text_level(self)
 		self.level_menu = Level_menu(self)
 		self.main_menu = Main_menu(self)
 		self.death_menu = Death_menu(self)
 		self.gameover_menu = Gameover_menu(self)
 		self.opt_level_menu = Opt_level_menu(self)
-
-		# Main_menu_text(self, "* Menu *", (X_WINDOW / 2, Y_WINDOW /2), cx=True)
 
 		# self.neutrals = []
 
@@ -213,12 +202,6 @@ class Game():
 			print("Player Collide with Items !")
 
 
-	def level_backgrounds_reinitialization(self):
-		self.all_sprites.add(self.level_backgrounds[0])
-		self.all_sprites.add(self.level_backgrounds[1])
-		self.level_backgrounds[0].rect.y = 0
-		self.level_backgrounds[1].rect.y = -Y_WINDOW
-
 	def continue_level(self):
 		self.player.continue_level(self)
 		self.sprites_enemies_shoots.empty()
@@ -234,7 +217,8 @@ class Game():
 		self.sprites_items.empty()
 
 		self.player.init_level(self)
-		self.level_backgrounds_reinitialization()
+		self.level_backgrounds.reinitialization(self)
+		# self.level_backgrounds_reinitialization()
 
 	def restart_game(self):
 		# Clear all Useless sprites lists
@@ -246,4 +230,5 @@ class Game():
 		self.sprites_items.empty()
 
 		self.player.init_game(self)
-		self.level_backgrounds_reinitialization()
+		self.level_backgrounds.reinitialization(self)
+		# self.level_backgrounds_reinitialization()

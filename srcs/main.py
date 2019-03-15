@@ -26,9 +26,10 @@ def main_loop(g):
 			# g.window.fill((0,0,0))
 			g.generate_enemies()
 			Event.manage(Event, g)
-			Layout.scroll_level_background(g)
 
 			print("nb_shoot == " + str(len(g.sprites_allies_shoots)))
+			# Layout.scroll_level_background(g)
+			g.sprites_level_backgrounds.update()
 			g.sprites_allies_shoots.update()
 			g.sprites_enemies_shoots.update()
 			g.sprites_enemies.update()
@@ -62,8 +63,11 @@ def main_loop(g):
 			g.level_menu.text.update()
 
 		elif (g.mode is F_MAIN_MENU):
+
+			g.sprites_main_menu_backgrounds.update()
 			Layout.draw_main_menu_sprites(Layout, g)
 			Event.manage(Event, g)
+			# g.sprites_main_menu_backgrounds.update()
 			g.main_menu.text.update()
 
 		elif (g.mode is F_OPTIONS_LEVEL):
