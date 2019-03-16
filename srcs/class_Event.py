@@ -14,7 +14,7 @@ from class_Menu			import Main_menu
 from constants			import (F_GAME, F_LEVEL_MENU, F_MAIN_MENU, F_DEATH_MENU, F_GAMEOVER_MENU, F_OPTIONS_LEVEL,
 								UP, DOWN, RIGHT, LEFT,
 								MENU_INPUT_DELAY,
-								OPT_SFX, OPT_MUSIC,
+								OPT_SFX, OPT_MUSIC, OPT_RETURN_MENU,
 								media_folder)
 
 class Event():
@@ -241,8 +241,7 @@ class Event():
 
 			if keys[K_LEFT] or keys[K_RIGHT]:
 
-				if g.opt_level_menu.text.new_pos == OPT_SFX or g.opt_level_menu.text.new_pos == OPT_MUSIC :
-
+				if g.opt_level_menu.text.new_pos != OPT_RETURN_MENU:
 					g.opt_level_menu.function[g.opt_level_menu.text.new_pos - g.opt_level_menu.text.offset_title_select](g)
 					g.menu_timer = MENU_INPUT_DELAY
 
