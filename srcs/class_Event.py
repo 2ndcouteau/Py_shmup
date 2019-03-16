@@ -2,6 +2,7 @@
 
 #!/usr/bin/env python3.7
 import os
+import sys
 import pygame
 from pygame.locals	import *
 from pygame.mixer	import music
@@ -120,7 +121,7 @@ class Event():
 
 	def general(g, keys):
 		if keys[K_ESCAPE]:
-			exit()
+			sys.exit(0)
 
 		if (g.mode == F_GAME):
 			g.menu_timer -= g.dt

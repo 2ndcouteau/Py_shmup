@@ -2,6 +2,7 @@
 # _*_ coding: Utf-8 -*
 
 import os
+import sys
 import pygame
 
 # from class_Event	import Event
@@ -59,7 +60,7 @@ class Main_menu(Menu):
 			g.mode = F_OPTIONS_LEVEL
 
 		def quit(g):
-			exit()
+			sys.exit(0)
 
 		self.function = []
 		self.function.insert(PLAY, play_game)
