@@ -23,9 +23,9 @@ Y_WINDOW = 710
 ################################################################################
 ## LOADING MEDIAS
 game_folder = os.path.dirname(__file__)
-media_folder = os.path.join(game_folder, '../media')
-images_folder = os.path.join(media_folder, './images')
-sounds_folder = os.path.join(media_folder, './sounds')
+media_folder = os.path.join(game_folder, 'media')
+images_folder = os.path.join(media_folder, 'images')
+sounds_folder = os.path.join(media_folder, 'sounds')
 
 FONT = os.path.join(media_folder, 'kenvector_future_thin.ttf')
 
