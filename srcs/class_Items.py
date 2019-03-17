@@ -45,7 +45,7 @@ class Items(Entities):
 
 
 	def generate(self, g, position):
-		if (randint(0, 20) == 0):
+		if (randint(0, 10) == 0):
 			Items(g, position)
 
 	def move(self, direction):
