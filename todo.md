@@ -1,13 +1,6 @@
 
 TODO:
 
-3)	Format Render, Binary
-		Freeze Format distribution		
-		-- check pyinstaller (Osx/linux)
-		-- py2app(Osx)
-		-- bbfreeze (linux) -- Nop (Only python 2.X)
-
-
 ~)	SOUND:
 OK)		Add Music
 OK)			In Menu
@@ -36,7 +29,7 @@ OK)				explosion enemies
 	Progression bar for level selection options
 	sound UI
 
-2)		Create Sound Class
+3)		Create Sound Class
 			init sound in
 			access to them
 
@@ -57,19 +50,21 @@ OK)				explosion enemies
 			color by type
 
 
-1)	Print Informations
+2)	Print Informations
 		weapon
 		Shield
 		Invulnerability
 		--> use icons
 
-	Enemies
+1)	Enemies
 		generate spawn salve formation
 			duo
 			triple
 			line
 			delta formation
 			etc...
+
+	Manage exit mouse click
 
 	Shoot class
 		generate salve
@@ -277,3 +272,12 @@ DONE:
 
 	EXPLOSION
 		animation
+
+
+	ONE FILE EXPORT
+		Linux		OK)
+		MAC OS		OK)
+		Freeze Format distribution		
+		--> Pyinstaller (Osx/linux)
+			()-- py2app(Osx)
+			()-- bbfreeze (linux) -- Nop (Only python 2.X)

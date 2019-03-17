@@ -24,7 +24,10 @@ def main_loop(g):
 
 		if (g.mode is F_GAME):
 			# g.window.fill((0,0,0))
+
+			# Waves.h_line(5, LEFT)
 			g.generate_enemies()
+
 			Event.manage(Event, g)
 
 			print("nb_shoot == " + str(len(g.sprites_allies_shoots)))
