@@ -1,10 +1,13 @@
 # -*- mode: python -*-
+import os
+
+HOME = os.environ['HOME']
+PATH = HOME + "/z/py_shmup/srcs"
 
 block_cipher = None
 
-
 a = Analysis(['main.py'],
-			 pathex=['/home/yoko/z/py_shmup/srcs'],
+			 pathex=[PATH],
 			 binaries=[],
 			 datas=[
 			 ('*', 'media/'),

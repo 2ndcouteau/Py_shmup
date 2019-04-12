@@ -1,10 +1,13 @@
 # -*- mode: python -*-
+import os
+
+HOME = os.environ['HOME']
+PATH = HOME + "/z/py_shmup/srcs"
 
 block_cipher = None
 
-
 a = Analysis(['main.py'],
-             pathex=['/Users/qrosa/z/py_shmup/srcs'],
+             pathex=[PATH],
              binaries=[],
 			 datas=[
 			 ('*', 'media/'),
@@ -27,7 +30,7 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,
           [],
-          name='Pyshmup_mac',
+          name='Pyshmup',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
