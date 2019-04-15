@@ -169,9 +169,15 @@ class Game():
 	def generate_enemies(self):
 		self.timer_gen_e -= self.dt
 		if self.timer_gen_e <= 0:
-			for i in range(10):
-				enemy = Enemy(self)
-				enemy.rect.centerx = ((enemy.size[0] / 2) + 15) * (1 + i)
+
+		### FOR RANDOM CREATION -- OLD METHOD -- SEE WAVES.PY ###
+			for i in range(1, 3):
+				Enemy(self)
+		### REPLACEMENT IN PROGRESS ###
+			# for i in range(10):
+			# 	enemy = Enemy(self)
+			# 	enemy.rect.centerx = ((enemy.size[0] / 2) + 15) * (1 + i)
+		### END NEW PART ###
 			# Reset the countdown timer to one second.
 			self.timer_gen_e = ENEMIES_SPAWN_FREQUENCY + randint(0, 3000)
 

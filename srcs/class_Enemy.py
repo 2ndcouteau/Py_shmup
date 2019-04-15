@@ -38,8 +38,10 @@ class Enemy(Entities):
 		self.rect = self.image.get_rect()
 		self.rect = self.rect.move(randint(int(self.size[0]), X_WINDOW) - int(self.size[0]) , -int(self.size[1]))
 
-		# while pygame.sprite.spritecollide(self, g.sprites_enemies, False):
-		# 	self.rect.centery -= self.size[1] / 2
+		### FOR RANDOM CREATION -- OLD METHOD -- SEE WAVES.PY ###
+		while pygame.sprite.spritecollide(self, g.sprites_enemies, False):
+			self.rect.centery -= self.size[1] / 2
+		### REPLACEMENT IN PROGRESS ###
 
 		self.mask = pygame.mask.from_surface(self.image)
 
