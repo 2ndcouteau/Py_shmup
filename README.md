@@ -25,16 +25,17 @@ cd srcs
 3. [OPTIONAL] Compile the python code with Pyinstaller :
 
 	- on MacOS:
-```
-pyinstaller Pyshmup_mac.spec
-```
+	```
+	pyinstaller Pyshmup_mac.spec
+	```
+
 	- on GNU/Linux system:
-```
-pyinstaller Pyshmup_linux.spec
-```
+	```
+	pyinstaller Pyshmup_linux.spec
+	```
 
 
-4. Run the game
+4. Run the game:
 ```
 ./python3 ./main.py
 ```
