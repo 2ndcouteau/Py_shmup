@@ -1,5 +1,5 @@
 # Py_shmup
-Simple Shoot'em up in Python
+Fast Shoot'em up in Python
 
 ## How to install
 
